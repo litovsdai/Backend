@@ -24,9 +24,9 @@ class Upload extends CI_Controller {
             // Cambio el nombre de la imagen
             $pos = strripos($_FILES['userfile']['name'], '.');
             $format = substr($_FILES['userfile']['name'], $pos, strlen($_FILES['userfile']['name']));
-            $name = substr($_FILES['userfile']['name'], 0, $pos) . $this->simple_sessions->get_value('id') . $format;
+            $name = $this->simple_sessions->get_value('id') . $format;
             $_FILES['userfile']['name'] = $name;
-            // Ejecuto laccion e subir
+            // Ejecuto la accion e subir
             $this->upload->initialize($config);
 
             // Recojo los datos que genera la subida de imagen, ya sea error o mensaje OK
@@ -48,7 +48,7 @@ class Upload extends CI_Controller {
                 $this->usuarios_m->set_avatar($dat);
                 // Elimino los mensajes de error, si quiero verlos comento esto
                 unset($data['upload_data']);
-                $data['msj_exit'] = 'La imagen ' . $name . ' se ha subido con éxito.';
+                $data['msj_exit'] = 'La imagen se ha sustituido con éxito.';
             }
 
             // Cargo las vistas de incio del BACKEND

@@ -68,7 +68,7 @@
                         if ($key === 'padre') {
                             $padre = $valor;
                         }
-                        if($padre==='0'){
+                        if(isset($padre) && $padre==='0'){
                             $padre='Sin categoría';
                         }
                     }

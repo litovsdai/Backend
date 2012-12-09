@@ -89,61 +89,33 @@ class B_gallery_c extends CI_Controller {
         if ($this->simple_sessions->get_value('status')) {
             # Load library
             $this->load->library('image_lib');
-            // configuración para el Upload de imágenes
-            $config['upload_path'] = "./img/gallery/"; // la ruta desde la raíz de CI
-            $config['overwrite'] = TRUE;
-            $config['allowed_types'] = 'jpg|jpeg|gif|png';
-            $config['max_size'] = '10000'; // 10 Mb
-            $config['max_width'] = '5000';
-            $config['max_height'] = '5000';
-
-            // Si existe es que no ha ocurrido ningun error
-            if (isset($_FILES['archivos']['name'])) {
-                // Recorro todos los nombres seleccionados..
-                for ($i = 0; $i < count($_FILES['archivos']['tmp_name']); $i++) {
-                    // Si el nombre posee mas de un punto o mas de 1 espacio  Los elimino
-                    if (substr_count($_FILES['archivos']['name'][$i], '.') > 1 || substr_count($_FILES['archivos']['name'][$i], ' ') > 0) {
-                        // Recojo nombre a manipular
-                        $name_complet = $_FILES['archivos']['name'][$i];
-                        // Sustituyo los espacios por "_"
-                        $name_complet = str_replace(' ', '_', $name_complet);
-                        // Extraigo la posicion del el ultimo "." de la String
-                        $pos_extension = strripos($name_complet, '.');
-                        // Extraigo la posicion del el ultimo "." de la String                 
-                        $extension = substr($name_complet, $pos_extension, strlen($name_complet));
-                        // Extraigo nombe actual
-                        $nombe_actual = substr($name_complet, 0, $pos_extension);
-                        // Quito los puntos por "_"
-                        $nombre_sin_puntos = str_replace('.', '_', $nombe_actual);
-                        // Concateno el nuevo nombre
-                        $nombre_final = $nombre_sin_puntos . $extension;
-                        // Asigno el nuevo nombre
-                        $_FILES['archivos']['name'][$i] = $nombre_final;
-                    }
-                }
-            }
-            // Procedo a subir las imágenes
-            $this->upload->initialize($config);
-            // Si existe es que no ha ocurrido ningun error
-            if (isset($_FILES['archivos']['name']) && !empty($_FILES['archivos']['name'])) {
-
-                // Cuento las imagenes a subir para el bucle
-                $num_archivos = count($_FILES['archivos']['tmp_name']);
-                // Las recorro una a una para ir redomensionando imágenes una a una
-                for ($i = 0; $i < $num_archivos; $i++) {
-                    // Cambio el nombre por exigencias codeigniter
-                    $_FILES['userfile']['name'] = $_FILES['archivos']['name'][$i];
-                    $_FILES['userfile']['type'] = $_FILES['archivos']['type'][$i];
-                    $_FILES['userfile']['tmp_name'] = $_FILES['archivos']['tmp_name'][$i];
-                    $_FILES['userfile']['error'] = $_FILES['archivos']['error'][$i];
-                    $_FILES['userfile']['size'] = $_FILES['archivos']['size'][$i];
-                    // Si falla la subida 
-                    if (!$this->upload->do_upload()) {
-                        // Alamceno el error para listarlo
-                        $data['error'][$i] = ' El formato ' . $_FILES['userfile']['type'] . ' no está permitido, error en el archivo ' . $_FILES['archivos']['name'][$i];
-                    } else if ($this->upload->do_upload()) {// Si no NO falla la subida
-                        $name = $_FILES['archivos']['name'][$i];
-                        /*
+            # Recorro todos los FILES que se hallan seleccionado
+            for ($i = 1; $i <= count($_FILES); $i++) {
+                $campo_temp = 'userfile' . $i;
+                // Si no esta vacio el campo
+                if (isset($_FILES[$campo_temp]['name']) && !empty($_FILES[$campo_temp]['name'])) {
+                    // Elimino todos los posibles puntos i espacios que contenga el nombee  de laimagen
+                    $name = $this->elimina_puntos_espacios($_FILES[$campo_temp]['name']);
+                    // configuración para el Upload de imágenes
+                    $config['upload_path'] = "./img/gallery/"; // la ruta desde la raíz de CI
+                    $config['overwrite'] = TRUE;
+                    $config['allowed_types'] = 'jpg|jpeg|gif|png';
+                    $config['file_name'] = $name;
+                    $config['max_size'] = '10000'; // 10 Mb
+                    $config['max_width'] = '5000';
+                    $config['max_height'] = '5000';
+                    $config['remove_spaces'] = TRUE;
+                    // Procedo a subir las imágenes
+                    $this->upload->initialize($config);
+                    // Compruebo si la subida de esta imagen NO ha sido satisfactoria
+                    if (!$this->upload->do_upload($campo_temp)) {
+                        // Recojo los errores
+                        $data['error'][$i] = array('error' => $this->upload->display_errors());
+                        $data['error'][$i]['error'] = $name . $data['error'][$i]['error'];
+                    } else {// En caso contrario
+                        // Recojo los success
+                        $data['success'][$i] = array('upload_data' => $this->upload->data());
+                        /* Redimensiono la imagen
                          * 800 X 600
                          */
                         if ($this->redimensiona($name, '800', '600')) {// Si es satisfactorio
@@ -159,6 +131,9 @@ class B_gallery_c extends CI_Controller {
                                 $data['ruta2'] = base_url() . 'img/gallery/145X100/' . $name;
                                 // Si la insercion es satisfactoria sigo adelante, si no ya existia a img
                                 $this->gallery_m->add_images($data);
+
+                                // Elimino la imagen subida a que no vale y pesa demasiado para lo que quiero hacer con ella
+                                @unlink('./img/gallery/' . $name);
                             } else {
                                 $data['err_145X100'][$i] = $name;
                             }
@@ -166,12 +141,9 @@ class B_gallery_c extends CI_Controller {
                             $data['err_800X600'][$i] = $name;
                         }
                     }
-                    // Elimino la imagen principal subida ya que ocupa mucho y le cuesta al servidor cargar las paginas
-                    @unlink('./img/gallery/' . $name);
                 }
-            } else {
-                $data['excess'] = ' ';
             }
+
             // Recojo las imágenes sin categoria asociada
             if ($this->gallery_m->all_images_for_category('0') === 0) {
                 $data['cero'] = '<strong>Muy bién!</strong> No hay imágenes sin categoría.';
@@ -255,6 +227,24 @@ class B_gallery_c extends CI_Controller {
         foreach ($data['categories'] as $value) {
             echo $value;
         }
+    }
+
+    function elimina_puntos_espacios($nombre_temp) {
+        $name_origin = $nombre_temp;
+        // Sustituyo los espacios por "_"
+        $name_complet = str_replace(' ', '_', $name_origin);
+        // Extraigo la posicion del el ultimo "." de la String
+        $pos_extension = strripos($name_complet, '.');
+        // Extraigo la posicion del el ultimo "." de la String                 
+        $extension = substr($name_complet, $pos_extension, strlen($name_complet));
+        // Extraigo nombe actual
+        $nombe_actual = substr($name_complet, 0, $pos_extension);
+        // Quito los puntos por "_"
+        $nombre_sin_puntos = str_replace('.', '_', $nombe_actual);
+        // Concateno el nuevo nombre
+        $nombre_final = $nombre_sin_puntos . $extension;
+        // Asigno el nuevo nombre
+        return $nombre_final;
     }
 
 }

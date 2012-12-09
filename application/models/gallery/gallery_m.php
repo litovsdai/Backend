@@ -27,7 +27,7 @@ class Gallery_m extends CI_Model {
 
     public function remove_picture($name) {
         @unlink('./img/gallery/' . '800X600/' . $name);
-        @unlink('./img/gallery/' . 'thumbs/' . $name);
+        @unlink('./img/gallery/' . '145X100/' . $name);
         $this->db->delete('imagenes', array('name' => $name));
     }
 
