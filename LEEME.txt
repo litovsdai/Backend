@@ -1,0 +1,12 @@
+version 0.3 
+
+Uso de sesiones implementado desde una libreria externa, todo funcionando y en caso e querer acceder a páginas
+en las que el login es requerido controlado.
+1. Próxima tarea añadir usuarios a la base de datos.
+2. Además crear la tabla de de usuarios, con opciones de editado, borrado de usuarios.
+
+Usuarios añadidos en la base de datos.
+Se controla cuando está registrado el superusuario, con mas opciones que el resto de usuarios:
+SUPER_USER -> Elimina, edita, nuevo
+NORMAL     -> Nuevo
+Tablas creadas dinamicamente, sólo faltará hacer que funcionen los botones.

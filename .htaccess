@@ -1,0 +1,28 @@
+<IfModule mod_rewrite.c>
+    # Aumentando capacidad de subida, en lugar de moddificar el php.ini
+    php_value upload_max_filesize 100M
+    php_value post_max_size 100M
+    php_value max_execution_time 1000
+    php_value max_input_time 1000
+
+    RewriteEngine On
+    RewriteBase /Backend/
+ 
+    RewriteCond %{REQUEST_URI} ^system.*
+    RewriteRule ^(.*)$ /Backend/index.php?/$1 [L]
+ 
+    RewriteCond %{REQUEST_URI} ^application.*
+    RewriteRule ^(.*)$ /Backend/index.php?/$1 [L]
+ 
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /Backend/index.php?/$1 [L]
+ 
+    # Rewrite exceptions
+    RewriteCond $1 !^(index\.php|css|js|img|avatares|robots\.txt)
+    RewriteRule ^(.*)$ /Backend/index.php/$1 [L]
+ </IfModule>
+ 
+<IfModule !mod_rewrite.c>
+    ErrorDocument 404 /Backend/index.php
+</IfModule>
