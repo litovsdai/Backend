@@ -63,43 +63,17 @@ class B_gallery_c extends CI_Controller {
         if ($this->simple_sessions->get_value('status')) {
             // Recojo las imágenes sin categoria asociada
             $datos['img_sin'] = $this->img_sin();
+            // Si esta contiene alguna imagen
             if ($datos['img_sin'] !== 0) {
-                $config['base_url'] = base_url() . 'backend/b_gallery_c/multi_upload';
-                $config['total_rows'] = count($datos['img_sin']);
-                $config['per_page'] = '3';
-                $config['uri_segment'] = '4';
-//                // El número de links en "digitos" que deseas antes y después del número de página seleccionado.
-//                $config['num_links'] = 2;
-//                // Rodear toda la paginación con algunas marcas
-//                $config['full_tag_open'] = '<p>';
-//                $config['full_tag_close'] = '</p>';
-//                // El texto que le gustaría que se muestre en el "primer" enlace de la izquierda.
-//                $config['first_link'] = 'Primero';
-//                $config['first_tag_open'] = '<div>';
-//                $config['first_tag_close'] = '</div>';
-//                // El texto que le gustaría que se muestre en el "último" enlace de la derecha.
-//                $config['last_link'] = 'Último';
-//                $config['last_tag_open'] = '<div>';
-//                $config['last_tag_close'] = '</div>';
-//                // El texto que le gustaría que se muestre en el enlace de página "siguiente".
-                $config['next_link'] = '&rarr;';
-//                $config['next_tag_open'] = '<div>';
-//                $config['next_tag_close'] = '</div>';
-//                // El texto que le gustaría que se muestre en el enlace de página "anterior".
-                $config['prev_link'] = '&larr;';
-//                $config['prev_tag_open'] = '<div>';
-//                $config['prev_tag_close'] = '</div>';
-//                // Personalizando el enlace "Página Actual"
-//                $config['cur_tag_open'] = '<b>';
-//                $config['cur_tag_close'] = '</b>';
-                // Personalizando el enlace "Dígito"
-//                $config['num_tag_open'] = '<div>';
-//                $config['num_tag_close'] = '</div>';
-                
+                // Cargo la configuracion de la paginacion
+                $config = $this->pagination($datos['img_sin']);
+                // Creo el array donde por porciones enviare las imágens que correspondan
                 $data['img_sin'] = array();
-
+                // Recorro el array y recojo la porcion elegida en la confguracion
                 for ($i = $start; $i < $start + $config['per_page']; $i++) {
+                    // Alamceno en data la porcion de datos
                     $data['img_sin'][] = $datos['img_sin'][$i];
+                    // Si se ha llegado al final del array me salgo con "break"
                     if ($i == count($datos['img_sin']) - 1) {
                         break;
                     }
@@ -107,42 +81,21 @@ class B_gallery_c extends CI_Controller {
 
                 $this->pagination->initialize($config);
             }
-
+            // Envio los links correspondientes a las vistas
             $data['paginacion'] = $this->pagination->create_links();
 
             // Cargo vistas
-            $this->load->view('includes/head_v');
-            $this->load->view('includes/header_v');
-            $this->load->view('includes/menu_v');
-            $this->load->view('galeria/breadcrumb_gallery');
-            $this->load->view('galeria/multi_upload_v', $data);
-            $this->load->view('galeria/img_sin_v', $data);
-            $this->load->view('includes/footer_v');
-        } else {
-            redirect('');
-        }
-    }
-
-    public function multi_upload_copia() {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
-        if ($this->simple_sessions->get_value('status')) {
-            // Recojo las imágenes sin categoria asociada
-            $data['img_sin'] = $this->img_sin();
-            if ($data['img_sin'] !== 0) {
-                $config['base_url'] = base_url() . 'backend/b_gallery_c/multi_upload';
-                $config['total_rows'] = count($data['img_sin']);
-                $config['per_page'] = '3';
-
-                $this->pagination->initialize($config);
+            if (!$this->input->post('ajax')) {
+                $this->load->view('includes/head_v');
+                $this->load->view('includes/header_v');
+                $this->load->view('includes/menu_v');
+                $this->load->view('galeria/breadcrumb_gallery');
+                $this->load->view('galeria/multi_upload_v', $data);
+                $this->load->view('galeria/img_sin_v', $data);
+                $this->load->view('includes/footer_v');
+            } else {
+                $this->load->view('galeria/img_sin_v_ajax', $data);
             }
-            // Cargo vistas
-            $this->load->view('includes/head_v');
-            $this->load->view('includes/header_v');
-            $this->load->view('includes/menu_v');
-            $this->load->view('galeria/breadcrumb_gallery');
-            $this->load->view('galeria/multi_upload_v', $data);
-            $this->load->view('galeria/img_sin_v', $data);
-            $this->load->view('includes/footer_v');
         } else {
             redirect('');
         }
@@ -152,7 +105,7 @@ class B_gallery_c extends CI_Controller {
      * Vista que carga el resultado de cuando lo pulsas a subir
      */
 
-    public function multi_upload_start() {
+    public function multi_upload_start($start = 0) {
         // Si está iniciada la SESION, mostrara las vistas de la galeria
         if ($this->simple_sessions->get_value('status')) {
             # Load library
@@ -213,11 +166,27 @@ class B_gallery_c extends CI_Controller {
             }
 
             // Recojo las imágenes sin categoria asociada
-            if ($this->gallery_m->all_images_for_category('0') === 0) {
-                $data['cero'] = '<strong>Muy bién!</strong> No hay imágenes sin categoría.';
-            } else {
-                $data['img_sin'] = $this->gallery_m->all_images_for_category('0');
+            $datos['img_sin'] = $this->img_sin();
+            // Si esta contiene alguna imagen
+            if ($datos['img_sin'] !== 0) {
+                // Cargo la configuracion de la paginacion
+                $config = $this->pagination($datos['img_sin']);
+                // Creo el array donde por porciones enviare las imágens que correspondan
+                $data['img_sin'] = array();
+                // Recorro el array y recojo la porcion elegida en la confguracion
+                for ($i = $start; $i < $start + $config['per_page']; $i++) {
+                    // Alamceno en data la porcion de datos
+                    $data['img_sin'][] = $datos['img_sin'][$i];
+                    // Si se ha llegado al final del array me salgo con "break"
+                    if ($i == count($datos['img_sin']) - 1) {
+                        break;
+                    }
+                }
+
+                $this->pagination->initialize($config);
             }
+            // Envio los links correspondientes a las vistas
+            $data['paginacion'] = $this->pagination->create_links();
             // Cargo vistas
             $this->load->view('includes/head_v');
             $this->load->view('includes/header_v');
@@ -324,6 +293,22 @@ class B_gallery_c extends CI_Controller {
             $img_sin = $this->gallery_m->all_images_for_category('0');
             return $img_sin;
         }
+    }
+
+    function pagination($array) {
+        $config['base_url'] = base_url() . 'backend/b_gallery_c/multi_upload';
+        $config['total_rows'] = count($array);
+        $config['per_page'] = '3';
+        $config['uri_segment'] = '4';
+        // El texto que le gustaría que se muestre en el "primer" enlace de la izquierda.
+        $config['first_link'] = '';
+        // El texto que le gustaría que se muestre en el "último" enlace de la derecha.
+        $config['last_link'] = '';
+        // El texto que le gustaría que se muestre en el enlace de página "siguiente".
+        $config['next_link'] = '&rarr;';
+        // El texto que le gustaría que se muestre en el enlace de página "anterior".
+        $config['prev_link'] = '&larr;';
+        return $config;
     }
 
 }

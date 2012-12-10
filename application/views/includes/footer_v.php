@@ -37,15 +37,38 @@
 <script>
     $(document).ready(function(){
  
-       $(document).ready(function() {
-			$("#object").hide();
+        $(document).ready(function() {
+            $("#object").hide();
  
-			$("#objectEvent").mouseover(function(){
-                            $("#object").fadeIn(1000);
-			}).mouseout(function(){
-				$("#object").fadeOut(2000);
-			});
-		});
+            $("#objectEvent").mouseover(function(){
+                $("#object").fadeIn(1000);
+            }).mouseout(function(){
+                $("#object").fadeOut(2000);
+            });
+        });
+                
+        $(function() {
+            applyPagination();
+
+            function applyPagination() {
+                $("#ajax_paging a").click(function() {
+                    var url = $(this).attr("href");
+                    $.ajax({
+                        type: "POST",
+                        data: "ajax=1",
+                        url: url,
+                        beforeSend: function() {
+                            $("#data").html("<img src='<?=base_url()?>img/ajax-loaders/ajax-loader-8.gif'>");
+                        },
+                        success: function(msg) {
+                            $("#data").html(msg);
+                            applyPagination();
+                        }
+                    });
+                    return false;
+                });
+            }
+        });
  
     });
 </script>

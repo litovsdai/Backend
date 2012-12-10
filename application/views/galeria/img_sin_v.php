@@ -36,6 +36,8 @@
                     }
                     ?>
                 <?php } ?>
+        
+        <div id="data">
                 <div class="box-content">
                     <ul class="dashboard-list">
                         <li>
@@ -46,14 +48,17 @@
                         </li>
                     </ul>
                 </div>
+        </data>
             <?php } ?>
         <?php } ?>
         <?php if (isset($cero)) { ?>
             <?php echo $cero; ?>
-        <?php } 
-        echo $paginacion;
-        ?>
+        <?php } ?>
+        <div id="ajax_paging">
+            <?php echo $paginacion; ?>
+        </div>
     </div>
+        
 </div><!--/span-->
 
 </div>
