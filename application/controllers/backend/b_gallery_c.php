@@ -7,6 +7,7 @@ class B_gallery_c extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->library('pagination');
         $this->load->model('gallery/gallery_m');
     }
 
@@ -61,12 +62,15 @@ class B_gallery_c extends CI_Controller {
         // Si está iniciada la SESION, mostrara las vistas de la galeria
         if ($this->simple_sessions->get_value('status')) {
             // Recojo las imágenes sin categoria asociada
-            if ($this->gallery_m->all_images_for_category('0') === 0) {
-                $data['cero'] = '<strong>Muy bién!</strong> No hay imágenes sin categoría.';
-            } else {
-                $data['img_sin'] = $this->gallery_m->all_images_for_category('0');
-            }
+            $data['img_sin'] = $this->img_sin();
+            if ($data['img_sin'] !== 0) {
+                $config['base_url'] = base_url() . 'backend/b_gallery_c/multi_upload';
+                $config['total_rows'] = count($data['img_sin']);
+                $config['per_page'] = '3';
+                
+                $this->pagination->initialize($config);
 
+            }
             // Cargo vistas
             $this->load->view('includes/head_v');
             $this->load->view('includes/header_v');
@@ -245,6 +249,17 @@ class B_gallery_c extends CI_Controller {
         $nombre_final = $nombre_sin_puntos . $extension;
         // Asigno el nuevo nombre
         return $nombre_final;
+    }
+
+    function img_sin() {
+        // Recojo las imágenes sin categoria asociada
+        if ($this->gallery_m->all_images_for_category('0') === 0) {
+            $cero = '<strong>Muy bién!</strong> No hay imágenes sin categoría.';
+            return 0;
+        } else {
+            $img_sin = $this->gallery_m->all_images_for_category('0');
+            return $img_sin;
+        }
     }
 
 }

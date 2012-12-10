@@ -50,7 +50,9 @@
         <?php } ?>
         <?php if (isset($cero)) { ?>
             <?php echo $cero; ?>
-        <?php } ?>
+        <?php } 
+        echo $this->pagination->create_links();
+        ?>
     </div>
 </div><!--/span-->
 
