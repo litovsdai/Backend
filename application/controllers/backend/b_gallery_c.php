@@ -67,12 +67,35 @@ class B_gallery_c extends CI_Controller {
                 $config['base_url'] = base_url() . 'backend/b_gallery_c/multi_upload';
                 $config['total_rows'] = count($datos['img_sin']);
                 $config['per_page'] = '3';
+                $config['uri_segment'] = '4';
+//                // El número de links en "digitos" que deseas antes y después del número de página seleccionado.
+//                $config['num_links'] = 2;
+//                // Rodear toda la paginación con algunas marcas
+//                $config['full_tag_open'] = '<p>';
+//                $config['full_tag_close'] = '</p>';
+//                // El texto que le gustaría que se muestre en el "primer" enlace de la izquierda.
 //                $config['first_link'] = 'Primero';
 //                $config['first_tag_open'] = '<div>';
 //                $config['first_tag_close'] = '</div>';
-//                $config['prev_link'] = '&larr;';
-//                $config['next_link'] = '&rarr;';
-
+//                // El texto que le gustaría que se muestre en el "último" enlace de la derecha.
+//                $config['last_link'] = 'Último';
+//                $config['last_tag_open'] = '<div>';
+//                $config['last_tag_close'] = '</div>';
+//                // El texto que le gustaría que se muestre en el enlace de página "siguiente".
+                $config['next_link'] = '&rarr;';
+//                $config['next_tag_open'] = '<div>';
+//                $config['next_tag_close'] = '</div>';
+//                // El texto que le gustaría que se muestre en el enlace de página "anterior".
+                $config['prev_link'] = '&larr;';
+//                $config['prev_tag_open'] = '<div>';
+//                $config['prev_tag_close'] = '</div>';
+//                // Personalizando el enlace "Página Actual"
+//                $config['cur_tag_open'] = '<b>';
+//                $config['cur_tag_close'] = '</b>';
+                // Personalizando el enlace "Dígito"
+//                $config['num_tag_open'] = '<div>';
+//                $config['num_tag_close'] = '</div>';
+                
                 $data['img_sin'] = array();
 
                 for ($i = $start; $i < $start + $config['per_page']; $i++) {
