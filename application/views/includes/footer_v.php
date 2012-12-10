@@ -46,6 +46,13 @@
                 $("#object").fadeOut(2000);
             });
         });
+        
+        $(document).ready(function() {
+           
+            $("#ajax").click(function(){
+                $("#o").show();
+            })
+        });
                 
         $(function() {
             applyPagination();
@@ -57,9 +64,6 @@
                         type: "POST",
                         data: "ajax=1",
                         url: url,
-                        beforeSend: function() {
-                            $("#data").html("<img src='<?=base_url()?>img/ajax-loaders/ajax-loader-8.gif'>");
-                        },
                         success: function(msg) {
                             $("#data").html(msg);
                             applyPagination();

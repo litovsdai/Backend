@@ -18,9 +18,11 @@
                 for ($i = 1; $i <= 5; $i++) {
                     ?>
                     <label for="userfile<?= $i ?>">Imagen <?= $i ?>:
-                    <input type="file" name="userfile<?= $i ?>" size="1" class="input-large" /></label>
+                        <input type="file" name="userfile<?= $i ?>" size="1" class="input-large" /></label>
                 <?php } ?> 
-                <input type="submit" class="btn btn-primary"  name="subir" value="Subir imagen/es" />
+                <img id="o" style="display: none;" src="<?= base_url() ?>img/ajax-loaders/ajax-loader-6.gif">
+                <br><br>
+                <input id="ajax" type="submit" class="btn btn-primary"  name="subir" value="Subir imagen/es" />
                 </form>
 
             </div>

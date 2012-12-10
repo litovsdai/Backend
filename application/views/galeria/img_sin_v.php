@@ -36,19 +36,20 @@
                     }
                     ?>
                 <?php } ?>
-        
-        <div id="data">
-                <div class="box-content">
-                    <ul class="dashboard-list">
-                        <li>
-                            <img class="dashboard-avatar" title="<?= $name ?>" alt="<?= $name ?>" src="<?= $ruta_thumb ?>">
-                            <strong>Nombre:</strong> <a href="#"> <?= $name ?></a><br>
-                            <strong>Fecha de subida:</strong> <a href="#"> <?= $fecha_creacion ?></a><br>
-                            <strong>Categoria:</strong> <a href="#"> <?= $padre ?></a><br>
-                        </li>
-                    </ul>
+
+                <div id="data">
+                    <div class="box-content">
+                        <ul class="dashboard-list">
+                            <li>
+                                <img class="dashboard-avatar" title="<?= $name ?>" alt="<?= $name ?>" src="<?= $ruta_thumb ?>">
+                                <strong>Nombre:</strong> <a href="#"> <?= $name ?></a><br>
+                                <strong>Fecha de subida:</strong> <a href="#"> <?= $fecha_creacion ?></a><br>
+                                <strong>Categoria:</strong> <a href="#"> <?= $padre ?></a><br>
+                            </li>
+                        </ul>
                 </div>
-        </data>
+                </data>
+                
             <?php } ?>
         <?php } ?>
         <?php if (isset($cero)) { ?>
@@ -58,7 +59,6 @@
             <?php echo $paginacion; ?>
         </div>
     </div>
-        
 </div><!--/span-->
 
 </div>

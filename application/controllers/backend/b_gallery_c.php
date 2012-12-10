@@ -80,6 +80,8 @@ class B_gallery_c extends CI_Controller {
                 }
 
                 $this->pagination->initialize($config);
+            } else {
+                $data['cero'] = '<br>Muy bién, no hay imágenes sin categoría.';
             }
             // Envio los links correspondientes a las vistas
             $data['paginacion'] = $this->pagination->create_links();
@@ -184,17 +186,23 @@ class B_gallery_c extends CI_Controller {
                 }
 
                 $this->pagination->initialize($config);
+            } else {
+                $data['cero'] = '<br>Muy bién, no hay imágenes sin categoría.';
             }
             // Envio los links correspondientes a las vistas
             $data['paginacion'] = $this->pagination->create_links();
             // Cargo vistas
-            $this->load->view('includes/head_v');
-            $this->load->view('includes/header_v');
-            $this->load->view('includes/menu_v');
-            $this->load->view('galeria/breadcrumb_gallery');
-            $this->load->view('galeria/multi_upload_v', $data);
-            $this->load->view('galeria/img_sin_v', $data);
-            $this->load->view('includes/footer_v');
+            if (!$this->input->post('ajax')) {
+                $this->load->view('includes/head_v');
+                $this->load->view('includes/header_v');
+                $this->load->view('includes/menu_v');
+                $this->load->view('galeria/breadcrumb_gallery');
+                $this->load->view('galeria/multi_upload_v', $data);
+                $this->load->view('galeria/img_sin_v', $data);
+                $this->load->view('includes/footer_v');
+            } else {
+                $this->load->view('galeria/img_sin_v_ajax', $data);
+            }
         } else {
             redirect('');
         }
