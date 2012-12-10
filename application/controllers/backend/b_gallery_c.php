@@ -58,7 +58,49 @@ class B_gallery_c extends CI_Controller {
      * Vista que carga cuando el menu se subida de imagenes
      */
 
-    public function multi_upload() {
+    public function multi_upload($start = 0) {
+        // Si está iniciada la SESION, mostrara las vistas de la galeria
+        if ($this->simple_sessions->get_value('status')) {
+            // Recojo las imágenes sin categoria asociada
+            $datos['img_sin'] = $this->img_sin();
+            if ($datos['img_sin'] !== 0) {
+                $config['base_url'] = base_url() . 'backend/b_gallery_c/multi_upload';
+                $config['total_rows'] = count($datos['img_sin']);
+                $config['per_page'] = '3';
+//                $config['first_link'] = 'Primero';
+//                $config['first_tag_open'] = '<div>';
+//                $config['first_tag_close'] = '</div>';
+//                $config['prev_link'] = '&larr;';
+//                $config['next_link'] = '&rarr;';
+
+                $data['img_sin'] = array();
+
+                for ($i = $start; $i < $start + $config['per_page']; $i++) {
+                    $data['img_sin'][] = $datos['img_sin'][$i];
+                    if ($i == count($datos['img_sin']) - 1) {
+                        break;
+                    }
+                }
+
+                $this->pagination->initialize($config);
+            }
+
+            $data['paginacion'] = $this->pagination->create_links();
+
+            // Cargo vistas
+            $this->load->view('includes/head_v');
+            $this->load->view('includes/header_v');
+            $this->load->view('includes/menu_v');
+            $this->load->view('galeria/breadcrumb_gallery');
+            $this->load->view('galeria/multi_upload_v', $data);
+            $this->load->view('galeria/img_sin_v', $data);
+            $this->load->view('includes/footer_v');
+        } else {
+            redirect('');
+        }
+    }
+
+    public function multi_upload_copia() {
         // Si está iniciada la SESION, mostrara las vistas de la galeria
         if ($this->simple_sessions->get_value('status')) {
             // Recojo las imágenes sin categoria asociada
@@ -67,9 +109,8 @@ class B_gallery_c extends CI_Controller {
                 $config['base_url'] = base_url() . 'backend/b_gallery_c/multi_upload';
                 $config['total_rows'] = count($data['img_sin']);
                 $config['per_page'] = '3';
-                
-                $this->pagination->initialize($config);
 
+                $this->pagination->initialize($config);
             }
             // Cargo vistas
             $this->load->view('includes/head_v');

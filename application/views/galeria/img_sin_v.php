@@ -51,7 +51,7 @@
         <?php if (isset($cero)) { ?>
             <?php echo $cero; ?>
         <?php } 
-        echo $this->pagination->create_links();
+        echo $paginacion;
         ?>
     </div>
 </div><!--/span-->
