@@ -83,12 +83,27 @@ class Gallery_m extends CI_Model {
         // Consulta
         $query = $this->db->query("SELECT DISTINCT padre FROM imagenes WHERE padre != '0'");
 
-
-
         if ($this->db->affected_rows() > 0) {
             $array_images = array();
             foreach ($query->result_array() as $row) {
                 $temporal = $row['padre'];
+                array_push($array_images, $temporal);
+            }
+            return $array_images;
+        } else {
+            return 0;
+        }
+    }
+    
+    public function all_categories() {
+        // Consulta
+        $this->db->from('categorias');
+        // Inserción de la QUERY
+        $query = $this->db->get();
+        if ($this->db->affected_rows() > 0) {
+            $array_images = array();
+            foreach ($query->result_array() as $row) {
+                $temporal = $row['name'];
                 array_push($array_images, $temporal);
             }
             return $array_images;
