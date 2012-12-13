@@ -22,7 +22,6 @@
     <p class="pull-left">&copy;&nbsp; 2012&nbsp;-&nbsp;<?php echo date('Y') ?> <a href="http://blogdelito.casualweb.org" target="_blank">&nbsp;Backend de Lito</a></p>
     <p class="pull-right">Powered by: <a href="http://twitter.com/soy_lito" target="_blank">Lito</a></p>
 </footer>
-
 </div><!--/.fluid-container-->
 
 <!-- external javascript
@@ -36,7 +35,7 @@
 <!-- Muestro imagen al poner el mouse sobre el input -->
 <script>
     $(document).ready(function(){
- 
+        // Boton de submit en subir imagenes
         $(document).ready(function() {
             $("#object").hide();
  
@@ -46,35 +45,107 @@
                 $("#object").fadeOut(2000);
             });
         });
-        
-        $(document).ready(function() {
-           
-            $("#ajax").click(function(){
-                $("#o").show();
-            })
+    });
+</script>  
+<script>  
+    // Ajax loader en subir imagenes
+    $(document).ready(function() {           
+        $("#ajax").click(function(){
+            $("#o").show();
         });
-                
-        $(function() {
-            applyPagination();
+    });
+</script>  
 
-            function applyPagination() {
-                $("#ajax_paging a").click(function() {
-                    var url = $(this).attr("href");
-                    $.ajax({
-                        type: "POST",
-                        data: "ajax=1",
-                        url: url,
-                        success: function(msg) {
-                            $("#data").html(msg);
-                            applyPagination();
+<script>  
+    // Paginacion JQuery
+    $(function() {
+        applyPagination();
+
+        function applyPagination() {
+            $("#ajax_paging a").click(function() {
+                var url = $(this).attr("href");
+                $.ajax({
+                    type: "POST",
+                    data: "ajax=1",
+                    url: url,
+                    success: function(msg) {
+                        $("#data").html(msg);
+                        applyPagination();
+                    }
+                });
+                return false;
+            });
+        }
+    });
+
+</script>  
+<script>  
+    // Checkear todos los checkbox
+    $(document).ready(function(){    
+        $("#activa_check").click(function() {  
+            $(".check").attr('checked', true);  
+        });  
+
+        $("#checkbox_desactivar").click(function() {  
+            $(".check").attr('checked', false);  
+        });  
+
+    });
+</script>  
+<script>   
+    // Recojo datos con Variable
+//    $(document).ready(function(){
+//        $('#comp_check').click(function(){
+//            var selectedItems= new Array();
+//            var indice=0;
+//            selectedItems+=indice+'='+$('#selectError').val()+'&';
+//            indice++;
+//            $('[name=nameCheckBox]').each(function(){
+//                if($(this).attr('checked')){                           
+//                    selectedItems+=indice+'='+ $(this).val()+'&';
+//                    indice++;
+//                }
+//            });
+//            selectedItems=selectedItems.substr(0,selectedItems.length-1);
+//            //alert(selectedItems);
+//            $.ajax({        
+//                type: "POST",
+//                url: "<?= base_url() ?>backend/b_gallery_c/asign_category",
+//                data: selectedItems,
+//                success: function(msg) {
+//                    alert(msg);
+//                }
+//            });
+//            return false;
+//        });
+//    });
+
+</script>  
+<script>  
+    // Recojo datos con Array
+            $(document).ready(function(){
+                $('#comp_check').click(function(){
+                    var selectedItems= new Array();
+                    var indice=1;
+                    $('[name=nameCheckBox]').each(function(){
+                        if($(this).attr('checked')){                           
+                            selectedItems[indice] = $(this).val();//El indice inicial cera 0
+                            indice++; //paso a incrementar el indice en 1
                         }
                     });
-                    return false;
+                    selectedItems[0]=$('#selectError').val();
+                    //alert(selectedItems);
+                    
+                    $.ajax({        
+                        type: "POST",
+                        url: "<?= base_url() ?>backend/b_gallery_c/asign_category",
+                        data: { activitiesArray : selectedItems },
+                        success: function(msg) {
+                            //alert(msg);
+                        }
+                    });
                 });
-            }
-        });
- 
-    });
+            });
 </script>
 
 <!-- transition / effect library -->

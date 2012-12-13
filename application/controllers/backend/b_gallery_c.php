@@ -222,21 +222,30 @@ class B_gallery_c extends CI_Controller {
             // Recojo las imágenes sin categoria asociada
             $data_all = $this->gallery_m->all_images_for_category('0');
             if ($data_all === '0') {
-                $data['img_sin'] = 0;
+                $data['sin'] = 0;
             } else {
                 $data['img_sin'] = $data_all;
             }
             // Recojo todas las categorias en un array 
             $data['categories'] = $this->gallery_m->all_categories();
+            // Cargo vistas
             $this->load->view('includes/head_v');
             $this->load->view('includes/header_v');
             $this->load->view('includes/menu_v');
             $this->load->view('galeria/breadcrumb_category_v');
-            $this->load->view('galeria/create_new_category_v');
             $this->load->view('galeria/asign_category_v', $data);
+            $this->load->view('galeria/create_new_category_v');
             $this->load->view('includes/footer_v');
         } else {
             redirect('');
+        }
+    }
+
+    public function asign_category() {
+
+        $data = $this->input->post('activitiesArray');
+        for ($i = 1; $i < count($data); $i++) {
+            $this->gallery_m->asign_categ($data[$i], $data[0]);
         }
     }
 

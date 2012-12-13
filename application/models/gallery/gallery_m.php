@@ -94,7 +94,7 @@ class Gallery_m extends CI_Model {
             return 0;
         }
     }
-    
+
     public function all_categories() {
         // Consulta
         $this->db->from('categorias');
@@ -134,6 +134,15 @@ class Gallery_m extends CI_Model {
         } else {
             return 0;
         }
+    }
+
+    public function asign_categ($name,$category) {
+        $dat = array(
+            'padre' => $category
+        );
+
+        $this->db->where('name', $name);
+        $this->db->update('imagenes', $dat);
     }
 
 }
