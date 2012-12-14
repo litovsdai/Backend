@@ -75,7 +75,7 @@
                 });
                 return false;
             });
-        }
+        };
     });
 
 </script>  
@@ -93,59 +93,65 @@
     });
 </script>  
 <script>   
-    // Recojo datos con Variable
-//    $(document).ready(function(){
-//        $('#comp_check').click(function(){
-//            var selectedItems= new Array();
-//            var indice=0;
-//            selectedItems+=indice+'='+$('#selectError').val()+'&';
-//            indice++;
-//            $('[name=nameCheckBox]').each(function(){
-//                if($(this).attr('checked')){                           
-//                    selectedItems+=indice+'='+ $(this).val()+'&';
-//                    indice++;
-//                }
-//            });
-//            selectedItems=selectedItems.substr(0,selectedItems.length-1);
-//            //alert(selectedItems);
-//            $.ajax({        
-//                type: "POST",
-//                url: "<?= base_url() ?>backend/b_gallery_c/asign_category",
-//                data: selectedItems,
-//                success: function(msg) {
-//                    alert(msg);
-//                }
-//            });
-//            return false;
-//        });
-//    });
-
+    $(document).ready(function() { 
+ 
+        $('#myForm').click(function(){ //en el evento submit del fomulario
+            //event.preventDefault();  //detenemos el comportamiento por default
+ 
+            var datos = $('input#n_cat').val();  //la url del action del formulario
+            $('#n_cat').val('');
+            $.ajax({
+                type: 'POST',
+                url: "<?= base_url() ?>backend/b_gallery_c/new_category",
+                data: {name:datos},
+                beforeSend: mostrarLoader, //funciones que definimos más abajo
+                success: mostrarRespuesta  //funciones que definimos más abajo
+            }); 
+            return false;
+        });	
+    });
+ 
+    function mostrarLoader(){
+        $('#img_new_cat').fadeIn("slow"); //muestro el loader de ajax
+    };
+    function mostrarRespuesta (responseText){
+        //alert("Mensaje enviado: "+responseText);  //responseText es lo que devuelve la página contacto.php. Si en contacto.php hacemos echo "Hola" , la variable responseText = "Hola" . Aca hago un alert con el valor de response text
+        $("#img_new_cat").fadeOut("slow"); // Hago desaparecer el loader de ajax
+        $("#resp_new_cat").html(responseText); // Aca utilizo la función append de JQuery para añadir el responseText  dentro del div "ajax_loader"
+    };
 </script>  
 <script>  
     // Recojo datos con Array
-            $(document).ready(function(){
-                $('#comp_check').click(function(){
-                    var selectedItems= new Array();
-                    var indice=1;
-                    $('[name=nameCheckBox]').each(function(){
-                        if($(this).attr('checked')){                           
-                            selectedItems[indice] = $(this).val();//El indice inicial cera 0
-                            indice++; //paso a incrementar el indice en 1
-                        }
-                    });
-                    selectedItems[0]=$('#selectError').val();
-                    //alert(selectedItems);
-                    
-                    $.ajax({        
-                        type: "POST",
-                        url: "<?= base_url() ?>backend/b_gallery_c/asign_category",
-                        data: { activitiesArray : selectedItems },
-                        success: function(msg) {
-                            //alert(msg);
-                        }
-                    });
-                });
+    $(document).ready(function(){
+        $('.comp_check').click(function(){
+            var selectedItems= new Array();
+            var indice=1;
+            $('[name=nameCheckBox]').each(function(){
+                if($(this).attr('checked')){                           
+                    selectedItems[indice] = $(this).val();//El indice inicial cera 0
+                    indice++; //paso a incrementar el indice en 1
+                }
             });
+            selectedItems[0]=$('.selectError').val();
+            //alert(selectedItems);
+                    
+            $.ajax({        
+                type: "POST",
+                url: "<?= base_url() ?>backend/b_gallery_c/asign_category",
+                data: { activitiesArray : selectedItems },
+                beforeSend: mostrarLoader,
+                success: function(msg) {//resp_cat
+                    $('.resp_asig').fadeOut("slow");
+                    $('.resp_cat').html(msg);
+                }
+            });
+            return false;
+        });
+        function mostrarLoader(){
+            $('.resp_asig').fadeIn("slow"); //muestro el loader de ajax
+        };
+    });
+    
 </script>
 
 <!-- transition / effect library -->

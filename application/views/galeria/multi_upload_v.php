@@ -2,7 +2,7 @@
 <div class="row-fluid sortable">
     <div class="box span5">
         <div class="box-header well" data-original-title>
-            <h2><i class="icon-camera"></i> Subir imágenes</h2>
+            <h2><i class="icon-camera"></i> Seleccione imágenes</h2>
             <div class="box-icon">
                 <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
                 <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
@@ -54,6 +54,12 @@
                         <?php } ?>
                     </ul>
                 </div>
+            <?php } ?>
+            <?php if (isset($err_145X100)) { ?>
+                <?php print_r($err_145X100) ?>
+            <?php } ?>
+            <?php if (isset($err_800X600)) { ?>
+                <?php print_r($err_800X600) ?>
             <?php } ?>
         </div>                   
     </div>

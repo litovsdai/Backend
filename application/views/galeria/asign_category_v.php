@@ -2,16 +2,24 @@
 <div class="row-fluid sortable">
     <div class="box span8">
         <div class="box-header well" data-original-title>
-            <h2><i class="icon-picture"></i> Asignar categorías</h2>
+            <h2><i class="icon-th-list"></i> Asignar categorías</h2>
             <div class="box-icon">
                 <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
                 <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
             </div>
         </div>
-        <div class="box-content">  
-            <div class="tooltip-demo well">
-                <p class="muted" style="margin-bottom: 0;">
-                    <i class="icon-warning-sign"></i>&nbsp;&nbsp;Ponga a 
+        <div class="box-content"> 
+
+            <p class="muted" style="margin-bottom: 0;">
+            <div class="alert alert-block ">
+                <button class="close" data-dismiss="alert" type="button">
+                    ×
+                </button>                
+                <h4 class="alert-heading">
+                    <i class="icon-exclamation-sign"></i>&nbsp;Atención!
+                </h4>
+                <p>
+                    Ponga a 
                     <a href="#" data-rel="tooltip" data-original-title="Sólo las imágenes a las que le desee asignarles categoría">
                         ON
                     </a> 
@@ -21,13 +29,16 @@
                     </a> 
                     las imágenes que no desee asignarles categoría.
                 </p>
+
             </div>
 
             <form method="POST">
+                <div class="resp_cat">
+                </div>
                 <div class="control-group">                    
                     <div class="controls">
                         <h3>Selecciona categoría</h3><br>
-                        <select id="selectError" name="catgeroy" data-rel="chosen">
+                        <select class="selectError" name="catgeroy" data-rel="chosen">
                             <?php if (isset($categories) && $categories !== 0) { ?>
                                 <?php for ($i = 0; $i < count($categories); $i++) { ?>
                                     <option><?= $categories[$i] ?></option>   
@@ -35,10 +46,14 @@
                             <?php } else { ?>
                                 <option>No hay categorías</option>
                             <?php } ?>
-                        </select>
-                        <button class="btn btn-large btn-primary" id="comp_check" style="margin: -2% 20% 0 3%;">
+                        </select>                       
+                        <a class="btn btn-small btn-primary comp_check" style="margin: -3% 2% 0 3%;">
                             Asignar categorías
-                        </button>
+                        </a>
+                        <a href="<?= base_url() ?>backend/b_gallery_c/category" style="margin: -3% 2% 0 0;" class="btn btn-small">
+                            <i class="icon-refresh"></i>&nbsp;Actualizar cambios
+                        </a>  
+                        <img class="resp_asig" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="margin: -3% 2% 0 3%;display:none;">
                     </div>
                 </div>
                 <br>
@@ -76,6 +91,31 @@
                         <?php
                     }
                     echo '</ul>';
+                    ?>
+<!--                    <div class="control-group">                    
+                        <div class="controls">
+                            <h3>Selecciona categoría</h3><br>
+                            <select class="selectError" name="catgeroy" data-rel="chosen">
+                                <?php if (isset($categories) && $categories !== 0) { ?>
+                                    <?php for ($i = 0; $i < count($categories); $i++) { ?>
+                                        <option><?= $categories[$i] ?></option>   
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <option>No hay categorías</option>
+                                <?php } ?>
+                            </select>                       
+                            <a class="btn btn-small btn-primary comp_check" style="margin: -3% 2% 0 3%;">
+                                Asignar categorías
+                            </a>
+                            <a href="<?= base_url() ?>backend/b_gallery_c/category" style="margin: -3% 2% 0 0;" class="btn btn-small">
+                                <i class="icon-refresh"></i>&nbsp;Actualizar cambios
+                            </a>  
+                            <img class="resp_asig" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="margin: -3% 2% 0 3%;display:none;">
+                        </div>
+                    </div>
+                    <div class="resp_cat">
+                    </div>-->
+                    <?php
                 } else {
                     echo '<p style="color:red;text-align: center;">Muy bién! todas las imágenes se encuentran con categorías asociadas.</p>';
                 }

@@ -8,6 +8,7 @@ class B_gallery_c extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->library('pagination');
+        $this->load->library('image_lib');
         $this->load->model('gallery/gallery_m');
     }
 
@@ -105,15 +106,9 @@ class B_gallery_c extends CI_Controller {
         }
     }
 
-    /*
-     * Vista que carga el resultado de cuando lo pulsas a subir
-     */
-
     public function multi_upload_start($start = 0) {
         // Si está iniciada la SESION, mostrara las vistas de la galeria
         if ($this->simple_sessions->get_value('status')) {
-            # Load library
-            $this->load->library('image_lib');
             # Recorro todos los FILES que se hallan seleccionado
             for ($i = 1; $i <= count($_FILES); $i++) {
                 $campo_temp = 'userfile' . $i;
@@ -137,9 +132,7 @@ class B_gallery_c extends CI_Controller {
                         // Recojo los errores
                         $data['error'][$i] = array('error' => $this->upload->display_errors());
                         $data['error'][$i]['error'] = $name . $data['error'][$i]['error'];
-                    } else {// En caso contrario
-                        // Recojo los success
-                        $data['success'][$i] = array('upload_data' => $this->upload->data());
+                    } else {// En caso contrario                        
                         /* Redimensiono la imagen
                          * 800 X 600
                          */
@@ -156,19 +149,19 @@ class B_gallery_c extends CI_Controller {
                                 $data['ruta2'] = base_url() . 'img/gallery/145X100/' . $name;
                                 // Si la insercion es satisfactoria sigo adelante, si no ya existia a img
                                 $this->gallery_m->add_images($data);
-
                                 // Elimino la imagen subida a que no vale y pesa demasiado para lo que quiero hacer con ella
                                 @unlink('./img/gallery/' . $name);
+                                // Recojo los success
+                                $data['success'][$i] = array('upload_data' => $this->upload->data());
                             } else {
-                                $data['err_145X100'][$i] = $name;
+                                $data['err_145X100'][$i] = 'Error en transformación 145X100 en imagen ' . $name;
                             }
                         } else {
-                            $data['err_800X600'][$i] = $name;
+                            $data['err_800X600'][$i] = 'Error en transformación 800X600 en imagen ' . $name;
                         }
                     }
                 }
             }
-
             // Recojo las imágenes sin categoria asociada
             $datos['img_sin'] = $this->img_sin();
             // Si esta contiene alguna imagen
@@ -193,6 +186,7 @@ class B_gallery_c extends CI_Controller {
             }
             // Envio los links correspondientes a las vistas
             $data['paginacion'] = $this->pagination->create_links();
+
             // Cargo vistas
             if (!$this->input->post('ajax')) {
                 $this->load->view('includes/head_v');
@@ -241,11 +235,52 @@ class B_gallery_c extends CI_Controller {
         }
     }
 
-    public function asign_category() {
+    public function new_category() {
+        // Si está iniciada la SESION, mostrara las vistas de la galeria
+        if ($this->simple_sessions->get_value('status')) {
+            sleep(1);
+            $data = array('name' => $this->input->post('name'));
+            $result = $this->gallery_m->set_category($data);
+            if($result){
+                echo '<div class="alert alert-success">Categoría almacenada satisfactoriamente.</div>';
+            }else if(!$result){
+                echo '<div class="alert alert-error"><b>Error</b> al insertar los datos en la base de datos.</div>';
+            }else{
+                echo '<div class="alert alert-error">La categoría '.$result.' ya existe en la base de datos.</div>';
+            }
+        } else {
+            redirect('');
+        }
+    }
 
-        $data = $this->input->post('activitiesArray');
-        for ($i = 1; $i < count($data); $i++) {
-            $this->gallery_m->asign_categ($data[$i], $data[0]);
+    public function asign_category() {
+        // Si está iniciada la SESION, mostrara las vistas de la galeria
+        if ($this->simple_sessions->get_value('status')) {
+            sleep(1);
+            $data = $this->input->post('activitiesArray');
+            if (count($data) > 1 && $data[0] !== 'No hay categorías' && !empty($data[0])) {
+                for ($i = 1; $i < count($data); $i++) {
+                    $result = $this->gallery_m->asign_categ($data[$i], $data[0]);
+                    if ($result !== TRUE) {
+                        $errores[] = 'Error al asignar categoría a la imagen ' . $result . '.';
+                    }
+                }
+                if (isset($errores) && count($errores) > 0) {
+                    $err = '';
+                    $err+= '<div class="alert alert-error">';
+                    for ($j = 0; $j < count($errores); $j++) {
+                        $err+= $errores[$j] . '<br>';
+                    }
+                    $err+='</div>';
+                    if ($err !== 0) {
+                        echo $err;
+                    }
+                } else {
+                    echo '<div class="alert alert-success">Imágen/es asignada/s a la categoría <b>' . $data[0] . '</b> satisfactoriamente.</div>';
+                }
+            }
+        } else {
+            redirect('');
         }
     }
 
@@ -291,28 +326,13 @@ class B_gallery_c extends CI_Controller {
         $this->image_lib->initialize($config);
         // Si NO es satisfactorio
         if (!$this->image_lib->resize()) {
+            echo $this->image_lib->display_errors();
             // Por si a caso elimino los directorios creados
             @unlink('./img/gallery/' . $name);
             @unlink('./img/gallery/' . $width . 'X' . $heigth . '/' . $name);
             return FALSE;
         }
         return TRUE;
-    }
-
-    function img_x_cat() {
-        // Recojo las imágenes sin categoria asociada
-        if ($this->gallery_m->all_images_for_category('0') === 0) {
-            $data['cero'] = '<strong>No hay imágenes.</strong>';
-        } else {
-            $data['img_sin'] = $this->gallery_m->all_images_for_category('0');
-        }
-
-        // Recojo todas las categorias en un array 
-        $data['categories'] = $this->gallery_m->all_category();
-        // Creo un array asociativo con los nombres de las categorias y con todas sus imagenes asociadas
-        foreach ($data['categories'] as $value) {
-            echo $value;
-        }
     }
 
     function elimina_puntos_espacios($nombre_temp) {

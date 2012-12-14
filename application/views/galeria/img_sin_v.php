@@ -8,7 +8,7 @@
     </div>
     <div class="box-content">        
         <i class="icon-share-alt"></i>
-        <?= anchor('backend/b_gallery_c', 'Asignar categorías a estas imágenes.', array('title' => 'Asignales categorías a la imágenes')) ?>
+        <?= anchor('backend/b_gallery_c/category', 'Asignar categorías a estas imágenes.', array('title' => 'Asignales categorías a la imágenes')) ?>
         <br>
         <?php if (isset($img_sin) && !empty($img_sin)) { ?>
             <?php

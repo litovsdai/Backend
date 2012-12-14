@@ -136,13 +136,31 @@ class Gallery_m extends CI_Model {
         }
     }
 
-    public function asign_categ($name,$category) {
+    public function asign_categ($name, $category) {
         $dat = array(
             'padre' => $category
         );
 
         $this->db->where('name', $name);
         $this->db->update('imagenes', $dat);
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        }
+        return $name;
+    }
+
+    public function set_category($data) {
+        $consulta = $this->db->get_where('categorias', array('name' => $data['name']));
+        if ($consulta->num_rows() === 0) {
+            $this->db->insert('categorias', $data);
+            if ($this->db->affected_rows() > 0) {
+                return TRUE;
+            } else if ($this->db->affected_rows() === 1) {
+                return FALSE;
+            }
+        } else {
+            return $data['name'];
+        }
     }
 
 }
