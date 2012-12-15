@@ -30,6 +30,12 @@ class Gallery_m extends CI_Model {
         @unlink('./img/gallery/' . '145X100/' . $name);
         $this->db->delete('imagenes', array('name' => $name));
     }
+    
+    public function remove_cat($name) {
+        @unlink('./img/gallery/' . '800X600/' . $name);
+        @unlink('./img/gallery/' . '145X100/' . $name);
+        $this->db->delete('categorias', array('name' => $name));
+    }
 
     public function get_last_pic() {
         $query = $this->db->query(
@@ -162,6 +168,30 @@ class Gallery_m extends CI_Model {
             return $data['name'];
         }
     }
+
+    public function list_img_for_cat($padre) {
+        // Consulta
+        $this->db->from('imagenes');
+        $this->db->where('padre', $padre);
+        // Inserción de la QUERY
+        $query = $this->db->get();
+        if ($this->db->affected_rows() > 0) {
+            $array_images = array();
+
+            foreach ($query->result_array() as $row) {
+                $temporal = array(
+                    'name' => $row['name'],
+                    'ruta' => $row['ruta'],
+                    'ruta_thumb' => $row['ruta_thumb']
+                );
+                array_push($array_images, $temporal);
+            }
+            return $array_images;
+        } else {
+            return 0;
+        }
+    }
+    
 
 }
 

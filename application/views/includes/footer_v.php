@@ -31,129 +31,6 @@
 <script src="<?= base_url() ?>js/jquery-1.7.2.min.js"></script>
 <!-- jQuery UI -->
 <script src="<?= base_url() ?>js/jquery-ui-1.8.21.custom.min.js"></script>
-
-<!-- Muestro imagen al poner el mouse sobre el input -->
-<script>
-    $(document).ready(function(){
-        // Boton de submit en subir imagenes
-        $(document).ready(function() {
-            $("#object").hide();
- 
-            $("#objectEvent").mouseover(function(){
-                $("#object").fadeIn(1000);
-            }).mouseout(function(){
-                $("#object").fadeOut(2000);
-            });
-        });
-    });
-</script>  
-<script>  
-    // Ajax loader en subir imagenes
-    $(document).ready(function() {           
-        $("#ajax").click(function(){
-            $("#o").show();
-        });
-    });
-</script>  
-
-<script>  
-    // Paginacion JQuery
-    $(function() {
-        applyPagination();
-
-        function applyPagination() {
-            $("#ajax_paging a").click(function() {
-                var url = $(this).attr("href");
-                $.ajax({
-                    type: "POST",
-                    data: "ajax=1",
-                    url: url,
-                    success: function(msg) {
-                        $("#data").html(msg);
-                        applyPagination();
-                    }
-                });
-                return false;
-            });
-        };
-    });
-
-</script>  
-<script>  
-    // Checkear todos los checkbox
-    $(document).ready(function(){    
-        $("#activa_check").click(function() {  
-            $(".check").attr('checked', true);  
-        });  
-
-        $("#checkbox_desactivar").click(function() {  
-            $(".check").attr('checked', false);  
-        });  
-
-    });
-</script>  
-<script>   
-    $(document).ready(function() { 
- 
-        $('#myForm').click(function(){ //en el evento submit del fomulario
-            //event.preventDefault();  //detenemos el comportamiento por default
- 
-            var datos = $('input#n_cat').val();  //la url del action del formulario
-            $('#n_cat').val('');
-            $.ajax({
-                type: 'POST',
-                url: "<?= base_url() ?>backend/b_gallery_c/new_category",
-                data: {name:datos},
-                beforeSend: mostrarLoader, //funciones que definimos más abajo
-                success: mostrarRespuesta  //funciones que definimos más abajo
-            }); 
-            return false;
-        });	
-    });
- 
-    function mostrarLoader(){
-        $('#img_new_cat').fadeIn("slow"); //muestro el loader de ajax
-    };
-    function mostrarRespuesta (responseText){
-        //alert("Mensaje enviado: "+responseText);  //responseText es lo que devuelve la página contacto.php. Si en contacto.php hacemos echo "Hola" , la variable responseText = "Hola" . Aca hago un alert con el valor de response text
-        $("#img_new_cat").fadeOut("slow"); // Hago desaparecer el loader de ajax
-        $("#resp_new_cat").html(responseText); // Aca utilizo la función append de JQuery para añadir el responseText  dentro del div "ajax_loader"
-    };
-</script>  
-<script>  
-    // Recojo datos con Array
-    $(document).ready(function(){
-        $('.comp_check').click(function(){
-            var selectedItems= new Array();
-            var indice=1;
-            $('[name=nameCheckBox]').each(function(){
-                if($(this).attr('checked')){                           
-                    selectedItems[indice] = $(this).val();//El indice inicial cera 0
-                    indice++; //paso a incrementar el indice en 1
-                }
-            });
-            selectedItems[0]=$('.selectError').val();
-            //alert(selectedItems);
-                    
-            $.ajax({        
-                type: "POST",
-                url: "<?= base_url() ?>backend/b_gallery_c/asign_category",
-                data: { activitiesArray : selectedItems },
-                beforeSend: mostrarLoader,
-                success: function(msg) {//resp_cat
-                    $('.resp_asig').fadeOut("slow");
-                    $('.resp_cat').html(msg);
-                }
-            });
-            return false;
-        });
-        function mostrarLoader(){
-            $('.resp_asig').fadeIn("slow"); //muestro el loader de ajax
-        };
-    });
-    
-</script>
-
 <!-- transition / effect library -->
 <script src="<?= base_url() ?>js/bootstrap-transition.js"></script>
 <!-- alert enhancer library -->
@@ -186,7 +63,6 @@
 <script src='<?= base_url() ?>js/fullcalendar.min.js'></script>
 <!-- data table plugin -->
 <script src='<?= base_url() ?>js/jquery.dataTables.min.js'></script>
-
 <!-- chart libraries start -->
 <script src="<?= base_url() ?>js/excanvas.js"></script>
 <script src="<?= base_url() ?>js/jquery.flot.min.js"></script>
@@ -194,7 +70,6 @@
 <script src="<?= base_url() ?>js/jquery.flot.stack.js"></script>
 <script src="<?= base_url() ?>js/jquery.flot.resize.min.js"></script>
 <!-- chart libraries end -->
-
 <!-- select or dropdown enhancer -->
 <script src="<?= base_url() ?>js/jquery.chosen.min.js"></script>
 <!-- checkbox, radio, and file input styler -->
@@ -220,6 +95,188 @@
 <!-- application script for Charisma demo -->
 <script src="<?= base_url() ?>js/charisma.js"></script>
 
+<!-- Muestro imagen al poner el mouse sobre el input -->
+<script>
+    $(document).ready(function(){
+        // Boton de submit en subir imagenes
+        $(document).ready(function() {
+            $("#object").hide();
+ 
+            $("#objectEvent").mouseover(function(){
+                $("#object").fadeIn(1000);
+            }).mouseout(function(){
+                $("#object").fadeOut(2000);
+            });
+        });
+    });
+</script>  
+<script>  
+    // Ajax loader en subir imagenes
+    $(document).ready(function() {           
+        $("#ajax").click(function(){
+            $("#o").show();
+        });
+    });
+</script>  
+
+<script>  
+    // Paginacion JQuery
+    $(function() {
+        applyPagination();
+        function applyPagination() {
+            $("#ajax_paging a").click(function() {
+                var url = $(this).attr("href");
+                $.ajax({
+                    type: "POST",
+                    data: "ajax=1",
+                    url: url,
+                    success: function(msg) {
+                        $("#data").html(msg);
+                        applyPagination();
+                    }
+                });
+                return false;
+            });
+        };
+    });
+
+</script>  
+<script>  
+    // Checkear todos los checkbox
+    $(document).ready(function(){    
+        $("#activa_check").click(function() {  
+            $(".check").attr('checked', true);  
+        });  
+
+        $("#checkbox_desactivar").click(function() {  
+            $(".check").attr('checked', false);  
+        });  
+
+    });
+</script>  
+<!-- -->
+<script>   
+    // Nueva categoria
+    $(document).ready(function() {  
+        $('#myForm').click(function(){ //en el evento submit del fomulario
+            //event.preventDefault();  //detenemos el comportamiento por default 
+            var datos = $('input#n_cat').val();  //la url del action del formulario
+            $('#n_cat').val('');
+            $.ajax({
+                type: 'POST',
+                url: "<?= base_url() ?>backend/b_gallery_c/new_category",
+                data: {name:datos},
+                beforeSend: mostrarLoader, //funciones que definimos más abajo
+                success: function(responseText){
+                    //alert("Mensaje enviado: "+responseText);  //responseText es lo que devuelve la página contacto.php. Si en contacto.php hacemos echo "Hola" , la variable responseText = "Hola" . Aca hago un alert con el valor de response text
+                    $("#img_new_cat").fadeOut("slow"); // Hago desaparecer el loader de ajax
+                    $("#resp_new_cat").html(responseText); // Aca utilizo la función append de JQuery para añadir el responseText  dentro del div "ajax_loader"
+                    setInterval(function(){
+                        location.reload();
+                    }, 3000);
+                }            
+            }); 
+            return false;
+        });	
+    });
+ 
+    function mostrarLoader(){
+        $('#img_new_cat').fadeIn("slow"); //muestro el loader de ajax
+    };
+    function mostrarRespuesta (responseText){
+        //alert("Mensaje enviado: "+responseText);  //responseText es lo que devuelve la página contacto.php. Si en contacto.php hacemos echo "Hola" , la variable responseText = "Hola" . Aca hago un alert con el valor de response text
+        $("#img_new_cat").fadeOut("slow"); // Hago desaparecer el loader de ajax
+        $("#resp_new_cat").html(responseText); // Aca utilizo la función append de JQuery para añadir el responseText  dentro del div "ajax_loader"
+    };
+</script>  
+<script>
+    // Devanece el mensaje informativo 
+    //    $(document).ready(function(){
+    //        setInterval(function(){
+    //            // $('#delete').css("display", "none");
+    //            $('#delete').delay(400);
+    //            $('#delete').fadeOut(2500, function () {
+    //                $('#delete').remove().fadeOut(15000);
+    //            })
+    //            
+    //        }, 20000);
+    //    });
+</script>
+<script>  
+    // Asigna categorias a las imagenes seleccionadas
+    $(document).ready(function(){
+        $('.comp_check').click(function(){
+            var selectedItems= new Array();
+            var indice=1;
+            $('[name=nameCheckBox]').each(function(){
+                if($(this).attr('checked')){                           
+                    selectedItems[indice] = $(this).val();//El indice inicial cera 0
+                    indice++; //paso a incrementar el indice en 1
+                }
+            });
+            selectedItems[0]=$('.selectError').val();
+            //alert(selectedItems);
+                    
+            $.ajax({        
+                type: "POST",
+                url: "<?= base_url() ?>backend/b_gallery_c/asign_category",
+                data: { activitiesArray : selectedItems },
+                beforeSend: mostrarLoader,
+                success: function(msg) {//resp_cat
+                    $('.resp_asig').fadeOut("slow");
+                    $('.resp_cat').html(msg);
+                    setInterval(function(){
+                        location.reload();
+                    }, 3000);
+                    //                    $.ajax({        
+                    //                        type: "POST",
+                    //                        url: "<?= base_url() ?>backend/b_gallery_c/refresh",
+                    //                        data: 'ajax=1',
+                    //                        //beforeSend: mostrarLoader,
+                    //                        success: function(msg) {//resp_cat
+                    //                            location.reload();
+                    //                    
+                    //                        }
+                    //                    });
+                }
+            });
+            return false;
+        });
+        function mostrarLoader(){
+            $('.resp_asig').fadeIn("slow"); //muestro el loader de ajax
+        };
+    });
+    
+</script>
+<script>
+    // Recojo las categorias a eliminar
+    $(document).ready(function(){
+        $('#submit_delete').click(function(){
+            var selectedItems= new Array();
+            var indice=0;
+            $("#sel :selected").each(function(){
+                selectedItems[indice]=$(this).attr('value');
+                indice++;
+            });
+            //alert(selectedItems);
+                    
+            $.ajax({        
+                type: "POST",
+                url: "<?= base_url() ?>backend/b_gallery_c/delete_category",
+                data: { activitiesArray : selectedItems },
+                beforeSend: mostrarLoader,
+                success: function(msg) {//resp_cat
+                    $('#img_del').fadeOut("slow");
+                    $('#resp_del').html(msg);
+                }
+            });
+            return false;
+        });
+        function mostrarLoader(){
+            $('#img_del').fadeIn("slow"); //muestro el loader de ajax
+        };
+    });
+</script>
 
 </body>
 </html>
