@@ -173,7 +173,7 @@
                     $("#resp_new_cat").html(responseText); // Aca utilizo la función append de JQuery para añadir el responseText  dentro del div "ajax_loader"
                     setInterval(function(){
                         location.reload();
-                    }, 3000);
+                    }, 2000);
                 }            
             }); 
             return false;
@@ -227,17 +227,7 @@
                     $('.resp_cat').html(msg);
                     setInterval(function(){
                         location.reload();
-                    }, 3000);
-                    //                    $.ajax({        
-                    //                        type: "POST",
-                    //                        url: "<?= base_url() ?>backend/b_gallery_c/refresh",
-                    //                        data: 'ajax=1',
-                    //                        //beforeSend: mostrarLoader,
-                    //                        success: function(msg) {//resp_cat
-                    //                            location.reload();
-                    //                    
-                    //                        }
-                    //                    });
+                    }, 2000);
                 }
             });
             return false;
@@ -268,6 +258,9 @@
                 success: function(msg) {//resp_cat
                     $('#img_del').fadeOut("slow");
                     $('#resp_del').html(msg);
+                    setInterval(function(){
+                        location.reload();
+                    }, 2000);
                 }
             });
             return false;
@@ -277,6 +270,37 @@
         };
     });
 </script>
-
+<script>
+    // Recojo las categorias a eliminar
+    $(document).ready(function(){
+        $('.submit_delete_img').click(function(){
+            var selectedItems= new Array();
+            var indice=0;
+            $('[name=nameCheckBox]').each(function(){
+                if($(this).attr('checked')){                           
+                    selectedItems[indice] = $(this).val();//El indice inicial cera 0
+                    indice++; //paso a incrementar el indice en 1
+                }
+            });
+            //alert(selectedItems);
+                    
+            $.ajax({        
+                type: "POST",
+                url: "<?= base_url() ?>backend/b_gallery_c/delete_image",
+                data: { activitiesArray : selectedItems },
+                beforeSend:function() { $('.ajax_load').fadeIn("slow")},
+                success: function(msg) {//resp_cat
+                    //alert(msg);
+                    $('.ajax_load').fadeOut("slow");
+                    $('.resp_del_img').html(msg);
+                    setInterval(function(){
+                        location.reload();
+                    }, 2000);
+                }
+            });
+            return false;
+        });
+    });
+</script>
 </body>
 </html>

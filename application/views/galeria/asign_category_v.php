@@ -45,6 +45,7 @@
                         <img class="resp_asig" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="margin: -3% 2% 0 3%;display:none;">
 
                     </div>
+                    <br>
                     <div class="resp_cat">
                     </div>
                 </div> 

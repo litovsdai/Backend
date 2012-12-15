@@ -10,6 +10,11 @@
         <div class="box-content">
             <p class="center">
                 <button id="toggle-fullscreen" class="btn btn-large btn-primary visible-desktop" data-toggle="button">Cambiar a pantalla completa</button>
+                <br><br>
+                <button  class="submit_delete_img btn btn-small btn-warning" >Eliminar imágenes que estén en ON</button>
+                <br>
+                <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="margin: 0 2% 0 3%;display:none;">
+            <div class="resp_del_img" style="position: absolute;"></div>
             </p>
             <br/>              
             <?php
@@ -40,7 +45,8 @@
                         <li class="thumbnail">
                             <a class="visor" style="background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
                                 <img class="grayscale" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
-                            </a>
+                            </a>                            
+                            <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" type="checkbox" >
                         </li>
                         <?php
                     }
@@ -51,8 +57,8 @@
             }
 
             if (isset($img_sin) && $img_sin !== 0) {
-                    echo '<h3>Imágenes sin categoría</h3>';
-                    echo '<ul class="thumbnails gallery">';
+                echo '<h3>Imágenes sin categoría</h3>';
+                echo '<ul class="thumbnails gallery">';
                 foreach ($img_sin as $array) {
                     foreach ($array as $key => $valor) {
                         //echo $key . ' ' . $valor . '<br>';
@@ -68,15 +74,16 @@
                         if ($key === 'padre') {
                             $padre = $valor;
                         }
-                        if(isset($padre) && $padre==='0'){
-                            $padre='Sin categoría';
+                        if (isset($padre) && $padre === '0') {
+                            $padre = 'Sin categoría';
                         }
                     }
                     ?>
                     <li class="thumbnail">
-                        <a class="visor" style="background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
-                            <img class="grayscale" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
+                        <a style="margin-bottom: 2%;" class="visor" style="background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
+                            <img class="grayscale img_delete" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
                         </a>
+                        <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" type="checkbox" >
                     </li>
                     <?php
                 }
@@ -84,6 +91,15 @@
             }
             ?>
             </ul>
+            <br>
+            <div class="resp_del_img" style="position: absolute;"></div>
+            <p class="center">              
+                <button class="submit_delete_img btn btn-small btn-warning" >Eliminar imágenes que estén en ON</button>
+                <br>
+                <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="margin: 0 2% 0 3%;display:none;">
+
+            </p>
+            <br/>   
         </div>
     </div><!--/span-->
 
