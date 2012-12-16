@@ -313,7 +313,7 @@ class B_gallery_c extends CI_Controller {
                     if (count($val) > 0 && !empty($val)) {
                         foreach ($val as $datos) {
                             foreach ($datos as $key => $value) {
-                                echo $key . ':' . $value . '<br>';
+                                //echo $key . ':' . $value . '<br>';
                                 if ($key === 'name') {
                                     $this->gallery_m->remove_picture($value);
                                 }
