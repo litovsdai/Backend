@@ -168,12 +168,11 @@
                 data: {name:datos},
                 beforeSend: mostrarLoader, //funciones que definimos más abajo
                 success: function(responseText){
-                    //alert("Mensaje enviado: "+responseText);  //responseText es lo que devuelve la página contacto.php. Si en contacto.php hacemos echo "Hola" , la variable responseText = "Hola" . Aca hago un alert con el valor de response text
+                    $("#refresh_delete").load("<?= base_url() ?>backend/b_gallery_c/refresh_delete");
+                    $("#refresh_list").load("<?= base_url() ?>backend/b_gallery_c/refresh_list");
                     $("#img_new_cat").fadeOut("slow"); // Hago desaparecer el loader de ajax
                     $("#resp_new_cat").html(responseText); // Aca utilizo la función append de JQuery para añadir el responseText  dentro del div "ajax_loader"
-                    setInterval(function(){
-                        location.reload();
-                    }, 2000);
+                    
                 }            
             }); 
             return false;
@@ -204,8 +203,8 @@
 </script>
 <script>  
     // Asigna categorias a las imagenes seleccionadas
-    $(document).live('ready',function(){
-        $('.comp_check').click(function(){
+    $(document).ready(function(){
+        $('.comp_check').live("click",function(){
             var selectedItems= new Array();
             var indice=1;
             $('[name=nameCheckBox]').each(function(){
@@ -224,12 +223,12 @@
                 data: { activitiesArray : selectedItems },
                 beforeSend: mostrarLoader,
                 success: function(msg) {//resp_cat
+                    $("#containerdiv").load("<?= base_url() ?>backend/b_gallery_c/refresh_div"); 
                     $('.resp_asig').fadeOut("slow");
-                    $('.resp_cat').html(msg);
-                    $("#containerdiv").load("<?= base_url() ?>backend/b_gallery_c/refresh_div");
-                   
+                    $('.resp_cat').html(msg);                  
                 }
-            });return  false;
+            });
+            return  false;
         });
         function mostrarLoader(){
             $('.resp_asig').fadeIn("slow"); //muestro el loader de ajax
@@ -237,6 +236,7 @@
     });
     
 </script>
+
 <script>
     // Recojo las categorias a eliminar
     $(document).ready(function(){
@@ -255,12 +255,13 @@
                 data: { activitiesArray : selectedItems },
                 beforeSend: mostrarLoader,
                 success: function(msg) {//resp_cat
+                    $("#refresh_delete").load("<?= base_url() ?>backend/b_gallery_c/refresh_delete");
+                    $("#refresh_list").load("<?= base_url() ?>backend/b_gallery_c/refresh_list");
                     $('#img_del').fadeOut("slow");
                     $('#resp_del').html(msg);
-                    setInterval(function(){
-                        location.reload();
-                    }, 2000);
-                }
+                    
+                 
+               }
             });
             return false;
         });
@@ -270,7 +271,7 @@
     });
 </script>
 <script>
-    // Recojo las categorias a eliminar
+    // Recorro lasimagenes seleccionadas para elimin arlas de la base d datos y del los ficheros
     $(document).ready(function(){
         $('.submit_delete_img').click(function(){
             var selectedItems= new Array();
@@ -300,15 +301,6 @@
             return false;
         });
     });
-</script>
-<script>
-    //    $(document).ready(function() {
-    //        $("#containerdiv").load("<?= base_url() ?>backend/b_gallery_c/refresh_div");
-    //                var refreshId = setInterval(function() {
-    //                    $("#containerdiv").load('<?= base_url() ?>backend/b_gallery_c/refresh_div?randval='+ Math.random());
-    //                }, 4000);
-    //        $.ajaxSetup({ cache: false });
-    //    });
 </script>
 </body>
 </html>

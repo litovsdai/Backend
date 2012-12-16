@@ -30,15 +30,17 @@
                 <div class="control-group">                    
                     <div  class="controls">
                         <h3>Selecciona categoría</h3><br>
-                        <select class="selectError" name="catgeroy" data-rel="chosen">
-                            <?php if (isset($categories) && $categories !== 0) { ?>
-                                <?php for ($i = 0; $i < count($categories); $i++) { ?>
-                                    <option><?= $categories[$i] ?></option>   
+                        <span id="refresh_list">
+                            <select class="selectError" name="catgeroy" data-rel="chosen">
+                                <?php if (isset($categories) && $categories !== 0) { ?>
+                                    <?php for ($i = 0; $i < count($categories); $i++) { ?>
+                                        <option><?= $categories[$i] ?></option>   
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <option>No hay categorías</option>
                                 <?php } ?>
-                            <?php } else { ?>
-                                <option>No hay categorías</option>
-                            <?php } ?>
-                        </select>                       
+                            </select>    
+                        </span>
                         <a class="btn btn-small btn-primary comp_check" style="margin: -3% 2% 0 3%;">
                             Asignar categorías
                         </a>
@@ -74,7 +76,7 @@
                                     }
                                 }
                                 ?>
-                            <li class="thumbnail" id="<?=$name?>" style="display: block;">
+                                <li class="thumbnail" id="<?= $name ?>" style="display: block;">
                                     <a class="visor" style="margin-bottom: 5px;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
                                         <img class="grayscale" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
                                     </a>

@@ -15,8 +15,8 @@
             <div class="controls">
                 <input class="input-xlarge focused" id="n_cat" name="n_cate" id="focusedInput" type="text" placeholder="Nombre de la categoría"><br>
                 <a style="margin-top: 3%;" id="myForm" class="btn btn-small btn-primary">Añadir categoría</a>
-               <img id="img_new_cat" src="<?= base_url() ?>img/ajax-loaders/loader2.gif"  style="display:none;margin: 3% 0 0 5%;"><br>
-                
+                <img id="img_new_cat" src="<?= base_url() ?>img/ajax-loaders/loader2.gif"  style="display:none;margin: 3% 0 0 5%;"><br>
+
             </div>
         </div>
         <?= form_close() ?>
@@ -43,15 +43,17 @@
             <div id="resp_del"></div>
             <label class="control-label" for="selectError1">Seleccione todas las categorías que desee eliminar:</label>
             <div class="controls">
-                <select id="sel" class="selectError1" name="delete_cats[]" multiple="multiple" data-rel="chosen">
-                    <?php if (isset($categories) && $categories !== 0) { ?>
-                        <?php for ($i = 0; $i < count($categories); $i++) { ?>
-                            <option value="<?= $categories[$i] ?>"><?= $categories[$i] ?></option>   
+                <span id="refresh_delete">
+                    <select id="sel" class="selectError1" name="delete_cats[]" multiple="multiple" data-rel="chosen">
+                        <?php if (isset($categories) && $categories !== 0) { ?>
+                            <?php for ($i = 0; $i < count($categories); $i++) { ?>
+                                <option value="<?= $categories[$i] ?>"><?= $categories[$i] ?></option>   
+                            <?php } ?>
+                        <?php } else { ?>
+                            <option>No hay categorías</option>
                         <?php } ?>
-                    <?php } else { ?>
-                        <option>No hay categorías</option>
-                    <?php } ?>
-                </select>
+                    </select>
+                </span>
                 <button id="submit_delete" style="margin-top: 15px;" class="btn btn-small btn-danger">Eliminar categoría</button>
                 <img id="img_del" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="display:none;margin: 3% 0 0 5%;"><br>
 

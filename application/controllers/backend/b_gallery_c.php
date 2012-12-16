@@ -306,6 +306,7 @@ class B_gallery_c extends CI_Controller {
             $data['categories'] = $this->gallery_m->all_categories();
             if ($img_sin !== 0) {
                 $msg = '';
+                $msg .=$this->load->view('includes/all_dom', "", TRUE);
                 $msg .= ' <ul class="thumbnails gallery" id="refresh">';
                 foreach ($img_sin as $array) {
                     foreach ($array as $key => $valor) {
@@ -335,12 +336,55 @@ class B_gallery_c extends CI_Controller {
                 }
                 $msg.='</ul>';
             } else {
-                $msg .= 'No hay categorías';
+                $msg = '<div class="alert alert-success">Muy bién, no hay imágenes sin categoría asociada</div>';
             }
             echo $msg;
         } else {
             redirect('');
         }
+    }
+
+    /*
+     * Controlador que refresca el option despues de agregar una categoria
+     */
+
+    public function refresh_list() {
+        // Recojo todas las categorias en un array 
+        $msg = '';
+        $msg .=$this->load->view('includes/all_dom', "", TRUE);
+        $categories = $this->gallery_m->all_categories();
+
+        $msg.= '<select class="selectError" name="catgeroy" data-rel="chosen">';
+        if (isset($categories) && $categories !== 0) {
+            for ($i = 0; $i < count($categories); $i++) {
+                $msg.= '<option>' . $categories[$i] . '</option>';
+            }
+        } else {
+            $msg.= ' <option>No hay categorías</option>';
+        }
+        $msg.= '</select>';
+        echo $msg;
+    }
+
+    /*
+     * Controlador que refresca el contenido del listado de categorias a eliminar
+     */
+
+    public function refresh_delete() {
+        // Recojo todas las categorias en un array 
+        $msg = '';
+        $msg .=$this->load->view('includes/all_dom', "", TRUE);
+        $categories = $this->gallery_m->all_categories();
+        $msg.='<select id="sel" class="selectError1" name="delete_cats[]" multiple="multiple" data-rel="chosen">';
+        if (isset($categories) && $categories !== 0) {
+            for ($i = 0; $i < count($categories); $i++) {
+                $msg.='<option value="' . $categories[$i] . '">' . $categories[$i] . '</option>';
+            }
+        } else {
+            $msg.='<option>No hay categorías</option>';
+        }
+        $msg.='</select>';
+        echo $msg;
     }
 
     /*
