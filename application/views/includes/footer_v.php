@@ -204,13 +204,14 @@
 </script>
 <script>  
     // Asigna categorias a las imagenes seleccionadas
-    $(document).ready(function(){
+    $(document).live('ready',function(){
         $('.comp_check').click(function(){
             var selectedItems= new Array();
             var indice=1;
             $('[name=nameCheckBox]').each(function(){
                 if($(this).attr('checked')){                           
                     selectedItems[indice] = $(this).val();//El indice inicial cera 0
+                    $("#"+selectedItems[indice]).css('display','none');
                     indice++; //paso a incrementar el indice en 1
                 }
             });
@@ -225,12 +226,10 @@
                 success: function(msg) {//resp_cat
                     $('.resp_asig').fadeOut("slow");
                     $('.resp_cat').html(msg);
-                    setInterval(function(){
-                        location.reload();
-                    }, 2000);
+                    $("#containerdiv").load("<?= base_url() ?>backend/b_gallery_c/refresh_div");
+                   
                 }
-            });
-            return false;
+            });return  false;
         });
         function mostrarLoader(){
             $('.resp_asig').fadeIn("slow"); //muestro el loader de ajax
@@ -301,6 +300,15 @@
             return false;
         });
     });
+</script>
+<script>
+    //    $(document).ready(function() {
+    //        $("#containerdiv").load("<?= base_url() ?>backend/b_gallery_c/refresh_div");
+    //                var refreshId = setInterval(function() {
+    //                    $("#containerdiv").load('<?= base_url() ?>backend/b_gallery_c/refresh_div?randval='+ Math.random());
+    //                }, 4000);
+    //        $.ajaxSetup({ cache: false });
+    //    });
 </script>
 </body>
 </html>

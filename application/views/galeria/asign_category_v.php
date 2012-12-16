@@ -51,37 +51,39 @@
                 </div> 
                 <?php if (isset($img_sin) && !empty($img_sin)) { ?>
                     <h4>Imágenes sin categoría</h4><br><br>
-                    <ul class="thumbnails gallery" id="refresh">
-                        <?php
-                        foreach ($img_sin as $array) {
-                            foreach ($array as $key => $valor) {
-                                //echo $key . ' ' . $valor . '<br>';
-                                if ($key === 'name') {
-                                    $name = $valor;
+                    <div id="containerdiv">
+                        <ul class="thumbnails gallery" id="refresh">
+                            <?php
+                            foreach ($img_sin as $array) {
+                                foreach ($array as $key => $valor) {
+                                    //echo $key . ' ' . $valor . '<br>';
+                                    if ($key === 'name') {
+                                        $name = $valor;
+                                    }
+                                    if ($key === 'ruta') {
+                                        $ruta = $valor;
+                                    }
+                                    if ($key === 'ruta_thumb') {
+                                        $ruta_thumb = $valor;
+                                    }
+                                    if ($key === 'padre') {
+                                        $padre = $valor;
+                                    }
+                                    if (isset($padre) && $padre === '0') {
+                                        $padre = 'Sin categoría';
+                                    }
                                 }
-                                if ($key === 'ruta') {
-                                    $ruta = $valor;
-                                }
-                                if ($key === 'ruta_thumb') {
-                                    $ruta_thumb = $valor;
-                                }
-                                if ($key === 'padre') {
-                                    $padre = $valor;
-                                }
-                                if (isset($padre) && $padre === '0') {
-                                    $padre = 'Sin categoría';
-                                }
-                            }
+                                ?>
+                            <li class="thumbnail" id="<?=$name?>" style="display: block;">
+                                    <a class="visor" style="margin-bottom: 5px;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
+                                        <img class="grayscale" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
+                                    </a>
+                                    <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" checked type="checkbox" >
+                                </li>
+                            <?php }
                             ?>
-                            <li class="thumbnail">
-                                <a class="visor" style="margin-bottom: 5px;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
-                                    <img class="grayscale" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
-                                </a>
-                                <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" checked type="checkbox" >
-                            </li>
-                        <?php }
-                        ?>
-                    </ul>
+                        </ul>
+                    </div>
                     <?php
                 } else {
                     echo '<p style="color:red;text-align: center;">Muy bién! todas las imágenes se encuentran con categorías asociadas.</p>';

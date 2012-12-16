@@ -290,6 +290,60 @@ class B_gallery_c extends CI_Controller {
     }
 
     /*
+     * Controlador que refresca un div al asignar categorias vía ajax
+     */
+
+    public function refresh_div() {
+        if ($this->simple_sessions->get_value('status')) {
+
+            $data_all = $this->gallery_m->all_images_for_category('0');
+            if ($data_all === '0') {
+                $img_sin = 0;
+            } else {
+                $img_sin = $data_all;
+            }
+            // Recojo todas las categorias en un array 
+            $data['categories'] = $this->gallery_m->all_categories();
+            if ($img_sin !== 0) {
+                $msg = '';
+                $msg .= ' <ul class="thumbnails gallery" id="refresh">';
+                foreach ($img_sin as $array) {
+                    foreach ($array as $key => $valor) {
+                        //echo $key . ' ' . $valor . '<br>';
+                        if ($key === 'name') {
+                            $name = $valor;
+                        }
+                        if ($key === 'ruta') {
+                            $ruta = $valor;
+                        }
+                        if ($key === 'ruta_thumb') {
+                            $ruta_thumb = $valor;
+                        }
+                        if ($key === 'padre') {
+                            $padre = $valor;
+                        }
+                        if (isset($padre) && $padre === '0') {
+                            $padre = 'Sin categoría';
+                        }
+                    }
+                    $msg .= '<li class="thumbnail">
+                                    <a class="visor" style="margin-bottom: 5px;background:url(' . $ruta_thumb . '>)" title=" ' . $padre . ' / ' . $name . '" href="' . $ruta . '">
+                                        <img class="grayscale" src="' . $ruta_thumb . '" alt="' . $name . '">
+                                    </a>
+                                    <input data-no-uniform="true" name="nameCheckBox" value="' . $name . '" class="iphone-toggle check" checked type="checkbox" >
+                               </li>';
+                }
+                $msg.='</ul>';
+            } else {
+                $msg .= 'No hay categorías';
+            }
+            echo $msg;
+        } else {
+            redirect('');
+        }
+    }
+
+    /*
      * Controlador que elimina categoría + imagenes que contenga 
      */
 
