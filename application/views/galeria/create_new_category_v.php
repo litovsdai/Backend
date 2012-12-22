@@ -8,7 +8,6 @@
         </div>
     </div>
     <div class="box-content">  
-        <?= form_open() ?>
         <div class="control-group">
             <div id="resp_new_cat"></div>
             <label class="control-label" for="focusedInput">Nombre:</label>
@@ -16,10 +15,8 @@
                 <input class="input-xlarge focused" id="n_cat" name="n_cate" id="focusedInput" type="text" placeholder="Nombre de la categoría"><br>
                 <a style="margin-top: 3%;" id="myForm" class="btn btn-small btn-primary">Añadir categoría</a>
                 <img id="img_new_cat" src="<?= base_url() ?>img/ajax-loaders/loader2.gif"  style="display:none;margin: 3% 0 0 5%;"><br>
-
             </div>
         </div>
-        <?= form_close() ?>
     </div>                   
 </div>
 <div class="box span4">

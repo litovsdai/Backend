@@ -211,81 +211,65 @@ class B_gallery_c extends CI_Controller {
      */
 
     public function category() {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
-        if ($this->simple_sessions->get_value('status')) {
-            // Recojo las imágenes sin categoria asociada
-            $data_all = $this->gallery_m->all_images_for_category('0');
-            if ($data_all === '0') {
-                $data['sin'] = 0;
-            } else {
-                $data['img_sin'] = $data_all;
-            }
-            // Recojo todas las categorias en un array 
-            $data['categories'] = $this->gallery_m->all_categories();
-            // Cargo vistas
-            $this->load->view('includes/head_v');
-            $this->load->view('includes/header_v');
-            $this->load->view('includes/menu_v');
-            $this->load->view('galeria/breadcrumb_category_v');
-            $this->load->view('galeria/asign_category_v', $data);
-            $this->load->view('galeria/create_new_category_v');
-            $this->load->view('includes/footer_v');
+        // Recojo las imágenes sin categoria asociada
+        $data_all = $this->gallery_m->all_images_for_category('0');
+        if ($data_all === '0') {
+            $data['sin'] = 0;
         } else {
-            redirect('');
+            $data['img_sin'] = $data_all;
         }
+        // Recojo todas las categorias en un array 
+        $data['categories'] = $this->gallery_m->all_categories();
+        // Cargo vistas
+        $this->load->view('includes/head_v');
+        $this->load->view('includes/header_v');
+        $this->load->view('includes/menu_v');
+        $this->load->view('galeria/breadcrumb_category_v');
+        $this->load->view('galeria/asign_category_v', $data);
+        $this->load->view('galeria/create_new_category_v');
+        $this->load->view('includes/footer_v');
     }
 
     public function new_category() {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
-        if ($this->simple_sessions->get_value('status')) {
-            sleep(1);
-            $name = $this->input->post('name');
-            if (!empty($name)) {
-                $data = array('name' => $this->input->post('name'));
-                $result = $this->gallery_m->set_category($data);
-                if ($result) {
-                    echo '<div class="alert alert-success">Categoría almacenada satisfactoriamente.</div>';
-                } else if (!$result) {
-                    echo '<div class="alert alert-error"><b>Error</b> al insertar los datos en la base de datos.</div>';
-                } else {
-                    echo '<div class="alert alert-error">La categoría ' . $result . ' ya existe en la base de datos.</div>';
-                }
+        $name = $this->input->post('name');
+        if (!empty($name)) {
+            $data = array('name' => $this->input->post('name'));
+            $result = $this->gallery_m->set_category($data);
+
+            if ($result) {
+                echo '<div class="alert alert-success">Categoría <b>' . $name . '</b> almacenada satisfactoriamente.</div>';
+            } else if (!$result) {
+                echo '<div class="alert alert-error">La categoría <b>' . $name . '</b> ya existe en la base de datos.</div>';
             } else {
-                echo '<div class="alert alert-error">Debe rellenar el campo <b>Nombre</b>.</div>';
+                echo '<div class="alert alert-error"><b>Error</b> al insertar los datos en la base de datos.</div>';
             }
         } else {
-            redirect('');
+            echo '<div class="alert alert-error">Debe rellenar el campo <b>"Nombre"</b>.</div>';
         }
     }
 
     public function asign_category() {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
-        if ($this->simple_sessions->get_value('status')) {
-            sleep(1);
-            $data = $this->input->post('activitiesArray');
-            if (count($data) > 1 && $data[0] !== 'No hay categorías' && !empty($data[0])) {
-                for ($i = 1; $i < count($data); $i++) {
-                    $result = $this->gallery_m->asign_categ($data[$i], $data[0]);
-                    if ($result !== TRUE) {
-                        $errores[] = 'Error al asignar categoría a la imagen ' . $result . '.';
-                    }
-                }
-                if (isset($errores) && count($errores) > 0) {
-                    $err = '';
-                    $err+= '<div class="alert alert-error">';
-                    for ($j = 0; $j < count($errores); $j++) {
-                        $err+= $errores[$j] . '<br>';
-                    }
-                    $err+='</div>';
-                    if ($err !== 0) {
-                        echo $err;
-                    }
-                } else {
-                    echo '<div class="alert alert-success">Imágen/es asignada/s a la categoría <b>' . $data[0] . '</b> satisfactoriamente.</div>';
+        $data = $this->input->post('activitiesArray');
+        if (count($data) > 1 && $data[0] !== 'No hay categorías' && !empty($data[0])) {
+            for ($i = 1; $i < count($data); $i++) {
+                $result = $this->gallery_m->asign_categ($data[$i], $data[0]);
+                if ($result !== TRUE) {
+                    $errores[] = 'Error al asignar categoría a la imagen ' . $result . '.';
                 }
             }
-        } else {
-            redirect('');
+            if (isset($errores) && count($errores) > 0) {
+                $err = '';
+                $err+= '<div class="alert alert-error">';
+                for ($j = 0; $j < count($errores); $j++) {
+                    $err+= $errores[$j] . '<br>';
+                }
+                $err+='</div>';
+                if ($err !== 0) {
+                    echo $err;
+                }
+            } else {
+                echo '<div class="alert alert-success">Imágen/es asignada/s a la categoría <b>' . $data[0] . '</b> satisfactoriamente.</div>';
+            }
         }
     }
 
@@ -294,54 +278,49 @@ class B_gallery_c extends CI_Controller {
      */
 
     public function refresh_div() {
-        if ($this->simple_sessions->get_value('status')) {
-
-            $data_all = $this->gallery_m->all_images_for_category('0');
-            if ($data_all === '0') {
-                $img_sin = 0;
-            } else {
-                $img_sin = $data_all;
-            }
-            // Recojo todas las categorias en un array 
-            $data['categories'] = $this->gallery_m->all_categories();
-            if ($img_sin !== 0) {
-                $msg = '';
-                $msg .=$this->load->view('includes/all_dom', "", TRUE);
-                $msg .= ' <ul class="thumbnails gallery" id="refresh">';
-                foreach ($img_sin as $array) {
-                    foreach ($array as $key => $valor) {
-                        //echo $key . ' ' . $valor . '<br>';
-                        if ($key === 'name') {
-                            $name = $valor;
-                        }
-                        if ($key === 'ruta') {
-                            $ruta = $valor;
-                        }
-                        if ($key === 'ruta_thumb') {
-                            $ruta_thumb = $valor;
-                        }
-                        if ($key === 'padre') {
-                            $padre = $valor;
-                        }
-                        if (isset($padre) && $padre === '0') {
-                            $padre = 'Sin categoría';
-                        }
+        $data_all = $this->gallery_m->all_images_for_category('0');
+        if ($data_all === '0') {
+            $img_sin = 0;
+        } else {
+            $img_sin = $data_all;
+        }
+        // Recojo todas las categorias en un array 
+        $data['categories'] = $this->gallery_m->all_categories();
+        if ($img_sin !== 0) {
+            $msg = '';
+            $msg .=$this->load->view('includes/all_dom', "", TRUE);
+            $msg .= ' <ul class="thumbnails gallery" id="refresh">';
+            foreach ($img_sin as $array) {
+                foreach ($array as $key => $valor) {
+                    //echo $key . ' ' . $valor . '<br>';
+                    if ($key === 'name') {
+                        $name = $valor;
                     }
-                    $msg .= '<li class="thumbnail">
-                                    <a class="visor" style="margin-bottom: 5px;background:url(' . $ruta_thumb . '>)" title=" ' . $padre . ' / ' . $name . '" href="' . $ruta . '">
+                    if ($key === 'ruta') {
+                        $ruta = $valor;
+                    }
+                    if ($key === 'ruta_thumb') {
+                        $ruta_thumb = $valor;
+                    }
+                    if ($key === 'padre') {
+                        $padre = $valor;
+                    }
+                    if (isset($padre) && $padre === '0') {
+                        $padre = 'Sin categoría';
+                    }
+                }
+                $msg .= '<li class="thumbnail">
+                                    <a  style="margin-bottom: 5px;background:url(' . $ruta_thumb . '>)" title=" ' . $padre . ' / ' . $name . '">
                                         <img class="grayscale" src="' . $ruta_thumb . '" alt="' . $name . '">
                                     </a>
                                     <input data-no-uniform="true" name="nameCheckBox" value="' . $name . '" class="iphone-toggle check" checked type="checkbox" >
                                </li>';
-                }
-                $msg.='</ul>';
-            } else {
-                $msg = '<div class="alert alert-success">Muy bién, no hay imágenes sin categoría asociada</div>';
             }
-            echo $msg;
+            $msg.='</ul>';
         } else {
-            redirect('');
+            $msg = '<div class="alert alert-success">Muy bién, no hay imágenes sin categoría asociada</div>';
         }
+        echo $msg;
     }
 
     /*
@@ -373,7 +352,6 @@ class B_gallery_c extends CI_Controller {
     public function refresh_delete() {
         // Recojo todas las categorias en un array 
         $msg = '';
-        $msg .=$this->load->view('includes/all_dom', "", TRUE);
         $categories = $this->gallery_m->all_categories();
         $msg.='<select id="sel" class="selectError1" name="delete_cats[]" multiple="multiple" data-rel="chosen">';
         if (isset($categories) && $categories !== 0) {
@@ -392,50 +370,45 @@ class B_gallery_c extends CI_Controller {
      */
 
     public function delete_category() {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
-        if ($this->simple_sessions->get_value('status')) {
-            $data = $this->input->post('activitiesArray');
-            /*
-             *  Recojo los nombres de las imágenes que tengan como padre el
-             *  nombre de la categoria a eliminar.. para eliminarlas
-             */
-            $nombres_delete = array();
-            if (count($data) > 0 && !empty($data)) {
-                for ($i = 0; $i < count($data); $i++) {
-                    if ($data[$i] !== 'No hay categorías') {
-                        $nombres_delete[$i] = $this->gallery_m->list_img_for_cat($data[$i]);
-                        $this->gallery_m->remove_cat($data[$i]);
-                    }
+        $data = $this->input->post('activitiesArray');
+        /*
+         *  Recojo los nombres de las imágenes que tengan como padre el
+         *  nombre de la categoria a eliminar.. para eliminarlas
+         */
+        $nombres_delete = array();
+        if (count($data) > 0 && !empty($data)) {
+            for ($i = 0; $i < count($data); $i++) {
+                if ($data[$i] !== 'No hay categorías') {
+                    $nombres_delete[$i] = $this->gallery_m->list_img_for_cat($data[$i]);
+                    $this->gallery_m->remove_cat($data[$i]);
                 }
-                foreach ($nombres_delete as $val) {
-                    if (count($val) > 0 && !empty($val)) {
-                        foreach ($val as $datos) {
-                            foreach ($datos as $key => $value) {
-                                //echo $key . ':' . $value . '<br>';
-                                if ($key === 'name') {
-                                    $this->gallery_m->remove_picture($value);
-                                }
-                                if ($key === 'ruta') {
-                                    @unlink($value);
-                                }
-                                if ($key === 'ruta_thumb') {
-                                    @unlink($value);
-                                }
+            }
+            foreach ($nombres_delete as $val) {
+                if (count($val) > 0 && !empty($val)) {
+                    foreach ($val as $datos) {
+                        foreach ($datos as $key => $value) {
+                            //echo $key . ':' . $value . '<br>';
+                            if ($key === 'name') {
+                                $this->gallery_m->remove_picture($value);
+                            }
+                            if ($key === 'ruta') {
+                                @unlink($value);
+                            }
+                            if ($key === 'ruta_thumb') {
+                                @unlink($value);
                             }
                         }
                     }
                 }
-                $resp = '<div class="alert alert-success">';
-                for ($i = 0; $i < count($data); $i++) {
-                    $resp .= 'Categoría <b>' . $data[$i] . '</b> eliminada satisfactoriamente.<br>';
-                }
-                $resp .= '</div>';
-                echo $resp;
-            } else {
-                echo '<div class="alert alert-error">No ha seleccionado ninguna categoría.</div>';
             }
+            $resp = '<div class="alert alert-success">';
+            for ($i = 0; $i < count($data); $i++) {
+                $resp .= 'Categoría <b>' . $data[$i] . '</b> eliminada satisfactoriamente.<br>';
+            }
+            $resp .= '</div>';
+            echo $resp;
         } else {
-            redirect('');
+            echo '<div class="alert alert-error">No ha seleccionado ninguna categoría.</div>';
         }
     }
 
@@ -444,19 +417,14 @@ class B_gallery_c extends CI_Controller {
      */
 
     public function delete_image() {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
-        if ($this->simple_sessions->get_value('status')) {
-            $data = $this->input->post('activitiesArray');
-            if (count($data) > 0 && !empty($data)) {
-                for ($i = 0; $i < count($data); $i++) {
-                    $this->gallery_m->remove_picture($data[$i]);
-                }
-                echo '<div class="alert alert-success">Imágen/es eliminada/s satisfactoriamente.</div>';
-            } else {
-                echo '<div class="alert alert-error">No ha seleccionado ninguna imagen.</div>';
+        $data = $this->input->post('activitiesArray');
+        if (count($data) > 0 && !empty($data)) {
+            for ($i = 0; $i < count($data); $i++) {
+                $this->gallery_m->remove_picture($data[$i]);
             }
+            echo '<div class="alert alert-success">Imágen/es eliminada/s satisfactoriamente.</div>';
         } else {
-            redirect('');
+            echo '<div class="alert alert-error">No ha seleccionado ninguna imagen.</div>';
         }
     }
 

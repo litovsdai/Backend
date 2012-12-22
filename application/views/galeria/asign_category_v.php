@@ -77,7 +77,7 @@
                                 }
                                 ?>
                                 <li class="thumbnail" id="<?= $name ?>" style="display: block;">
-                                    <a class="visor" style="margin-bottom: 5px;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
+                                    <a style="margin-bottom: 5px;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>">
                                         <img class="grayscale" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
                                     </a>
                                     <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" checked type="checkbox" >

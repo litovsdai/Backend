@@ -97,7 +97,6 @@
 
 <!-- Muestro imagen al poner el mouse sobre el input -->
 <script>
-    $(document).ready(function(){
         // Boton de submit en subir imagenes
         $(document).ready(function() {
             $("#object").hide();
@@ -108,7 +107,6 @@
                 $("#object").fadeOut(2000);
             });
         });
-    });
 </script>  
 <script>  
     // Ajax loader en subir imagenes
@@ -168,8 +166,8 @@
                 data: {name:datos},
                 beforeSend: mostrarLoader, //funciones que definimos más abajo
                 success: function(responseText){
-                    $("#refresh_delete").load("<?= base_url() ?>backend/b_gallery_c/refresh_delete");
                     $("#refresh_list").load("<?= base_url() ?>backend/b_gallery_c/refresh_list");
+                    $("#refresh_delete").load("<?= base_url() ?>backend/b_gallery_c/refresh_delete");
                     $("#img_new_cat").fadeOut("slow"); // Hago desaparecer el loader de ajax
                     $("#resp_new_cat").html(responseText); // Aca utilizo la función append de JQuery para añadir el responseText  dentro del div "ajax_loader"
                     
@@ -220,7 +218,7 @@
             $.ajax({        
                 type: "POST",
                 url: "<?= base_url() ?>backend/b_gallery_c/asign_category",
-                data: { activitiesArray : selectedItems },
+                data: {activitiesArray:selectedItems},
                 beforeSend: mostrarLoader,
                 success: function(msg) {//resp_cat
                     $("#containerdiv").load("<?= base_url() ?>backend/b_gallery_c/refresh_div"); 
@@ -255,8 +253,8 @@
                 data: { activitiesArray : selectedItems },
                 beforeSend: mostrarLoader,
                 success: function(msg) {//resp_cat
-                    $("#refresh_delete").load("<?= base_url() ?>backend/b_gallery_c/refresh_delete");
                     $("#refresh_list").load("<?= base_url() ?>backend/b_gallery_c/refresh_list");
+                    $("#refresh_delete").load("<?= base_url() ?>backend/b_gallery_c/refresh_delete");
                     $('#img_del').fadeOut("slow");
                     $('#resp_del').html(msg);
                     

@@ -30,9 +30,9 @@ class Gallery_m extends CI_Model {
         @unlink('./img/gallery/' . '145X100/' . $name);
         $this->db->delete('imagenes', array('name' => $name));
     }
-    
+
     public function remove_cat($name) {
-        
+
         $this->db->delete('categorias', array('name' => $name));
     }
 
@@ -160,11 +160,11 @@ class Gallery_m extends CI_Model {
             $this->db->insert('categorias', $data);
             if ($this->db->affected_rows() > 0) {
                 return TRUE;
-            } else if ($this->db->affected_rows() === 1) {
-                return FALSE;
+            } else if ($this->db->affected_rows() === 0) {
+                return -1;
             }
         } else {
-            return $data['name'];
+            return FALSE;
         }
     }
 
@@ -190,7 +190,6 @@ class Gallery_m extends CI_Model {
             return 0;
         }
     }
-    
 
 }
 
