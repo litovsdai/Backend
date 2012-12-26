@@ -7,22 +7,23 @@
                 <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
             </div>
         </div>
-        <div class="box-content">
-            <p class="center">
-                <button id="toggle-fullscreen" class="btn btn-large btn-primary visible-desktop" data-toggle="button">Cambiar a pantalla completa</button>
-                <br><br>
-                <button  class="submit_delete_img btn btn-small btn-warning" >Eliminar imágenes que estén en ON</button>
-                <br>
-                <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="margin: 0 2% 0 3%;display:none;">
-            <div class="resp_del_img" style="position: absolute;"></div>
-            </p>
-            <br/>              
+        <div class="box-content" style="text-align: center;"> 
+            <button class="btn show_"><i class="icon-edit"></i> EDITAR DATOS</button>    
+            <button class="submit_delete_img btn btn-danger" ><i class="icon-trash icon-white"></i> ELIMINA las "ON"</button>
+            <br /><br />
+            <button class="btn show_edit btn-warning refr btn-large" style="display: none;"><i class="icon-refresh icon-white"></i> APLICAR CAMBIOS</button> 
+
+            <br />
+            <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="display:none;">
+            <br />
+            <div class="resp_del_img"></div>
+
             <?php
             $con = 0;
 
             if (isset($categ) && isset($all_category) && $all_category !== 0) {
                 foreach ($categ as $array) {
-                    echo '<h3>' . $all_category[$con] . '</h3>';
+                    echo '<h1 style="text-decoration:underline;">' . $all_category[$con] . '</h1>';
                     echo '<ul class="thumbnails gallery">';
                     $con++;
                     foreach ($array as $categoria) {
@@ -43,7 +44,9 @@
                         }
                         ?>
                         <li class="thumbnail">
-                            <a class="visor" style="margin-bottom:3%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
+                            <span style="margin-bottom: 1%;display: none;" title="Editar <?= $name ?>?" value="<?= $name ?>" class="show_edit ed_img btn"><i class="icon-edit"></i></span> 
+                            <span style="margin-bottom: 2%;display: none;" value="<?= $name ?>" class="btn show_edit delete_one"><i class="icon-remove"></i></span>
+                            <a class="visor" style="margin-bottom: 2%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
                                 <img class="grayscale img_delete" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
                             </a>
                             <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" type="checkbox" >
@@ -57,7 +60,7 @@
             }
 
             if (isset($img_sin) && $img_sin !== 0) {
-                echo '<h3>Imágenes sin categoría</h3>';
+                echo '<h2 style="text-decoration:underline;">Imágenes sin categoría</h2>';
                 echo '<ul class="thumbnails gallery">';
                 foreach ($img_sin as $array) {
                     foreach ($array as $key => $valor) {
@@ -80,7 +83,9 @@
                     }
                     ?>
                     <li class="thumbnail">
-                        <a class="visor" style="margin-bottom:3%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
+                        <span style="margin-bottom: 1%;display: none;" title="Editar <?= $name ?>?" value="<?= $name ?>" class="show_edit ed_img btn"><i class="icon-edit"></i></span>
+                        <span style="display: none;" value="<?= $name ?>" class="btn show_edit delete_one"><i class="icon-remove"></i></span>
+                        <a class="visor" style="margin-bottom: 2%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
                             <img class="grayscale img_delete" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
                         </a>
                         <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" type="checkbox" >
@@ -89,17 +94,15 @@
                 }
                 echo '</ul>';
             }
-            ?>
-            </ul>
-            <br>
-            <div class="resp_del_img" style="position: absolute;"></div>
-            <p class="center">              
-                <button class="submit_delete_img btn btn-small btn-warning" >Eliminar imágenes que estén en ON</button>
-                <br>
-                <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="margin: 0 2% 0 3%;display:none;">
-
-            </p>
-            <br/>   
+            ?>   
+            <div class="resp_del_img"></div>
+            <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="display:none;">
+            <br /><br />
+            <button class="btn show_edit btn-warning refr btn-large" style="display: none;"><i class="icon-refresh icon-white"></i> APLICAR CAMBIOS</button> 
+            <br /><br />
+            <button class="btn show_"><i class="icon-edit"></i> EDITAR DATOS</button> 
+            <button class="submit_delete_img btn btn-danger" ><i class="icon-trash icon-white"></i> ELIMINA las "ON"</button>
+            <br /><br />
         </div>
     </div><!--/span-->
 

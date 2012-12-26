@@ -32,7 +32,7 @@ $(document).ready(function(){
 	{
 		$('#is-ajax').prop('checked',false);
 		$('#for-is-ajax').hide();
-		$('#toggle-fullscreen').hide();
+		$('.toggle-fullscreen').hide();
 		$('.login-box').find('.input-large').removeClass('span10');
 		
 	}
@@ -204,7 +204,7 @@ function docReady(){
 	$('.thumbnail .visor').colorbox({rel:'thumbnail .visor', transition:"elastic", maxWidth:"95%", maxHeight:"95%"});
 
 	//gallery fullscreen
-	$('#toggle-fullscreen').button().click(function () {
+	$('.toggle-fullscreen').button().click(function () {
 		var button = $(this), root = document.documentElement;
 		if (!button.hasClass('active')) {
 			$('#thumbnails').addClass('modal-fullscreen');

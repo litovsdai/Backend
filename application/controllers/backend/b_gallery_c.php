@@ -323,14 +323,15 @@ class B_gallery_c extends CI_Controller {
         echo $msg;
     }
 
+
+
     /*
      * Controlador que refresca el option despues de agregar una categoria
      */
 
     public function refresh_list() {
-        // Recojo todas las categorias en un array 
+// Recojo todas las categorias en un array 
         $msg = '';
-        $msg .=$this->load->view('includes/all_dom', "", TRUE);
         $categories = $this->gallery_m->all_categories();
 
         $msg.= '<select class="selectError" name="catgeroy" data-rel="chosen">';
@@ -341,7 +342,9 @@ class B_gallery_c extends CI_Controller {
         } else {
             $msg.= ' <option>No hay categorías</option>';
         }
-        $msg.= '</select>';
+        $msg .= '</select>';
+        $msg .=$this->load->view('includes/all_dom', "", TRUE);
+
         echo $msg;
     }
 
@@ -350,7 +353,7 @@ class B_gallery_c extends CI_Controller {
      */
 
     public function refresh_delete() {
-        // Recojo todas las categorias en un array 
+// Recojo todas las categorias en un array 
         $msg = '';
         $categories = $this->gallery_m->all_categories();
         $msg.='<select id="sel" class="selectError1" name="delete_cats[]" multiple="multiple" data-rel="chosen">';
@@ -387,7 +390,7 @@ class B_gallery_c extends CI_Controller {
                 if (count($val) > 0 && !empty($val)) {
                     foreach ($val as $datos) {
                         foreach ($datos as $key => $value) {
-                            //echo $key . ':' . $value . '<br>';
+//echo $key . ':' . $value . '<br>';
                             if ($key === 'name') {
                                 $this->gallery_m->remove_picture($value);
                             }
@@ -418,32 +421,33 @@ class B_gallery_c extends CI_Controller {
 
     public function delete_image() {
         $data = $this->input->post('activitiesArray');
+
         if (count($data) > 0 && !empty($data)) {
             for ($i = 0; $i < count($data); $i++) {
                 $this->gallery_m->remove_picture($data[$i]);
             }
-            echo '<div class="alert alert-success">Imágen/es eliminada/s satisfactoriamente.</div>';
+            echo '<div class="alert alert-success">Imágen/es eliminada/s satisfactoriamente<br />Pulse en <b>APLICAR CAMBIOS</b> para ver todos los cambios realizados.</div>';
         } else {
             echo '<div class="alert alert-error">No ha seleccionado ninguna imagen.</div>';
         }
     }
 
     function redimensiona($name, $width, $heigth) {
-        // Datos para el config
+// Datos para el config
         $config = array(
             'image_library' => 'gd2',
             'source_image' => './img/gallery/' . $name,
-            //'maintain_ratio' => 'TRUE',
+//'maintain_ratio' => 'TRUE',
             'width' => $width,
             'height' => $heigth,
             'new_image' => './img/gallery/' . $width . 'X' . $heigth . '/' . $name
         );
-        // Cargo la libreria que se encargará de redimensionar imágenes
+// Cargo la libreria que se encargará de redimensionar imágenes
         $this->image_lib->initialize($config);
-        // Si NO es satisfactorio
+// Si NO es satisfactorio
         if (!$this->image_lib->resize()) {
             echo $this->image_lib->display_errors();
-            // Por si a caso elimino los directorios creados
+// Por si a caso elimino los directorios creados
             @unlink('./img/gallery/' . $name);
             @unlink('./img/gallery/' . $width . 'X' . $heigth . '/' . $name);
             return FALSE;
@@ -453,24 +457,24 @@ class B_gallery_c extends CI_Controller {
 
     function elimina_puntos_espacios($nombre_temp) {
         $name_origin = $nombre_temp;
-        // Sustituyo los espacios por "_"
+// Sustituyo los espacios por "_"
         $name_complet = str_replace(' ', '_', $name_origin);
-        // Extraigo la posicion del el ultimo "." de la String
+// Extraigo la posicion del el ultimo "." de la String
         $pos_extension = strripos($name_complet, '.');
-        // Extraigo la posicion del el ultimo "." de la String                 
+// Extraigo la posicion del el ultimo "." de la String                 
         $extension = substr($name_complet, $pos_extension, strlen($name_complet));
-        // Extraigo nombe actual
+// Extraigo nombe actual
         $nombe_actual = substr($name_complet, 0, $pos_extension);
-        // Quito los puntos por "_"
+// Quito los puntos por "_"
         $nombre_sin_puntos = str_replace('.', '_', $nombe_actual);
-        // Concateno el nuevo nombre
+// Concateno el nuevo nombre
         $nombre_final = $nombre_sin_puntos . $extension;
-        // Asigno el nuevo nombre
+// Asigno el nuevo nombre
         return $nombre_final;
     }
 
     function img_sin() {
-        // Recojo las imágenes sin categoria asociada
+// Recojo las imágenes sin categoria asociada
         if ($this->gallery_m->all_images_for_category('0') === 0) {
             $cero = '<strong>Muy bién!</strong> No hay imágenes sin categoría.';
             return 0;
@@ -485,13 +489,13 @@ class B_gallery_c extends CI_Controller {
         $config['total_rows'] = count($array);
         $config['per_page'] = '3';
         $config['uri_segment'] = '4';
-        // El texto que le gustaría que se muestre en el "primer" enlace de la izquierda.
+// El texto que le gustaría que se muestre en el "primer" enlace de la izquierda.
         $config['first_link'] = '';
-        // El texto que le gustaría que se muestre en el "último" enlace de la derecha.
+// El texto que le gustaría que se muestre en el "último" enlace de la derecha.
         $config['last_link'] = '';
-        // El texto que le gustaría que se muestre en el enlace de página "siguiente".
+// El texto que le gustaría que se muestre en el enlace de página "siguiente".
         $config['next_link'] = '&rarr;';
-        // El texto que le gustaría que se muestre en el enlace de página "anterior".
+// El texto que le gustaría que se muestre en el enlace de página "anterior".
         $config['prev_link'] = '&larr;';
         return $config;
     }

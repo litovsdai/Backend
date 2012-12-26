@@ -9,7 +9,8 @@
     </ul>
 </div>
 
-<?= validation_errors('<p class="alert alert-error">', '</p>') ?>   
+    <?= validation_errors('<div class="alert alert-error">', '</div>') ?>  
+
 <?php if (isset($nombre_error1)) echo '<br><span class="alert alert-error">El nombre ya existe en la base de datos</span><br><br><br>'; ?>
 <?php if (isset($email_error1)) echo '<span class="alert alert-error">El email ya existe en la base de datos</span><br><br><br>'; ?>
 <?php if (isset($form_ok)) echo '<span class="alert alert-success">Los datos de usuario se han actualizado satisfactoriamente</span><br><br><br>'; ?>

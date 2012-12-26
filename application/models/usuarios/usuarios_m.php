@@ -106,7 +106,7 @@ class Usuarios_m extends CI_Model {
     public function update_usuario($data) {
         $query = $this->db->query("
             UPDATE administradores
-            SET nombre='" . $data['nombre'] . "', password='" . md5($data['password']) . "' WHERE id = " . $this->simple_sessions->get_value('id') . "");
+            SET nombre='" . $data['nombre'] . "', mail='" . $data['email'] . "', password='" . md5($data['password']) . "' WHERE id = " . $this->simple_sessions->get_value('id') . "");
 
         if ($this->db->affected_rows() > 0) {
             return TRUE;

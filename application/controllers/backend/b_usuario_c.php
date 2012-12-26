@@ -8,6 +8,7 @@ class B_usuario_c extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('usuarios/usuarios_m');
+        $this->load->model('gallery/gallery_m');
     }
 
     public function nuevo_administrador() {
@@ -123,13 +124,16 @@ class B_usuario_c extends CI_Controller {
             // Si el formulario no es exitoso, vuelvo a mostrar las vistas junto a sus errores
             if (!$this->form_validation->run()) {
                 // Cargo las vistas de incio del BACKEND
-                // Cargo las vistas de incio del BACKEND
                 // Miembros totales
                 $data['totales'] = $this->usuarios_m->total_members();
                 // Añadidos el ultimo mes
                 $data['last_month'] = $this->usuarios_m->get_last_week();
                 // Superusuarios
                 $data['total_pro'] = $this->usuarios_m->get_num_pro_members();
+                // Total imágenes
+                $data['total_pictures'] = $this->gallery_m->total_pictures();
+                // Imágenes añadidas el último mes
+                $data['last_month_pic'] = $this->gallery_m->get_last_pic();
                 // Cargo las vistas de incio del BACKEND
                 $this->load->view('includes/head_v');
                 $this->load->view('includes/header_v');
@@ -179,6 +183,10 @@ class B_usuario_c extends CI_Controller {
                 $data['last_month'] = $this->usuarios_m->get_last_week();
                 // Superusuarios
                 $data['total_pro'] = $this->usuarios_m->get_num_pro_members();
+                // Total imágenes
+                $data['total_pictures'] = $this->gallery_m->total_pictures();
+                // Imágenes añadidas el último mes
+                $data['last_month_pic'] = $this->gallery_m->get_last_pic();
                 // Cargo las vistas de incio del BACKEND
                 $this->load->view('includes/head_v');
                 $this->load->view('includes/header_v');
