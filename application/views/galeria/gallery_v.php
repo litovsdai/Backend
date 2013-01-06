@@ -46,7 +46,7 @@
                         <li class="thumbnail">
                             <span style="margin-bottom: 1%;display: none;" title="Editar <?= $name ?>?" value="<?= $name ?>" class="show_edit ed_img btn"><i class="icon-edit"></i></span> 
                             <span style="margin-bottom: 2%;display: none;" value="<?= $name ?>" class="btn show_edit delete_one"><i class="icon-remove"></i></span>
-                            <a class="visor" style="margin-bottom: 2%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
+                            <a class="visor" style="margin-bottom: 2%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>"shore>
                                 <img class="grayscale img_delete" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
                             </a>
                             <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" type="checkbox" >

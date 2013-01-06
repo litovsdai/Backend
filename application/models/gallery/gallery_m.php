@@ -25,6 +25,28 @@ class Gallery_m extends CI_Model {
         }
     }
 
+    public function asign_categ($id, $category) {
+        $dat = array(
+            'padre' => $category
+        );
+        $this->db->where('id', $id);
+        $this->db->update('imagenes', $dat);
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        }
+        return $name;
+    }
+
+    public function get_name($data) {
+        $query = $this->db->query("SELECT name FROM imagenes WHERE id = '".$data."'");
+
+        foreach ($query->result() as $row)
+        {
+           return $row->name;
+        }
+    }
+
+
     public function remove_picture($name) {
         @unlink('./img/gallery/' . '800X600/' . $name);
         @unlink('./img/gallery/' . '145X100/' . $name);
@@ -32,7 +54,6 @@ class Gallery_m extends CI_Model {
     }
 
     public function remove_cat($name) {
-
         $this->db->delete('categorias', array('name' => $name));
     }
 
@@ -128,6 +149,7 @@ class Gallery_m extends CI_Model {
 
             foreach ($query->result_array() as $row) {
                 $temporal = array(
+                    'id'   => $row['id'],
                     'name' => $row['name'],
                     'ruta' => $row['ruta'],
                     'ruta_thumb' => $row['ruta_thumb'],
@@ -140,20 +162,6 @@ class Gallery_m extends CI_Model {
             return 0;
         }
     }
-
-    public function asign_categ($name, $category) {
-        $dat = array(
-            'padre' => $category
-        );
-
-        $this->db->where('name', $name);
-        $this->db->update('imagenes', $dat);
-        if ($this->db->affected_rows() > 0) {
-            return TRUE;
-        }
-        return $name;
-    }
-
     public function set_category($data) {
         $consulta = $this->db->get_where('categorias', array('name' => $data['name']));
         if ($consulta->num_rows() === 0) {
@@ -167,6 +175,7 @@ class Gallery_m extends CI_Model {
             return FALSE;
         }
     }
+
 
     public function list_img_for_cat($padre) {
         // Consulta

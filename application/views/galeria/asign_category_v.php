@@ -31,7 +31,7 @@
                     <div  class="controls">
                         <h3>Selecciona categoría</h3><br>
                         <span id="refresh_list">
-                            <select class="selectError" name="catgeroy" data-rel="chosen">
+                            <select id="list_cat" class="selectError" name="catgeroy" data-rel="chosen">
                                 <?php if (isset($categories) && $categories !== 0) { ?>
                                     <?php for ($i = 0; $i < count($categories); $i++) { ?>
                                         <option><?= $categories[$i] ?></option>   
@@ -52,13 +52,16 @@
                     </div>
                 </div> 
                 <?php if (isset($img_sin) && !empty($img_sin)) { ?>
-                    <h4>Imágenes sin categoría</h4><br><br>
+                    <h4 id="tile">Imágenes sin categoría</h4><br><br>
                     <div id="containerdiv">
                         <ul class="thumbnails gallery" id="refresh">
                             <?php
                             foreach ($img_sin as $array) {
                                 foreach ($array as $key => $valor) {
                                     //echo $key . ' ' . $valor . '<br>';
+                                    if($key === 'id'){
+                                        $id = $valor;
+                                    }
                                     if ($key === 'name') {
                                         $name = $valor;
                                     }
@@ -76,11 +79,11 @@
                                     }
                                 }
                                 ?>
-                                <li class="thumbnail" id="<?= $name ?>" style="display: block;">
-                                    <a style="margin-bottom: 5px;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>">
+                                <li class="thumbnail" id="<?= $id ?>" style="display: block;">
+                                    <a class="visor" style="margin-bottom: 5px;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
                                         <img class="grayscale" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
                                     </a>
-                                    <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" checked type="checkbox" >
+                                    <input data-no-uniform="true" name="nameCheckBox" value="<?= $id ?>" class="iphone-toggle check" checked type="checkbox" >
                                 </li>
                             <?php }
                             ?>

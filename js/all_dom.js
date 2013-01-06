@@ -63,15 +63,6 @@ $(document).ready(function(){
 			}
 		});
 	});
-	
-	//animating menus on hover
-	$('ul.main-menu li:not(.nav-header)').hover(function(){
-		$(this).animate({'margin-left':'+=5'},300);
-	},
-	function(){
-		$(this).animate({'margin-left':'-=5'},300);
-	});
-	
 	//other things to do on document ready, seperated for ajax calls
 	docReady();
 });
@@ -152,30 +143,6 @@ function docReady(){
 		// Put your options here
 	});
 
-	//gallery colorbox
-	$('.thumbnail .visor').colorbox({rel:'thumbnail .visor', transition:"elastic", maxWidth:"95%", maxHeight:"95%"});
-
-	//gallery fullscreen
-	$('.toggle-fullscreen').button().click(function () {
-		var button = $(this), root = document.documentElement;
-		if (!button.hasClass('active')) {
-			$('#thumbnails').addClass('modal-fullscreen');
-			if (root.webkitRequestFullScreen) {
-				root.webkitRequestFullScreen(
-					window.Element.ALLOW_KEYBOARD_INPUT
-				);
-			} else if (root.mozRequestFullScreen) {
-				root.mozRequestFullScreen();
-			}
-		} else {
-			$('#thumbnails').removeClass('modal-fullscreen');
-			(document.webkitCancelFullScreen ||
-				document.mozCancelFullScreen ||
-				$.noop).apply(document);
-		}
-	});
-
-	
 	//datatable
 	$('.datatable').dataTable({
 			"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",
