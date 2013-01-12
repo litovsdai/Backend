@@ -267,46 +267,14 @@
             };
         });
         /*
-         *  Recorro lasimagenes seleccionadas para elimin arlas de la base d datos y del los ficheros
-         */
-        $(document).ready(function(){
-            $('.submit_delete_img').click(function(){
-                var selectedItems= new Array();
-                var indice=0;
-                $('[name=nameCheckBox]').each(function(){
-                    if($(this).attr('checked')){                           
-                        selectedItems[indice] = $(this).val();//El indice inicial cera 0
-                        indice++; //paso a incrementar el indice en 1
-                    }
-                });
-                //alert(selectedItems);
-                if(indice > 0){                      
-                    $('.refr').fadeIn(2000);
-                }
-                $.ajax({        
-                    type: "POST",
-                    url: "<?= base_url() ?>backend/b_gallery_c/delete_image",
-                    data: { activitiesArray : selectedItems },
-                    beforeSend:function() { $('.ajax_load').fadeIn("slow")},
-                    success: function(msg) {//resp_cat
-                        //alert(msg);
-                        $('.ajax_load').fadeOut("slow");
-                        $('.resp_del_img').html(msg);
-                   
-                    }
-                });
-                return false;
-            });
-        });
-        /*
          *  Muestra los elementos ocultos en el Visor de imágenes
          */
         $(document).ready(function(){
             $(".show_").toggle(
                 function(){
-                $(".show_edit").slideToggle('slow');
+                $(".show_edit").slideToggle(300);
             },function(){
-                $(".show_edit").slideToggle('slow');
+                $(".show_edit").slideToggle(300);
             });
         });
         /*
@@ -316,6 +284,7 @@
             $('.delete_one').on('click',function(){
                 var name = new Array();
                 name[0] = $(this).attr('value');
+                $('li#'+name[0]).detach();
                 $.ajax({
                     type : "POST",
                     url : "<?= base_url() ?>backend/b_gallery_c/delete_image",

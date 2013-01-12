@@ -11,6 +11,6 @@
 
 <?php
 if (isset($msg)) {
-    echo '<p class="alert alert-success">El usuario ' . $msg . ', se ha eliminado satisfactoriamente.</p>';
+    echo '<p class="alert alert-success">El usuario <b>' . $msg . '</b>, se ha eliminado satisfactoriamente.</p>';
 }
 ?>

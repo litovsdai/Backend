@@ -15,7 +15,14 @@
                 <form class="form-horizontal" action="<?= base_url() ?>login/login_c/login" method="post">
                     <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                    <div class="alert alert-error">
-                       Correo electrónico o contraseña incorrectos ! 
+                    <?php
+                    if(isset($no_active)){
+                        echo $no_active;
+                    }else {
+                        echo 'Correo electrónico o contraseña incorrectos ! ';
+                    }
+                    ?>
+                       
                    </div>
                     <fieldset>
                         <div class="input-prepend" title="correo electrónico" data-rel="tooltip">

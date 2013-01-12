@@ -9,6 +9,7 @@ class B_usuario_c extends CI_Controller {
         parent::__construct();
         $this->load->model('usuarios/usuarios_m');
         $this->load->model('gallery/gallery_m');
+        $this->load->library('email','','correo');
     }
 
     public function nuevo_administrador() {
@@ -65,9 +66,9 @@ class B_usuario_c extends CI_Controller {
             } else {// Si fue existo compruebo que no exista ni el nombre del usuario, ni el correo 
                 // Recojo datos del formulario
                 $data = array(
-                    'nombre' => $this->input->post('nombre'),
-                    'email' => $this->input->post('email'),
-                    'password' => $this->input->post('password'),
+                    'nombre'     => $this->input->post('nombre'),
+                    'email'      => $this->input->post('email'),
+                    'password'   => $this->input->post('password'),
                     'repassword' => $this->input->post('repassword')
                 );
                 // Recojo los datos de todos los usuarios para la tabla
@@ -85,10 +86,38 @@ class B_usuario_c extends CI_Controller {
                 }
                 // Si no existe ninguno de las dos variables, alamaceno los datos en la DB
                 if (!isset($data['nombre_error']) && !isset($data['email_error'])) {
+                    // Genero clave aleatoria de activación para adjuntarla en la url del email y en la BBDD
+                    $data['clave'] = $this->generar_txtAct(20,FALSE);
                     //Almaceno los datos en la DB y si esto funciona bien..
                     if ($this->usuarios_m->insert_usuario($data) > 0) {
+                        // Array para recoger el ID
+                        $dame = array('email'=>$this->input->post('email'),'password'=>md5($this->input->post('password')));
+                        // Extraigo el id de usuario para enviarlo por la url
+                        $id = $this->usuarios_m->dame_id($dame);
                         // Creo la variable para mensaje de exito
-                        $data['form_ok'] = $this->input->post('nombre');
+                        $data['form_ok'] = $this->input->post('nombre');                        
+                        // Envio correo al usuario recien creado
+                        $this->correo->from('info@casualweb.org', 'Casual Web');
+                        $this->correo->to($this->input->post('email'));
+                        $this->correo->subject('Hola '.$this->input->post('nombre').':');
+                        $this->correo->message('
+                            <p>Te envío este email para que actives tu cuenta con xxxxxxx, pulsa en el siguiente link para activarla:</p><br />
+                            <a style="color:purple;font-size:18px;" href="'.base_url().'login/login_c/activacion/'.$data['clave'].'/'.$id.'">Activación de cuenta.</a></p>
+                            <p style="color:red;">Tus datos personales son los siguientes:</p>
+                            <p style="color:tomato;">Nombre: <b>'.$this->input->post('nombre').'</b></p>
+                            <p style="color:tomato;">Email: <b>'.$this->input->post('email').'</b></p>
+                            <p style="color:tomato;">Contraseña: <b>'.$this->input->post('password').'</b></p>
+                            <p style="color:green;"><b>Puedes editar los datos personales una vez activada tu cuenta dentro de la aplicación.</b></p>
+                            ');
+                        // Si este fue enviado satisfactoriamente
+                        if($this->correo->send()) {
+                            $data['mail_ok']='El correo de activación se envió satisfactoriamente';
+                            // Si no se envió satisfactoriamente
+                        } else {
+                            //show_error($this->correo->print_debugger());
+                            $data['mail_err']='Ha ocurrido un <b>error</b> inesperado al enviar el correo de activación.<br>
+                            <b>Elimina el usuario</b> y vuélvelo a registrar, en caso de otro error como este, ponte en contacto con el administrador.';
+                        }
                     } else {// Si no se almacena ---> ERROR
                         //Error al insertar datos en la base de datos
                         $data['error_db'] = '';
@@ -145,10 +174,10 @@ class B_usuario_c extends CI_Controller {
             } else {// Si fue existo compruebo que no exista ni el nombre del usuario, ni el correo 
                 // Recojo datos del formulario
                 $data = array(
-                    'nombre' => $this->input->post('nombre'),
-                    'email' => $this->input->post('email'),
-                    'password' => $this->input->post('password'),
-                    'repassword' => $this->input->post('repassword'),
+                    'nombre'      => $this->input->post('nombre'),
+                    'email'       => $this->input->post('email'),
+                    'password'    => $this->input->post('password'),
+                    'repassword'  => $this->input->post('repassword'),
                     'oldpassword' => $this->input->post('oldpassword')
                 );
                 // Compruebo que coincida el viejo password
@@ -240,11 +269,11 @@ class B_usuario_c extends CI_Controller {
                     // Si hay mas de 1 usuario 
                     $data['array'] = $this->usuarios_m->get_usuarios();
                 }
-                $data['one_user'] = $this->usuarios_m->get_one_user($id);
-                $data['nombre'] = $data['one_user']['nombre'];
-                $data['email'] = $data['one_user']['email'];
+                $data['one_user']       = $this->usuarios_m->get_one_user($id);
+                $data['nombre']         = $data['one_user']['nombre'];
+                $data['email']          = $data['one_user']['email'];
                 $data['fecha_creacion'] = $data['one_user']['fecha_creacion'];
-                $data['avatar'] = $data['one_user']['avatar'];
+                $data['avatar']         = $data['one_user']['avatar'];
                 // Muestro las vistas del apartado de usuarios
                 $this->load->view('includes/head_v');
                 $this->load->view('includes/header_v');
@@ -265,6 +294,37 @@ class B_usuario_c extends CI_Controller {
         $this->simple_sessions->destroy_sess();
         redirect(base_url());
     }
+
+
+
+    function generar_txtAct($longitud,$especiales){
+        // Array con los valores a escoger
+        $semilla   = array();
+        $semilla[] = array('a','e','i','o','u');
+        $semilla[] = array('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z');
+        $semilla[] = array('0','1','2','3','4','5','6','7','8','9');
+        $semilla[] = array('A','E','I','O','U');
+        $semilla[] = array('B','C','D','F','G','H','J','K','L','M','N','P','Q','R','S','T','V','W','X','Y','Z');
+        $semilla[] = array('0','1','2','3','4','5','6','7','8','9');
+         
+        // si puede contener caracteres especiales, aumentamos el array $semilla
+        if ($especiales) { 
+            $semilla[] = array('+','-','*');
+         }
+         $clave='';
+        // creamos la clave con la longitud indicada
+        for ($bucle=0; $bucle < $longitud; $bucle++){
+            // seleccionamos un subarray al azar
+            $valor = mt_rand(0, count($semilla)-1);
+            // selecccionamos una posición al azar dentro del subarray
+            $posicion = mt_rand(0,count($semilla[$valor])-1);
+            // cogemos el carácter y lo agregamos a la clave
+            $clave .= $semilla[$valor][$posicion];
+        }
+        // devolvemos la clave
+        return $clave;
+    }
+
 
 }
 

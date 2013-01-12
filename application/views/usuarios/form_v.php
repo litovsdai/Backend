@@ -1,5 +1,5 @@
 <?php
-if ($this->simple_sessions->get_value('super') === 1) {
+if ($this->simple_sessions->get_value('super') === '1') {
     ?>     
     <div class="row-fluid sortable">
         <div class="box span8">
@@ -21,6 +21,8 @@ if ($this->simple_sessions->get_value('super') === 1) {
                     <?php if (isset($email_error)) echo '<p class="alert alert-error">El correo electrónio <b>' . $email_error . '</b> ya existe en la base de datos </p>'; ?>
                     <?php if (isset($form_ok) /* || isset($this->simple_sessions->get_value('form_ok')) */) echo '<p class="alert alert-success">El usuario <b>' . $form_ok . '</b> se almacenó satisfactoriamente</p>'; ?>
                     <?php if (isset($error_db)) echo '<p class="alert alert-error">En la inserción de los datos ocurrió un error inesperado,<br> <b>rogamos se ponga en contacto con el administrador.</b></p>'; ?>
+                    <?php if (isset($mail_ok)) echo '<p class="alert alert-success">'.$mail_ok.'</p>'; ?>
+                    <?php if (isset($mail_err)) echo '<p class="alert alert-errors">'.$mail_err.'</p>'; ?>
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="focusedInput">Nombre</label>

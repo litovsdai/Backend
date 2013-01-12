@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-ES">
     <head>
         <meta charset="utf-8">
-        <title>Free HTML5 Bootstrap Admin Template</title>
+        <title>Backend propiedad casualweb.org</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Privado">
         <meta name="author" content="Lito">

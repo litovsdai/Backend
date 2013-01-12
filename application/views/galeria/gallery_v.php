@@ -9,10 +9,6 @@
         </div>
         <div class="box-content" style="text-align: center;"> 
             <button class="btn show_"><i class="icon-edit"></i> EDITAR DATOS</button>    
-            <button class="submit_delete_img btn btn-danger" ><i class="icon-trash icon-white"></i> ELIMINA las "ON"</button>
-            <br /><br />
-            <button class="btn show_edit btn-warning refr btn-large" style="display: none;"><i class="icon-refresh icon-white"></i> APLICAR CAMBIOS</button> 
-
             <br />
             <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="display:none;">
             <br />
@@ -28,7 +24,9 @@
                     $con++;
                     foreach ($array as $categoria) {
                         foreach ($categoria as $key => $valor) {
-                            //echo $key . ': ' . $valor . '<br>';
+                            if($key === 'id'){
+                                $id = $valor;
+                            }
                             if ($key === 'name') {
                                 $name = $valor;
                             }
@@ -43,14 +41,13 @@
                             }
                         }
                         ?>
-                        <li class="thumbnail">
-                            <span style="margin-bottom: 1%;display: none;" title="Editar <?= $name ?>?" value="<?= $name ?>" class="show_edit ed_img btn"><i class="icon-edit"></i></span> 
-                            <span style="margin-bottom: 2%;display: none;" value="<?= $name ?>" class="btn show_edit delete_one"><i class="icon-remove"></i></span>
-                            <a class="visor" style="margin-bottom: 2%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>"shore>
-                                <img class="grayscale img_delete" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
-                            </a>
-                            <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" type="checkbox" >
-                        </li>
+                    <li class="thumbnail" id="<?= $id ?>">
+                        <span style="margin-bottom: 1%;display: none;" title="Editar <?= $name ?>?" value="<?= $name ?>" class="show_edit ed_img btn"><i class="icon-edit"></i></span>
+                        <span style="display: none;" value="<?= $id ?>" class="btn show_edit delete_one"><i class="icon-remove"></i></span>
+                        <a class="visor" style="margin-bottom: 2%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
+                            <img class="grayscale img_delete" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
+                        </a>
+                    </li>
                         <?php
                     }
                     echo '</ul>';
@@ -64,7 +61,9 @@
                 echo '<ul class="thumbnails gallery">';
                 foreach ($img_sin as $array) {
                     foreach ($array as $key => $valor) {
-                        //echo $key . ' ' . $valor . '<br>';
+                        if($key === 'id'){
+                            $id = $valor;
+                        }
                         if ($key === 'name') {
                             $name = $valor;
                         }
@@ -82,13 +81,12 @@
                         }
                     }
                     ?>
-                    <li class="thumbnail">
+                    <li class="thumbnail" id="<?= $id ?>">
                         <span style="margin-bottom: 1%;display: none;" title="Editar <?= $name ?>?" value="<?= $name ?>" class="show_edit ed_img btn"><i class="icon-edit"></i></span>
-                        <span style="display: none;" value="<?= $name ?>" class="btn show_edit delete_one"><i class="icon-remove"></i></span>
+                        <span style="display: none;" value="<?= $id ?>" class="btn show_edit delete_one"><i class="icon-remove"></i></span>
                         <a class="visor" style="margin-bottom: 2%;background:url(<?= $ruta_thumb ?>)" title="<?= $padre . ' / ' . $name ?>" href="<?= $ruta ?>">
                             <img class="grayscale img_delete" src="<?= $ruta_thumb ?>" alt="<?= $name ?>">
                         </a>
-                        <input data-no-uniform="true" name="nameCheckBox" value="<?= $name ?>" class="iphone-toggle check" type="checkbox" >
                     </li>
                     <?php
                 }
@@ -98,10 +96,7 @@
             <div class="resp_del_img"></div>
             <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="display:none;">
             <br /><br />
-            <button class="btn show_edit btn-warning refr btn-large" style="display: none;"><i class="icon-refresh icon-white"></i> APLICAR CAMBIOS</button> 
-            <br /><br />
             <button class="btn show_"><i class="icon-edit"></i> EDITAR DATOS</button> 
-            <button class="submit_delete_img btn btn-danger" ><i class="icon-trash icon-white"></i> ELIMINA las "ON"</button>
             <br /><br />
         </div>
     </div><!--/span-->

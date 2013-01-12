@@ -114,13 +114,21 @@ class Usuarios_m extends CI_Model {
         return FALSE;
     }
 
+    public function active_user($id) {
+        $query = $this->db->query("
+            UPDATE administradores
+            SET activo='si' WHERE id = " . $id."");
+    }
+
+
     public function insert_usuario($data) {
         $fecha = date('Y-m-d');
         $data = array(
             'nombre' => $data['nombre'],
             'mail' => $data['email'],
             'password' => md5($data['password']),
-            'fecha_creacion' => $fecha
+            'fecha_creacion' => $fecha,
+            'clave_temp' => $data['clave']
         );
         $this->db->insert('administradores', $data);
         return $this->db->affected_rows();
@@ -154,10 +162,11 @@ class Usuarios_m extends CI_Model {
 
             foreach ($query->result_array() as $row) {
                 $temporal = array(
-                    'id' => $row['id'],
-                    'nombre' => $row['nombre'],
-                    'mail' => $row['mail'],
-                    'fecha_creacion' => $row['fecha_creacion']);
+                    'id'             => $row['id'],
+                    'nombre'         => $row['nombre'],
+                    'mail'           => $row['mail'],
+                    'fecha_creacion' => $row['fecha_creacion'],
+                    'activo'         => $row['activo']);
                 array_push($array_usarios, $temporal);
             }
             return $array_usarios;
@@ -188,7 +197,11 @@ class Usuarios_m extends CI_Model {
                     'nombre' => $row['nombre'],
                     'email' => $row['mail'],
                     'avatar' => $row['avatar'],
-                    'fecha_creacion' => $row['fecha_creacion']);
+                    'super_user' => $row['super_user'],
+                    'fecha_creacion' => $row['fecha_creacion'],
+                    'clave_temp' => $row['clave_temp'],
+                    'activo' => $row['activo']
+                    );
             }
             return $one_user;
         }

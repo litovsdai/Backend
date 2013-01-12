@@ -16,7 +16,8 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Email</th>
-                        <th>Fecha de registro</th>                        
+                        <th>Fecha de registro</th>   
+                        <th>Estado</th>                     
                         <th>Acciones</th>
                     </tr>
                 </thead>   
@@ -43,16 +44,27 @@
                                         case 'fecha_creacion':
                                             echo '<td class="center">' . $valor . '</td>';
                                             break;
+                                        case 'activo':
+                                            if($valor==='si'){
+                                                echo '<td class="center">
+                                                            <span class="label label-success">Activo</span>
+                                                            </td>';
+                                            }else{
+                                                echo '<td class="center">
+                                                            <span class="label label-warning">Pendiente</span>
+                                                            </td>';
+                                            }
+                                            break;
                                     }
                                 }
                                 ?>
                                 <td class = "center">
-                                    <a class="btn btn-success" href="<?= base_url(); ?>backend/b_usuario_c/ver/<?= $id_user ?>">
+                                    <a class="btn btn-info" href="<?= base_url(); ?>backend/b_usuario_c/ver/<?= $id_user ?>">
                                         <i class="icon-zoom-in icon-white"></i>  
                                         Ver                                            
                                     </a>
                                     <?php
-                                    if ($this->simple_sessions->get_value('super') === 1) {
+                                    if ($this->simple_sessions->get_value('super') === '1') {
                                         ?>
                                         <a class = "btn btn-danger" href = "<?= base_url(); ?>backend/b_usuario_c/delete_user/<?= $id_user ?>/<?= $name ?>">
                                             <i class = "icon-trash icon-white"></i>

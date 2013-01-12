@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#"> <img alt="Charisma Logo" src="<?= base_url() ?>img/logo20.png" /> <span>Backend</span></a>
+            <a class="brand" href="#"> <span>casualWeb</span></a>
 
             <!-- theme selector starts -->
             <!--            <div class="btn-group pull-right theme-container" >

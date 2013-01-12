@@ -15,12 +15,12 @@ class Upload extends CI_Controller {
     function do_upload() {
         // Si está iniciada la SESION, mostrara las vistas del BACKEND
         if ($this->simple_sessions->get_value('status')) {
-            $config['upload_path'] = './img/avatares/';
-            $config['overwrite'] = TRUE;
-            $config['allowed_types'] = 'jpg|jpeg|gif|png';
-            $config['max_size'] = '2048';
-            $config['max_width'] = '1024';
-            $config['max_height'] = '768';
+            $config['upload_path']    = './img/avatares/';
+            $config['overwrite']      = TRUE;
+            $config['allowed_types']  = 'jpg|jpeg|gif|png';
+            $config['max_size']       = '2048';
+            $config['max_width']      = '1024';
+            $config['max_height']     = '768';
             // Cambio el nombre de la imagen
             $pos = strripos($_FILES['userfile']['name'], '.');
             $format = substr($_FILES['userfile']['name'], $pos, strlen($_FILES['userfile']['name']));
@@ -40,9 +40,9 @@ class Upload extends CI_Controller {
                 $data['upload_data']['client_name'] = $name;
                 $route = base_url() . 'img/avatares/' . $name;
                 $dat = array(
-                    'id' => $this->simple_sessions->get_value('id'),
+                    'id'      => $this->simple_sessions->get_value('id'),
                     'nom_img' => $name,
-                    'avatar' => $route
+                    'avatar'  => $route
                 );
                 // Inserto datos en DB
                 $this->usuarios_m->set_avatar($dat);
@@ -82,12 +82,12 @@ class Upload extends CI_Controller {
     public function upload() {
         # Configuracion de la libreria
         # 'img_path' esta en /applications/config/pixmat.php
-        $config['upload_path'] = './img/gallery/';
+        $config['upload_path']   = './img/gallery/';
         $config['allowed_types'] = 'jpg|gif|png|jpeg';
-        $config['encrypt_name'] = 'TRUE';
-        $config['max_size'] = '71680';
-        $config['max_width'] = '8000';
-        $config['max_height'] = '8000';
+        $config['encrypt_name']  = 'TRUE';
+        $config['max_size']      = '71680';
+        $config['max_width']     = '8000';
+        $config['max_height']    = '8000';
 
         $this->load->library('upload', $config);
 
@@ -100,9 +100,9 @@ class Upload extends CI_Controller {
             $image_name = NULL;
         } else {
             # Nombre de la foto
-            $imageData = $this->upload->data();
+            $imageData  = $this->upload->data();
             $image_name = $imageData['file_name'];
-            $image_ext = $imageData['file_ext'];
+            $image_ext  = $imageData['file_ext'];
 
             # Achicamos la foto
             if (!$this->resizePhoto($image_name)) {
@@ -110,8 +110,8 @@ class Upload extends CI_Controller {
             } else {
                 # Agregamos a la base de datos
                 $data = array(
-                    'title' => 'Foto sin titulo',
-                    'image' => $image_name,
+                    'title'  => 'Foto sin titulo',
+                    'image'  => $image_name,
                     'active' => 0
                 );
 
@@ -138,42 +138,23 @@ class Upload extends CI_Controller {
         $this->load->library('image_lib');
 
         // Achicamos a 1024x768
-        $config['image_library'] = 'gd2';
-        $config['source_image'] = './img/gallery/' . $name;
-        $config['new_image'] = './img/gallery/' . '1024x768/' . $name;
+        $config['image_library']  = 'gd2';
+        $config['source_image']   = './img/gallery/' . $name;
+        $config['new_image']      = './img/gallery/' . '1024x768/' . $name;
         $config['maintain_ratio'] = TRUE;
-        $config['width'] = 1024;
-        $config['height'] = 768;
+        $config['width']          = 1024;
+        $config['height']         = 768;
 
         $this->image_lib->initialize($config);
         if (!$this->image_lib->resize()) {
             $error = TRUE;
         }
 
-        /*
-
-          // Le ponemos watermark, tenemos que utilizar otra configuracion, puesto que vamos a trabajar
-          // con el thumbnail y vamos a ponerle watermark
-          $config2['image_library']       = 'gd2';
-          $config2['source_image']        = $this->config->item('upload_path') . '1024x768/' . $name;
-          $config2['wm_type']         = 'overlay';
-          $config2['wm_overlay_path']     = $this->config->item('watermark');
-          $config2['wm_vrt_alignment']        = 'middle';
-          $config2['wm_hor_alignment']    = 'center';
-
-          # Watermark
-          $this->image_lib->initialize($config2);
-          if ( ! $this->image_lib->watermark()){
-          $error = TRUE;
-          }
-
-         */
-
         // Achicamos a 800x600
         $config['source_image'] = './img/gallery/' . '1024x768/' . $name;
-        $config['new_image'] = './img/gallery/' . '800x600/' . $name;
-        $config['width'] = 800;
-        $config['height'] = 600;
+        $config['new_image']    = './img/gallery/' . '800x600/' . $name;
+        $config['width']        = 800;
+        $config['height']       = 600;
 
         $this->image_lib->initialize($config);
         if (!$this->image_lib->resize()) {
@@ -182,9 +163,9 @@ class Upload extends CI_Controller {
 
         // Achicamos a 400x300
         $config['source_image'] = './img/gallery/' . '1024x768/' . $name;
-        $config['new_image'] = './img/gallery/' . '400x300/' . $name;
-        $config['width'] = 400;
-        $config['height'] = 300;
+        $config['new_image']    = './img/gallery/' . '400x300/' . $name;
+        $config['width']        = 400;
+        $config['height']       = 300;
 
         $this->image_lib->initialize($config);
         if (!$this->image_lib->resize()) {

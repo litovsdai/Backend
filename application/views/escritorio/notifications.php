@@ -15,7 +15,7 @@
         <div><?= $total_pro ?></div>
     </a>
     <a data-rel="tooltip" title="<?= $total_pictures ?> imágenes nuevas de este mes" class="well span4 top-block" href="<?= base_url() ?>backend/b_gallery_c">
-        <span ><img style="width: 40px;height: 35px;" src="<?= base_url() ?>/img/icon_camera.png" alt="Icono imagenes"></span>
+        <span class="icon32 icon-color icon-image"></span>
         <div>Imágenes</div>
         <div><?= $total_pictures ?></div>
         <?php if ($last_month_pic > 0) { ?>

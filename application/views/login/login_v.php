@@ -1,6 +1,5 @@
 <div class="container-fluid">
-    <div class="row-fluid">
-
+    <div class="row-fluid">        
         <div class="row-fluid">
             <div class="span12 center login-header">
                 <h2>Bienvenido a su backend personal</h2>
@@ -8,6 +7,7 @@
         </div><!--/row-->
         <div class="row-fluid">
             <div class="well span5 center login-box">
+                <?php if(isset($active)) echo '<div class="alert alert-success">'.$active.'</div>'; ?>       
                 <div class="alert alert-info">
                     Por favor introduce tu nombre de usuario y contraseña.
                 </div>
