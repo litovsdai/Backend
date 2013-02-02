@@ -14,169 +14,6 @@ class B_gallery_c extends CI_Controller {
 
     /*
      * ********************************************************************************
-     * ********************  Botón del menú SUBIR IMÁGENES   **************************
-     * ********************************************************************************
-     */
-
-    /*
-     * Vista que carga cuando el Pulsas en subir imágenes
-     */
-
-    public function multi_upload($start = 0) {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
-        if ($this->simple_sessions->get_value('status')) {
-            // Recojo las imágenes sin categoria asociada
-            $datos['img_sin'] = $this->img_sin();
-            // Si esta contiene alguna imagen
-            if ($datos['img_sin'] !== 0) {
-                // Cargo la configuracion de la paginacion
-                $config = $this->pagination($datos['img_sin']);
-                // Creo el array donde por porciones enviare las imágens que correspondan
-                $data['img_sin'] = array();
-                // Recorro el array y recojo la porcion elegida en la confguracion
-                for ($i = $start; $i < $start + $config['per_page']; $i++) {
-                    // Alamceno en data la porcion de datos
-                    $data['img_sin'][] = $datos['img_sin'][$i];
-                    // Si se ha llegado al final del array me salgo con "break"
-                    if ($i == count($datos['img_sin']) - 1) {
-                        break;
-                    }
-                }
-                $this->pagination->initialize($config);
-            } else {
-                $data['cero'] = '<br>Muy bién, no hay imágenes sin categoría.';
-            }
-            // Envio los links correspondientes a las vistas
-            $data['paginacion'] = $this->pagination->create_links();
-
-            // Cargo vistas
-            if (!$this->input->post('ajax')) {
-                $this->load->view('includes/head_v');
-                $this->load->view('includes/header_v');
-                $this->load->view('includes/menu_v');
-                $this->load->view('galeria/breadcrumb_gallery');
-                $this->load->view('galeria/multi_upload_v', $data);
-                $this->load->view('galeria/img_sin_v', $data);
-                $this->load->view('includes/footer_v');
-            } else if ($this->input->post('ajax')) {
-                $this->load->view('galeria/img_sin_v_ajax', $data);
-            } else {
-                redirect('');
-            }
-        } else {
-            redirect('');
-        }
-    }
-
-    /*
-     * Método que gestiona la subida imágenes, y genera la respuesta a dicha acción
-     */
-
-    public function multi_upload_start($start = 0) {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
-        if ($this->simple_sessions->get_value('status')) {
-            # Recorro todos los FILES que se hallan seleccionado
-            for ($i = 1; $i <= count($_FILES); $i++) {
-                $campo_temp = 'userfile' . $i;
-                // Si no esta vacio el campo
-                if (isset($_FILES[$campo_temp]['name']) && !empty($_FILES[$campo_temp]['name'])) {
-                    // Elimino todos los posibles puntos i espacios que contenga el nombee  de laimagen
-                    $name = $this->elimina_puntos_espacios($_FILES[$campo_temp]['name']);
-                    // configuración para el Upload de imágenes
-                    $config['upload_path'] = "./img/gallery/"; // la ruta desde la raíz de CI
-                    $config['overwrite'] = TRUE;
-                    $config['allowed_types'] = 'jpg|jpeg|gif|png';
-                    $config['file_name'] = $name;
-                    $config['max_size'] = '10000'; // 10 Mb
-                    $config['max_width'] = '5000';
-                    $config['max_height'] = '5000';
-                    $config['remove_spaces'] = TRUE;
-                    // Procedo a subir las imágenes
-                    $this->upload->initialize($config);
-                    // Compruebo si la subida de esta imagen NO ha sido satisfactoria
-                    if (!$this->upload->do_upload($campo_temp)) {
-                        // Recojo los errores
-                        $data['error'][$i] = array('error' => $this->upload->display_errors());
-                        $data['error'][$i]['error'] = $name . $data['error'][$i]['error'];
-                    } else {// En caso contrario                        
-                        /*
-                         * 800 X 600
-                         */
-                        $size_width_1 = '800';
-                        $size_heigth_1 = '600';
-                        if ($this->redimensiona($name, $size_width_1, $size_heigth_1)) {// Si es satisfactorio
-                            /*
-                             * Thumb 145 X  100
-                             */
-                            $size_width_2 = '145';
-                            $size_heigth_2 = '100';
-                            if ($this->redimensiona($name, $size_width_2, $size_heigth_2)) {// Si es satisfactorio
-                                // Recojo el nombre de la imagen
-                                $data['ok'][$i] = $name;
-                                // Almaceno los datos para Mysql
-                                $data['name'] = $name;
-                                $data['ruta1'] = base_url() . 'img/gallery/' . $size_width_1 . 'X' . $size_heigth_1 . '/' . $name;
-                                $data['ruta2'] = base_url() . 'img/gallery/' . $size_width_2 . 'X' . $size_heigth_2 . '/' . $name;
-                                // Si la insercion es satisfactoria sigo adelante, si no ya existia a img
-                                $this->gallery_m->add_images($data);
-                                // Elimino la imagen subida a que no vale y pesa demasiado para lo que quiero hacer con ella
-                                @unlink('./img/gallery/' . $name);
-                                // Recojo los success
-                                $data['success'][$i] = array('upload_data' => $this->upload->data());
-                            } else {
-                                $data['err_145X100'][$i] = 'Error en transformación 145X100 en imagen ' . $name;
-                            }
-                        } else {
-                            $data['err_800X600'][$i] = 'Error en transformación 800X600 en imagen ' . $name;
-                        }
-                    }
-                }
-            }
-            // Recojo las imágenes sin categoria asociada
-            $datos['img_sin'] = $this->img_sin();
-            // Si esta contiene alguna imagen
-            if ($datos['img_sin'] !== 0) {
-                // Cargo la configuracion de la paginacion
-                $config = $this->pagination($datos['img_sin']);
-                // Creo el array donde por porciones enviare las imágens que correspondan
-                $data['img_sin'] = array();
-                // Recorro el array y recojo la porcion elegida en la confguracion
-                for ($i = $start; $i < $start + $config['per_page']; $i++) {
-                    // Alamceno en data la porcion de datos
-                    $data['img_sin'][] = $datos['img_sin'][$i];
-                    // Si se ha llegado al final del array me salgo con "break"
-                    if ($i == count($datos['img_sin']) - 1) {
-                        break;
-                    }
-                }
-                $this->pagination->initialize($config);
-            } else {
-                $data['cero'] = '<br>Muy bién, no hay imágenes sin categoría.';
-            }
-            // Envio los links correspondientes a las vistas
-            $data['paginacion'] = $this->pagination->create_links();
-
-            // Cargo vistas
-            if (!$this->input->post('ajax')) {
-                $this->load->view('includes/head_v');
-                $this->load->view('includes/header_v');
-                $this->load->view('includes/menu_v');
-                $this->load->view('galeria/breadcrumb_gallery');
-                $this->load->view('galeria/multi_upload_v', $data);
-                $this->load->view('galeria/img_sin_v', $data);
-                $this->load->view('includes/footer_v');
-            } else if ($this->input->post('ajax')) {
-                $this->load->view('galeria/img_sin_v_ajax', $data);
-            } else {
-                redirect('');
-            }
-        } else {
-            redirect('');
-        }
-    }
-
-    /*
-     * ********************************************************************************
      * ********************  Botón del menú EDITAR IMÁGENES   *************************
      * ********************************************************************************
      */
@@ -239,6 +76,220 @@ class B_gallery_c extends CI_Controller {
             }
         } else {
             echo '<div class="alert alert-error">No ha seleccionado ninguna imagen.</div>';
+        }
+    }
+
+    /*
+     * ********************************************************************************
+     * ********************  Botón del menú SUBIR IMÁGENES   **************************
+     * ********************************************************************************
+     */
+
+    /*
+     * Vista que carga cuando el Pulsas en subir imágenes
+     */
+
+    public function multi_upload($start = 0) {
+        // Si está iniciada la SESION, mostrara las vistas de la galeria
+        if ($this->simple_sessions->get_value('status')) {
+            // Recojo las imágenes sin categoria asociada
+            $datos['img_sin'] = $this->img_sin();
+            // Si esta contiene alguna imagen
+            if ($datos['img_sin'] !== 0) {
+                // Cargo la configuracion de la paginacion
+                $config = $this->pagination($datos['img_sin']);
+                // Creo el array donde por porciones enviare las imágens que correspondan
+                $data['img_sin'] = array();
+                // Recorro el array y recojo la porcion elegida en la confguracion
+                for ($i = $start; $i < $start + $config['per_page']; $i++) {
+                    // Alamceno en data la porcion de datos
+                    $data['img_sin'][] = $datos['img_sin'][$i];
+                    // Si se ha llegado al final del array me salgo con "break"
+                    if ($i == count($datos['img_sin']) - 1) {
+                        break;
+                    }
+                }
+                $this->pagination->initialize($config);
+            } else {
+                $data['cero'] = '<br>Muy bién, no hay imágenes sin categoría.';
+            }
+            // Envio los links correspondientes a las vistas
+            $data['paginacion'] = $this->pagination->create_links();
+
+            // Cargo vistas
+            if (!$this->input->post('ajax')) {
+                $this->load->view('includes/head_v');
+                $this->load->view('includes/header_v');
+                $this->load->view('includes/menu_v');
+                $this->load->view('galeria/breadcrumb_gallery');
+                $this->load->view('galeria/multi_upload_v', $data);
+                $this->load->view('galeria/img_sin_v', $data);
+                $this->load->view('includes/footer_v');
+            } else if ($this->input->post('ajax')) {
+                $this->load->view('galeria/img_sin_v_ajax', $data);
+            } else {
+                redirect('');
+            }
+        } else {
+            redirect('');
+        }
+    }
+
+    /*
+     * Método que gestiona la subida imágenes, y genera la respuesta a dicha acción
+     */
+
+    public function multi_upload_start($start = 0) {
+        // Si está iniciada la SESION, mostrara las vistas de la galeria
+        if ($this->simple_sessions->get_value('status')) {
+            // configuración para el Upload de imágenes
+            $config['upload_path'] = "./img/gallery/"; // la ruta desde la raíz de CI
+            $config['overwrite'] = TRUE;
+            $config['allowed_types'] = 'jpg|jpeg|gif|png';
+            $config['max_size'] = '10000'; // 10 Mb
+            $config['max_width'] = '5000';
+            $config['max_height'] = '5000';
+            $config['remove_spaces'] = TRUE;
+            // Procedo a subir las imágenes
+            $this->upload->initialize($config);
+            // Compruebo si la subida de esta imagen ha sido satisfactoria
+            if ($this->upload->do_multi_upload("files")) {
+                $datos = array();
+                // Recorro los resultados satisfactorios uno a uno
+                foreach ($this->upload->get_multi_upload_data() as $values) {
+                    foreach ($values as $key => $value) {
+                        // Recojo el campo NOMBRE
+                        if ($key === 'file_name') {
+                            // Añado a un array con los nombres para mostrarlos en la vista
+                            array_push($datos, $value);
+                            // Genero la redimension 800X600
+                            $redimension_800X600 = $this->redimensiona($value, '800', '600');
+                            if ($redimension_800X600) {// SUCCESS 800X600
+                                // Genero la redimension 145X100
+                                $redimension_145X100 = $this->redimensiona($value, '145', '100');
+                                if ($redimension_145X100) {// SUCCESS 145X100
+                                    // Recojo los datos a incluir en la Database
+                                    $data = array(
+                                        'name' => $value,
+                                        'ruta1' => site_url('img/gallery') . '/800X600/' . $value,
+                                        'ruta2' => site_url('img/gallery') . '/145X100/' . $value
+                                    );
+                                    // Envio los datos
+                                    $this->gallery_m->add_images($data);
+                                    // Elimino la imagen grande, ya que ocupa mucho
+                                    @unlink('./img/gallery/' . $value);
+                                } else {// ERROR 145X100
+                                    echo 'En la redimensión 145X100 de la imagen ' . $value . '<br>';
+                                    print_r($redimension_145X100);
+                                }
+                            } else {// ERROR 800X600
+                                echo 'En la redimensión 800X600  de la imagen ' . $value . '<br>';
+                                print_r($redimension_800X600);
+                            }
+                        }
+                        $data ['datos'] = $datos;
+                        /* DEVUELVE
+                          file_name: 2011-12-31_22.15_.39_.jpg
+                          file_type: image/jpeg
+                          file_path: /var/www/Backend/img/gallery/
+                          full_path: /var/www/Backend/img/gallery/2011-12-31_22.15_.39_.jpg
+                          raw_name: 2011-12-31_22.15_.39_
+                          orig_name: 2011-12-31_22.15_.39_.jpg
+                          client_name: 2011-12-31 22.15_.39_.jpg
+                          file_ext: .jpg
+                          file_size: 2683.42
+                          is_image: 1
+                          image_width: 3264
+                          image_height: 2448
+                          image_type: jpeg
+                          image_size_str: width="3264" height="2448"
+                         */
+                    }
+                }
+            } else {
+                /*
+                 * Aunque ocurra algún error, puede haber imágenes que se hallan subido bien
+                 */
+                $datos = array();
+                // Recorro los resultados satisfactorios uno a uno
+                foreach ($this->upload->get_multi_upload_data() as $values) {
+                    foreach ($values as $key => $value) {
+                        // Recojo el campo NOMBRE
+                        if ($key === 'file_name') {
+                            // Añado a un array los nombres para mostrarlos
+                            array_push($datos, $value);
+                            // Genero la redimension 800X600
+                            $redimension_800X600 = $this->redimensiona($value, '800', '600');
+                            if ($redimension_800X600) {// SUCCESS 800X600
+                                // Genero la redimension 145X100
+                                $redimension_145X100 = $this->redimensiona($value, '145', '100');
+                                if ($redimension_145X100) {// SUCCESS 145X100
+                                    // Recojo los datos a incluir en la Database
+                                    $data = array(
+                                        'name' => $value,
+                                        'ruta1' => site_url('img/gallery') . '/800X600/' . $value,
+                                        'ruta2' => site_url('img/gallery') . '/145X100/' . $value
+                                    );
+                                    // Envio los datos
+                                    $this->gallery_m->add_images($data);
+                                    // Elimino la imagen grande, ya que ocupa mucho
+                                    @unlink('./img/gallery/' . $value);
+                                } else {// ERROR 145X100
+                                    echo 'En la redimension 145X100 de la imagen ' . $value . '<br>';
+                                    print_r($redimension_145X100);
+                                }
+                            } else {// ERROR 800X600
+                                echo 'En la redimension 800X600  de la imagen ' . $value . '<br>';
+                                print_r($redimension_800X600);
+                            }
+                        }
+                    }
+                }
+                $data ['datos'] = $datos;
+                // Errors
+                $data['error_images'] = $this->upload->display_errors();
+            }
+        }
+        /**
+         * PAGINACIÓN + RECOGIDA IMÁGENES SIN CATEGORIA
+         */
+        // Recojo las imágenes sin categoria asociada, en caso de no haber imágenes devuelve 0
+        $datos['img_sin'] = $this->img_sin();
+        // Si esta contiene alguna imagen
+        if ($datos['img_sin'] !== 0) {
+            // Cargo la configuracion de la paginacion
+            $config = $this->pagination($datos['img_sin']);
+            // Creo el array donde por porciones enviare las imágenes que correspondan
+            $data['img_sin'] = array();
+            // Recorro el array y recojo la porcion elegida en la confguracion
+            for ($i = $start; $i < $start + $config['per_page']; $i++) {
+                // Almaceno en data la porcion de datos
+                $data['img_sin'][] = $datos['img_sin'][$i];
+                // Si se ha llegado al final del array me salgo con "break"
+                if ($i == count($datos['img_sin']) - 1) {
+                    break;
+                }
+            }
+            $this->pagination->initialize($config);
+        } else {
+            $data['cero'] = '<br>Muy bién, no hay imágenes sin categoría.';
+        }
+        // Envio los links correspondientes a las vistas
+        $data['paginacion'] = $this->pagination->create_links();
+
+        // Cargo vistas
+        if (!$this->input->post('ajax')) {
+            $this->load->view('includes/head_v');
+            $this->load->view('includes/header_v');
+            $this->load->view('includes/menu_v');
+            $this->load->view('galeria/breadcrumb_gallery');
+            $this->load->view('galeria/multi_upload_v', $data);
+            $this->load->view('galeria/img_sin_v', $data);
+            $this->load->view('includes/footer_v');
+        } else if ($this->input->post('ajax')) {
+            $this->load->view('galeria/img_sin_v_ajax', $data);
+        } else {
+            redirect('');
         }
     }
 
@@ -444,31 +495,12 @@ class B_gallery_c extends CI_Controller {
         $this->image_lib->initialize($config);
         // Si NO es satisfactorio
         if (!$this->image_lib->resize()) {
-            echo $this->image_lib->display_errors();
             // Por si a caso elimino los directorios creados
             @unlink('./img/gallery/' . $name);
             @unlink('./img/gallery/' . $width . 'X' . $heigth . '/' . $name);
-            return FALSE;
+            return $this->image_lib->display_errors();
         }
         return TRUE;
-    }
-
-    function elimina_puntos_espacios($nombre_temp) {
-        $name_origin = $nombre_temp;
-        // Sustituyo los espacios por "_"
-        $name_complet = str_replace(' ', '_', $name_origin);
-        // Extraigo la posicion del el ultimo "." de la String
-        $pos_extension = strripos($name_complet, '.');
-        // Extraigo la posicion del el ultimo "." de la String                 
-        $extension = substr($name_complet, $pos_extension, strlen($name_complet));
-        // Extraigo nombe actual
-        $nombe_actual = substr($name_complet, 0, $pos_extension);
-        // Quito los puntos por "_"
-        $nombre_sin_puntos = str_replace('.', '_', $nombe_actual);
-        // Concateno el nuevo nombre
-        $nombre_final = $nombre_sin_puntos . $extension;
-        // Asigno el nuevo nombre
-        return $nombre_final;
     }
 
     function img_sin() {
