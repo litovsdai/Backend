@@ -233,24 +233,29 @@ class Multi_upload extends CI_Controller {
      */
 
     function redimensiona($name, $width, $heigth) {
-        // Datos para el config
-        $config = array(
-            'image_library' => 'gd2',
-            'source_image' => './img/gallery/' . $name,
-            'width' => $width,
-            'height' => $heigth,
-            'new_image' => './img/gallery/' . $width . 'X' . $heigth . '/' . $name
-        );
-        // Cargo la libreria que se encargará de redimensionar imágenes
-        $this->image_lib->initialize($config);
-        // Si NO es satisfactorio
-        if (!$this->image_lib->resize()) {
-            // Por si a caso elimino los directorios creados
-            @unlink('./img/gallery/' . $name);
-            @unlink('./img/gallery/' . $width . 'X' . $heigth . '/' . $name);
-            return $this->image_lib->display_errors();
+        // Si está iniciada la SESION, mostrara las vistas de la galeria
+        if ($this->simple_sessions->get_value('status')) {
+            // Datos para el config
+            $config = array(
+                'image_library' => 'gd2',
+                'source_image' => './img/gallery/' . $name,
+                'width' => $width,
+                'height' => $heigth,
+                'new_image' => './img/gallery/' . $width . 'X' . $heigth . '/' . $name
+            );
+            // Cargo la libreria que se encargará de redimensionar imágenes
+            $this->image_lib->initialize($config);
+            // Si NO es satisfactorio
+            if (!$this->image_lib->resize()) {
+                // Por si a caso elimino los directorios creados
+                @unlink('./img/gallery/' . $name);
+                @unlink('./img/gallery/' . $width . 'X' . $heigth . '/' . $name);
+                return $this->image_lib->display_errors();
+            }
+            return TRUE;
+        } else {
+            redirect('');
         }
-        return TRUE;
     }
 
     function img_sin() {
@@ -264,7 +269,7 @@ class Multi_upload extends CI_Controller {
     }
 
     function pagination($array) {
-        $config['base_url'] = base_url() . 'backend/multi_upload';
+        $config['base_url'] = base_url() . 'backend/multi_upload/multi_upload_start';
         $config['total_rows'] = count($array);
         $config['per_page'] = '3';
         $config['uri_segment'] = '4';

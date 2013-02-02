@@ -41,10 +41,10 @@
                                 <?php } ?>
                             </select>    
                         </span>
-                        <a class="btn btn-small btn-primary comp_check" style="margin: -3% 2% 0 3%;">
+                        <a class="btn btn-small btn-primary comp_check" style="margin: -1% 2% 0 3%;">
                             Asignar categorías
                         </a>
-                        <img class="resp_asig" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="margin: -3% 2% 0 3%;display:none;">
+                        <img class="resp_asig" src="<?= base_url() ?>img/ajax-loaders/load-indicator.gif" style="margin: -1% 2% 0 3%;display:none;">
 
                     </div>
                     <br>

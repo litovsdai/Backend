@@ -66,16 +66,21 @@ class Edit_images extends CI_Controller {
      */
 
     public function delete_image() {
-        $data = $this->input->post('activitiesArray');
+        // Si está iniciada la SESION, mostrara las vistas de la galeria
+        if ($this->simple_sessions->get_value('status')) {
+            $data = $this->input->post('activitiesArray');
 
-        if (count($data) > 0 && !empty($data)) {
-            for ($i = 0; $i < count($data); $i++) {
-                $nombre = $this->gallery_m->get_name($data[$i]);
-                $this->gallery_m->remove_picture($nombre);
-                echo '<div class="alert alert-success">La imagen ' . $nombre . ' ha sido eliminada satisfactoriamente.</div>';
+            if (count($data) > 0 && !empty($data)) {
+                for ($i = 0; $i < count($data); $i++) {
+                    $nombre = $this->gallery_m->get_name($data[$i]);
+                    $this->gallery_m->remove_picture($nombre);
+                    echo '<div class="alert alert-success">La imagen ' . $nombre . ' ha sido eliminada satisfactoriamente.</div>';
+                }
+            } else {
+                echo '<div class="alert alert-error">No ha seleccionado ninguna imagen.</div>';
             }
         } else {
-            echo '<div class="alert alert-error">No ha seleccionado ninguna imagen.</div>';
+            redirect('');
         }
     }
 

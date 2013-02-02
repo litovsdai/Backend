@@ -14,7 +14,7 @@
         <div>Miembros pro</div>
         <div><?= $total_pro ?></div>
     </a>
-    <a data-rel="tooltip" title="<?= $total_pictures ?> imágenes nuevas de este mes" class="well span4 top-block" href="<?= base_url() ?>backend/edit_images">
+    <a data-rel="tooltip" title="<?= $last_month_pic ?> imágenes nuevas de este mes" class="well span4 top-block" href="<?= base_url() ?>backend/edit_images">
         <span class="icon32 icon-color icon-image"></span>
         <div>Imágenes</div>
         <div><?= $total_pictures ?></div>
