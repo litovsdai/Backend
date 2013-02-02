@@ -20,7 +20,7 @@
                             <span class="add-on"><i class="icon-user"></i></span>
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                             <input autofocus class="input-large span10" name="email" id="email" type="text" placeholder="correo electrónico"
-                                   value="<?php echo set_value('email'); ?>" />
+                                   value="lito@gmail.com" />
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                         </div>
                         <div class="clearfix"></div>
@@ -28,7 +28,7 @@
                             <span class="add-on"><i class="icon-lock"></i></span>
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                             <input class="input-large span10" name="password" id="password" type="password" placeholder="contraseña"
-                                   value="<?php echo set_value('password'); ?>" />
+                                   value="lito" />
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                         </div>
                         <div class="clearfix"></div>

@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Privado">
         <meta name="author" content="Lito">
-        <meta http-equiv="Cache-Control" content="no-cache">
         <!-- The styles -->
         <link href="<?= base_url() ?>css/bootstrap-cerulean.css" rel="stylesheet">
         <style type="text/css">
@@ -41,7 +40,17 @@
 
         <!-- The fav icon -->
         <link rel="shortcut icon" href="<?= base_url() ?>img/favicon.ico">
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-30532508-7']);
+            _gaq.push(['_trackPageview']);
 
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
     </head>
 
     <body>
