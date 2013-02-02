@@ -85,7 +85,7 @@ class Login_c extends CI_Controller {
                     // Creo la session
                     $this->simple_sessions->add_sess($data);
                     // Redirijo al usuario al BACKEND
-                    redirect('backend/backend_c');
+                    redirect('backend/escritorio');
                 }else{// Si no tiene activada la cuenta
                     $data['no_active'] = 'No puedes acceder a la aplicación ya que tu cuenta no está activada.';
                     // Cargo vistas

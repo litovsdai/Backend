@@ -7,7 +7,7 @@
                 <ul class="nav nav-tabs nav-stacked main-menu">
                     <li class="nav-header hidden-tablet">Menu</li>
                     <li>
-                        <a class="ajax-link" href="<?= base_url() ?>backend/backend_c/">
+                        <a class="ajax-link" href="<?= base_url() ?>backend/escritorio/">
                             <i class="icon-home"></i>
                             <span class="hidden-tablet"> Escritorio</span>
                         </a>
@@ -29,19 +29,19 @@
                 </li>
                     <li class="nav-header hidden-tablet">Galería</li>
                     <li>
-                        <a class="ajax-link" href="<?= base_url() ?>backend/b_gallery_c/multi_upload">
+                        <a class="ajax-link" href="<?= base_url() ?>backend/multi_upload">
                             <i class="icon-camera"></i>
                             <span class="hidden-tablet"> Subir imágenes</span>
                         </a>
                     </li>
                     <li>
-                        <a class="ajax-link" href="<?= base_url() ?>backend/b_gallery_c">
+                        <a class="ajax-link" href="<?= base_url() ?>backend/edit_images">
                             <i class="icon-picture"></i>
                             <span class="hidden-tablet"> Editar imágenes</span>
                         </a>
                     </li>
                     <li>
-                        <a class="ajax-link" href="<?= base_url() ?>backend/b_gallery_c/category">
+                        <a class="ajax-link" href="<?= base_url() ?>backend/categorias">
                             <i class="icon-tags"></i>
                             <span class="hidden-tablet"> Categorías</span>
                         </a>

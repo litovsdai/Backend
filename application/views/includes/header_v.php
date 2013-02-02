@@ -182,8 +182,7 @@
         </div>
         <!-- Subir imagen -->
         <div>
-            <?php $string = base_url() . 'backend/upload/do_upload'; ?>
-            <?php echo form_open_multipart($string); ?>
+            <?php echo form_open_multipart(base_url('backend/upload_avatar/do_upload')); ?>
             <div class="control-group"  style="color:black;">
                 <h3>Seleccione nuevo avatar:</h3>
                 <div class="controls">

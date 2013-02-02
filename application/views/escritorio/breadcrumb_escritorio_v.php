@@ -9,7 +9,7 @@
     </ul>
 </div>
 
-    <?= validation_errors('<div class="alert alert-error">', '</div>') ?>  
+<?= validation_errors('<div class="alert alert-error">', '</div>') ?>  
 
 <?php if (isset($nombre_error1)) echo '<br><span class="alert alert-error">El nombre ya existe en la base de datos</span><br><br><br>'; ?>
 <?php if (isset($email_error1)) echo '<span class="alert alert-error">El email ya existe en la base de datos</span><br><br><br>'; ?>
@@ -20,24 +20,7 @@
 
 <?php
 if (isset($error))
-    echo "<h3 style='color:red';>
-    ¡Error al transferir la imagen!</h3>"
-    . $error .
-    '<div class="alert alert-error"><ul style="list-style:none;">
-        <strong>Posibles errores:</strong>
-        <li>
-        No ha seleccionado ninguna imagen.
-        </li>
-        <li>
-        Tamaño superior a 2048 bytes.
-        </li>
-        <li>
-        No tiene formato jpg|jpeg|gif|png.
-        </li>
-        <li>
-        Tamaño supera 1024 X 768
-        </li>
-     </ul></div>';
+    echo '<div class="alert alert-error">' . $error . '</div>';
 ?>
 <?php if (isset($err)) echo $err; ?>
 <?php if (isset($msj_exit)) { ?>

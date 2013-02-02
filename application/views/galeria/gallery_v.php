@@ -10,7 +10,7 @@
         <div class="box-content" style="text-align: center;"> 
             <button class="btn show_"><i class="icon-edit"></i> EDITAR DATOS</button>    
             <br />
-            <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="display:none;">
+            <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/load-indicator.gif" style="display:none;">
             <br />
             <div class="resp_del_img"></div>
 
@@ -94,7 +94,7 @@
             }
             ?>   
             <div class="resp_del_img"></div>
-            <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="display:none;">
+            <img class="ajax_load" src="<?= base_url() ?>img/ajax-loaders/load-indicator.gif" style="display:none;">
             <br /><br />
             <button class="btn show_"><i class="icon-edit"></i> EDITAR DATOS</button> 
             <br /><br />

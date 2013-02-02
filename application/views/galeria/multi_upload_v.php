@@ -11,7 +11,7 @@
         <div class="box-content">
             <div class="row-fluid">
                 <!-- Formulario de subida -->
-                <?= form_open_multipart(site_url('backend/b_gallery_c/multi_upload_start')); ?>
+                <?= form_open_multipart(site_url('backend/multi_upload/multi_upload_start')); ?>
 
                 <input style="overflow-x: auto;" type="file" name="files[]" multiple />
                 &nbsp;&nbsp;<img id="o" style="display: none;" src="<?= base_url() ?>img/ajax-loaders/load-indicator.gif">

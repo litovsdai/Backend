@@ -14,7 +14,7 @@
             <div class="controls">
                 <input class="input-xlarge focused" id="n_cat" name="n_cate" id="focusedInput" type="text" placeholder="Nombre de la categoría"><br>
                 <a style="margin-top: 3%;" id="myForm" class="btn btn-small btn-primary">Añadir categoría</a>
-                <img id="img_new_cat" src="<?= base_url() ?>img/ajax-loaders/loader2.gif"  style="display:none;margin: 3% 0 0 5%;"><br>
+                <img id="img_new_cat" src="<?= base_url() ?>img/ajax-loaders/load-indicator.gif"  style="display:none;margin: 3% 0 0 5%;"><br>
             </div>
         </div>
     </div>                   
@@ -52,7 +52,7 @@
                     </select>
                 </span>
                 <button id="submit_delete" style="margin-top: 15px;" class="btn btn-small btn-danger">Eliminar categoría</button>
-                <img id="img_del" src="<?= base_url() ?>img/ajax-loaders/loader2.gif" style="display:none;margin: 3% 0 0 5%;"><br>
+                <img id="img_del" src="<?= base_url() ?>img/ajax-loaders/load-indicator.gif" style="display:none;margin: 3% 0 0 5%;"><br>
 
             </div>
 
