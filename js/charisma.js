@@ -32,7 +32,7 @@ $(document).ready(function(){
 	{
 		$('#is-ajax').prop('checked',false);
 		$('#for-is-ajax').hide();
-		$('.toggle-fullscreen').hide();
+		$('#toggle-fullscreen').hide();
 		$('.login-box').find('.input-large').removeClass('span10');
 		
 	}
@@ -62,6 +62,23 @@ $(document).ready(function(){
 				docReady();
 			}
 		});
+	});
+	
+	//ajaxify menus
+	$('a.ajax-link').click(function(e){
+		if($.browser.msie) e.which=1;
+		if(e.which!=1 || !$('#is-ajax').prop('checked') || $(this).parent().hasClass('active')) return;
+		e.preventDefault();
+		if($('.btn-navbar').is(':visible'))
+		{
+			$('.btn-navbar').click();
+		}
+		$('#loading').remove();
+		$('#content').fadeOut().parent().append('<div id="loading" class="center">Loading...<div class="center"></div></div>');
+		var $clink=$(this);
+		History.pushState(null, null, $clink.attr('href'));
+		$('ul.main-menu li.active').removeClass('active');
+		$clink.parent('li').addClass('active');	
 	});
 	
 	//animating menus on hover
@@ -152,11 +169,42 @@ function docReady(){
 		// Put your options here
 	});
 
+	//gallery controlls container animation
+//	$('ul.gallery li').hover(function(){
+//		//$('img',this).fadeToggle(1000);
+//		$(this).find('.gallery-controls').remove();
+//		$(this).append('<div class="well gallery-controls">'+
+//							'<p><a href="#" class="gallery-edit btn"><i class="icon-edit"></i></a> <a href="#" class="gallery-delete btn"><i class="icon-remove"></i></a></p>'+
+//						'</div>');
+//		$(this).find('.gallery-controls').stop().animate({'margin-top':'-1'},400,'easeInQuint');
+//	},function(){
+//		//$('img',this).fadeToggle(1000);
+//		$(this).find('.gallery-controls').stop().animate({'margin-top':'-30'},200,'easeInQuint',function(){
+//				$(this).remove();
+//		});
+//	});
+
+
+	//gallery image controls example
+	//gallery delete
+//	$('.thumbnails').on('click','.gallery-delete',function(e){
+//		e.preventDefault();
+//		//get image id
+//		//alert($(this).parents('.thumbnail').attr('id'));
+//		$(this).parents('.thumbnail').fadeOut();
+//	});
+	//gallery edit
+//	$('.thumbnails').on('click','.gallery-edit',function(e){
+//		e.preventDefault();
+//		//get image id
+//		//alert($(this).parents('.thumbnail').attr('id'));
+//	});
+
 	//gallery colorbox
 	$('.thumbnail .visor').colorbox({rel:'thumbnail .visor', transition:"elastic", maxWidth:"95%", maxHeight:"95%"});
 
 	//gallery fullscreen
-	$('.toggle-fullscreen').button().click(function () {
+	$('#toggle-fullscreen').button().click(function () {
 		var button = $(this), root = document.documentElement;
 		if (!button.hasClass('active')) {
 			$('#thumbnails').addClass('modal-fullscreen');
@@ -175,7 +223,42 @@ function docReady(){
 		}
 	});
 
-	
+	//tour
+	if($('.tour').length && typeof(tour)=='undefined')
+	{
+		var tour = new Tour();
+		tour.addStep({
+			element: ".span10:first", /* html element next to which the step popover should be shown */
+			placement: "top",
+			title: "Custom Tour", /* title of the popover */
+			content: "You can create tour like this. Click Next." /* content of the popover */
+		});
+		tour.addStep({
+			element: ".theme-container",
+			placement: "left",
+			title: "Themes",
+			content: "You change your theme from here."
+		});
+		tour.addStep({
+			element: "ul.main-menu a:first",
+			title: "Dashboard",
+			content: "This is your dashboard from here you will find highlights."
+		});
+		tour.addStep({
+			element: "#for-is-ajax",
+			title: "Ajax",
+			content: "You can change if pages load with Ajax or not."
+		});
+		tour.addStep({
+			element: ".top-nav a:first",
+			placement: "bottom",
+			title: "Visit Site",
+			content: "Visit your front end from here."
+		});
+		
+		tour.restart();
+	}
+
 	//datatable
 	$('.datatable').dataTable({
 			"sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span12'i><'span12 center'p>>",

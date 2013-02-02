@@ -13,14 +13,15 @@ class B_gallery_c extends CI_Controller {
     }
 
     /*
-     *********************************************************************************
-     *********************  Botón del menú SUBIR IMÁGENES   **************************
-     *********************************************************************************
+     * ********************************************************************************
+     * ********************  Botón del menú SUBIR IMÁGENES   **************************
+     * ********************************************************************************
      */
 
     /*
      * Vista que carga cuando el Pulsas en subir imágenes
      */
+
     public function multi_upload($start = 0) {
         // Si está iniciada la SESION, mostrara las vistas de la galeria
         if ($this->simple_sessions->get_value('status')) {
@@ -70,6 +71,7 @@ class B_gallery_c extends CI_Controller {
     /*
      * Método que gestiona la subida imágenes, y genera la respuesta a dicha acción
      */
+
     public function multi_upload_start($start = 0) {
         // Si está iniciada la SESION, mostrara las vistas de la galeria
         if ($this->simple_sessions->get_value('status')) {
@@ -81,13 +83,13 @@ class B_gallery_c extends CI_Controller {
                     // Elimino todos los posibles puntos i espacios que contenga el nombee  de laimagen
                     $name = $this->elimina_puntos_espacios($_FILES[$campo_temp]['name']);
                     // configuración para el Upload de imágenes
-                    $config['upload_path']   = "./img/gallery/"; // la ruta desde la raíz de CI
-                    $config['overwrite']     = TRUE;
+                    $config['upload_path'] = "./img/gallery/"; // la ruta desde la raíz de CI
+                    $config['overwrite'] = TRUE;
                     $config['allowed_types'] = 'jpg|jpeg|gif|png';
-                    $config['file_name']     = $name;
-                    $config['max_size']      = '10000'; // 10 Mb
-                    $config['max_width']     = '5000';
-                    $config['max_height']    = '5000';
+                    $config['file_name'] = $name;
+                    $config['max_size'] = '10000'; // 10 Mb
+                    $config['max_width'] = '5000';
+                    $config['max_height'] = '5000';
                     $config['remove_spaces'] = TRUE;
                     // Procedo a subir las imágenes
                     $this->upload->initialize($config);
@@ -97,20 +99,24 @@ class B_gallery_c extends CI_Controller {
                         $data['error'][$i] = array('error' => $this->upload->display_errors());
                         $data['error'][$i]['error'] = $name . $data['error'][$i]['error'];
                     } else {// En caso contrario                        
-                        /* Redimensiono la imagen
+                        /*
                          * 800 X 600
                          */
-                        if ($this->redimensiona($name, '800', '600')) {// Si es satisfactorio
+                        $size_width_1 = '800';
+                        $size_heigth_1 = '600';
+                        if ($this->redimensiona($name, $size_width_1, $size_heigth_1)) {// Si es satisfactorio
                             /*
                              * Thumb 145 X  100
                              */
-                            if ($this->redimensiona($name, '145', '100')) {// Si es satisfactorio
+                            $size_width_2 = '145';
+                            $size_heigth_2 = '100';
+                            if ($this->redimensiona($name, $size_width_2, $size_heigth_2)) {// Si es satisfactorio
                                 // Recojo el nombre de la imagen
                                 $data['ok'][$i] = $name;
                                 // Almaceno los datos para Mysql
-                                $data['name']  = $name;
-                                $data['ruta1'] = base_url() . 'img/gallery/800X600/' . $name;
-                                $data['ruta2'] = base_url() . 'img/gallery/145X100/' . $name;
+                                $data['name'] = $name;
+                                $data['ruta1'] = base_url() . 'img/gallery/' . $size_width_1 . 'X' . $size_heigth_1 . '/' . $name;
+                                $data['ruta2'] = base_url() . 'img/gallery/' . $size_width_2 . 'X' . $size_heigth_2 . '/' . $name;
                                 // Si la insercion es satisfactoria sigo adelante, si no ya existia a img
                                 $this->gallery_m->add_images($data);
                                 // Elimino la imagen subida a que no vale y pesa demasiado para lo que quiero hacer con ella
@@ -168,15 +174,17 @@ class B_gallery_c extends CI_Controller {
             redirect('');
         }
     }
+
     /*
-     *********************************************************************************
-     *********************  Botón del menú EDITAR IMÁGENES   *************************
-     *********************************************************************************
+     * ********************************************************************************
+     * ********************  Botón del menú EDITAR IMÁGENES   *************************
+     * ********************************************************************************
      */
 
     /*
      * Vista que carga la galería solo para EDITAR imágenes
      */
+
     public function index() {
         // Si está iniciada la SESION, mostrara las vistas de la galeria
         if ($this->simple_sessions->get_value('status')) {
@@ -216,32 +224,34 @@ class B_gallery_c extends CI_Controller {
         }
     }
 
-    
     /*
      * Método que gestiona con Ajax y Jquery, la eliminación de una imagen 
      */
+
     public function delete_image() {
         $data = $this->input->post('activitiesArray');
 
         if (count($data) > 0 && !empty($data)) {
             for ($i = 0; $i < count($data); $i++) {
                 $nombre = $this->gallery_m->get_name($data[$i]);
-                $this->gallery_m->remove_picture($nombre);         
-                echo '<div class="alert alert-success">La imagen '.$nombre.' ha sido eliminada satisfactoriamente.</div>';
+                $this->gallery_m->remove_picture($nombre);
+                echo '<div class="alert alert-success">La imagen ' . $nombre . ' ha sido eliminada satisfactoriamente.</div>';
             }
         } else {
             echo '<div class="alert alert-error">No ha seleccionado ninguna imagen.</div>';
         }
     }
+
     /*
-     *********************************************************************************
-     ************************  Botón del menú CATEGORÍAS   ***************************
-     *********************************************************************************
-     */    
+     * ********************************************************************************
+     * ***********************  Botón del menú CATEGORÍAS   ***************************
+     * ********************************************************************************
+     */
 
     /*
      * Vista de nuevas categorías y eliminar categorías
      */
+
     public function category() {
         // Recojo las imágenes sin categoria asociada
         $data_all = $this->gallery_m->all_images_for_category('0');
@@ -265,6 +275,7 @@ class B_gallery_c extends CI_Controller {
     /*
      *  Método llamado por Jquery y Ajax, que crea una nueva categoría
      */
+
     public function new_category() {
         $name = $this->input->post('name');
         if (!empty($name)) {
@@ -286,15 +297,16 @@ class B_gallery_c extends CI_Controller {
     /*
      *  Método llamado por Jquery y Ajax que asigna categorías a las imágenes seleccionadas
      */
+
     public function asign_category() {
         $data = $this->input->post('activitiesArray');
-        $msg='';
+        $msg = '';
         if (count($data) > 1 && $data[0] !== 'No hay categorías' && !empty($data[0])) {
             for ($i = 1; $i < count($data); $i++) {
                 $result = $this->gallery_m->asign_categ($data[$i], $data[0]);
                 if ($result !== TRUE) {
                     $errores[] = 'Error al asignar categoría a la imagen <b>' . $result . '</b>.';
-                }else{
+                } else {
                     $success[] = 'Imagen ' . $this->gallery_m->get_name($data[$i]) . '.';
                 }
             }
@@ -302,7 +314,7 @@ class B_gallery_c extends CI_Controller {
                 $err = '';
                 $err += '<div class="alert alert-error"><ul>';
                 for ($j = 0; $j < count($errores); $j++) {
-                    $err += '<li>'.$errores[$j] . '</li>';
+                    $err += '<li>' . $errores[$j] . '</li>';
                 }
                 $err+='</ul></div>';
                 if ($err !== 0) {
@@ -310,15 +322,15 @@ class B_gallery_c extends CI_Controller {
                 }
             } else {
                 $msg .= '<div class="alert alert-success">Las siguientes imagen/es han sido asignada/s a la categoría <b>' . $data[0] . '</b> satisfactoriamente.<ul>';
-                for($i = 0; $i < count($success); $i++){
-                    $msg .= '<li><b>'.$success[$i].'</b></li>';
+                for ($i = 0; $i < count($success); $i++) {
+                    $msg .= '<li><b>' . $success[$i] . '</b></li>';
                 }
                 $msg.= '</ul></div>';
                 echo $msg;
             }
-        }else if($data[0] === 'No hay categorías') {
+        } else if ($data[0] === '') {
             echo '<div class="alert alert-error">No ha <b>seleccionado</b> ninguna categoría.</div>';
-        }else{
+        } else {
             echo '<div class="alert alert-error">Debe <b>seleccionar</b> alguna imagen.</div>';
         }
     }
@@ -326,6 +338,7 @@ class B_gallery_c extends CI_Controller {
     /*
      * Controlador que refresca la lista de ASIGNACIÓN después de agregar una nueva categoría, con Ajax
      */
+
     public function refresh_list() {
         // Recojo todas las categorias en un array 
         $msg = '';
@@ -348,6 +361,7 @@ class B_gallery_c extends CI_Controller {
     /*
      * Controlador que refresca el contenido del listado de categorias a ELIMINAR
      */
+
     public function refresh_delete() {
         // Recojo todas las categorias en un array 
         $msg = '';
@@ -368,6 +382,7 @@ class B_gallery_c extends CI_Controller {
     /*
      * Controlador que elimina categoría + imágenes que contenga 
      */
+
     public function delete_category() {
         $data = $this->input->post('activitiesArray');
         /*
@@ -411,26 +426,26 @@ class B_gallery_c extends CI_Controller {
     }
 
     /*
-     *********************************************************************************
+     * ********************************************************************************
      *  METODOS Y FUNCIONES INTERNAS Y PRIVADAS SOLO UTILIZADAS EN ESTE CONTROLADOR  *
-     *********************************************************************************
+     * ********************************************************************************
      */
 
     function redimensiona($name, $width, $heigth) {
         // Datos para el config
         $config = array(
             'image_library' => 'gd2',
-            'source_image'  => './img/gallery/' . $name,
-            'width'         => $width,
-            'height'        => $heigth,
-            'new_image'     => './img/gallery/' . $width . 'X' . $heigth . '/' . $name
+            'source_image' => './img/gallery/' . $name,
+            'width' => $width,
+            'height' => $heigth,
+            'new_image' => './img/gallery/' . $width . 'X' . $heigth . '/' . $name
         );
         // Cargo la libreria que se encargará de redimensionar imágenes
         $this->image_lib->initialize($config);
         // Si NO es satisfactorio
         if (!$this->image_lib->resize()) {
             echo $this->image_lib->display_errors();
-        // Por si a caso elimino los directorios creados
+            // Por si a caso elimino los directorios creados
             @unlink('./img/gallery/' . $name);
             @unlink('./img/gallery/' . $width . 'X' . $heigth . '/' . $name);
             return FALSE;
@@ -468,18 +483,18 @@ class B_gallery_c extends CI_Controller {
     }
 
     function pagination($array) {
-        $config['base_url']    = base_url() . 'backend/b_gallery_c/multi_upload';
-        $config['total_rows']  = count($array);
-        $config['per_page']    = '3';
+        $config['base_url'] = base_url() . 'backend/b_gallery_c/multi_upload';
+        $config['total_rows'] = count($array);
+        $config['per_page'] = '3';
         $config['uri_segment'] = '4';
         // El texto que le gustaría que se muestre en el "primer" enlace de la izquierda.
-        $config['first_link']  = '';
+        $config['first_link'] = '';
         // El texto que le gustaría que se muestre en el "último" enlace de la derecha.
-        $config['last_link']   = '';
+        $config['last_link'] = '';
         // El texto que le gustaría que se muestre en el enlace de página "siguiente".
-        $config['next_link']   = '&rarr;';
+        $config['next_link'] = '&rarr;';
         // El texto que le gustaría que se muestre en el enlace de página "anterior".
-        $config['prev_link']   = '&larr;';
+        $config['prev_link'] = '&larr;';
         return $config;
     }
 

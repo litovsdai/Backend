@@ -32,7 +32,7 @@
                         <h3>Selecciona categoría</h3><br>
                         <span id="refresh_list">
                             <select id="list_cat" class="selectError" name="catgeroy" data-rel="chosen">
-                                <?php if (isset($categories) && $categories !== 0) { ?>
+                                <?php if (isset($categories) && $categories != 0) { ?>
                                     <?php for ($i = 0; $i < count($categories); $i++) { ?>
                                         <option><?= $categories[$i] ?></option>   
                                     <?php } ?>
