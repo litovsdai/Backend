@@ -1,24 +1,6 @@
-<?php
-if (isset($datos)) {
-    echo '<div class="alert alert-success" style="width:400px;"><p>';
-    echo '<h4 style="color:green;">Número de imágenes subidas satisfactoriamente (' . count($datos) . '): </h4>';
-    for ($i = 0; $i < count($datos); $i++) {
-        $temp = $i + 1;
-        echo '<b>' . $temp . ')</b>. ' . $datos[$i] . '<br>';
-    }
-    echo '</p></div>';
-}
-if (isset($error_images)) {
-    echo '<div class="alert alert-error"><p>';
-    echo $error_images;
-    if ($error_images === '') {
-        echo 'Ha surgido algún error inesperado, vuelve a intentarlo.';
-    }
-    echo '</p></div>';
-}
-?>
+
 <div class="row-fluid sortable">
-    <div class="box span5">
+    <div class="box span7">
         <div class="box-header well" data-original-title>
             <h2><i class="icon-camera"></i> Seleccione imágenes</h2>
             <div class="box-icon">
@@ -36,6 +18,25 @@ if (isset($error_images)) {
                 <br><br>
                 <input id="ajax" type="submit" class="btn btn-primary"  name="subir" value="Subir imagen/es" />
                 </form>
+                <?php
+                if (isset($datos)) {
+                    echo '<div class="alert alert-success" style="width:400px;"><p>';
+                    echo '<h4 style="color:green;">Número de imágenes subidas satisfactoriamente (' . count($datos) . '): </h4>';
+                    for ($i = 0; $i < count($datos); $i++) {
+                        $temp = $i + 1;
+                        echo '<b>' . $temp . ')</b>. ' . $datos[$i] . '<br>';
+                    }
+                    echo '</p></div>';
+                }
+                if (isset($error_images)) {
+                    echo '<div class="alert alert-error" style="width:400px;"><p>';
+                    echo $error_images;
+                    if ($error_images === '') {
+                        echo 'Ha surgido algún error inesperado, vuelve a intentarlo.';
+                    }
+                    echo '</p></div>';
+                }
+                ?>
             </div>
 
         </div>                   

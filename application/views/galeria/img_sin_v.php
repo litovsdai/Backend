@@ -1,4 +1,4 @@
-<div class="box span7">
+<div class="box span5">
     <div class="box-header well" data-original-title>
         <h2><i class="icon-inbox"></i> Imágenes sin categoría</h2>
         <div class="box-icon">
