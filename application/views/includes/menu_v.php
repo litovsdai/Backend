@@ -15,14 +15,14 @@
                     <li class="nav-header hidden-tablet">Usuarios</li>
                     <?php if ($this->simple_sessions->get_value('super') === '1') { ?>
                         <li>
-                            <a class="ajax-link" href="<?= base_url() ?>backend/b_usuario_c/almacenar_nuevo">
+                            <a class="ajax-link" href="<?= base_url() ?>backend/usuarios/almacenar_nuevo">
                                 <i class="icon-plus"></i>
                                 <span class="hidden-tablet"> Nuevo usuario</span>
                             </a>
                         </li>
                     <?php } ?>
                     <li>
-                        <a class="ajax-link" href="<?= base_url() ?>backend/b_usuario_c/nuevo_administrador">
+                        <a class="ajax-link" href="<?= base_url() ?>backend/usuarios/nuevo_administrador">
                         <i class="icon-user"></i>
                         <span class="hidden-tablet"> Ver usuarios</span>
                     </a>

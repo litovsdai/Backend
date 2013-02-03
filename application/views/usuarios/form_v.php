@@ -14,7 +14,7 @@ if ($this->simple_sessions->get_value('super') === '1') {
 
                 <!-- Fomulario de Nuevo Usuario -->
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                <form class="form-horizontal" action="<?= base_url() ?>backend/b_usuario_c/almacenar_nuevo" method="post">
+                <form class="form-horizontal" action="<?= base_url() ?>backend/usuarios/almacenar_nuevo" method="post">
                     <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                     <?= validation_errors('<p class="alert alert-error">', '</p>') ?>
                     <?php if (isset($nombre_error)) echo '<p class="alert alert-error">El usuario <b>' . $nombre_error . '</b> ya existe en la base de datos</p>'; ?>

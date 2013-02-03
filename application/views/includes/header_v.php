@@ -30,7 +30,7 @@
             <!-- theme selector ends -->
 
             <!-- user dropdown starts -->
-            <div class="btn-group pull-right" >
+            <div class="btn-group pull-right" >                
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                     <i class="icon-user"></i><span class="hidden-phone"> Administrador</span>
                     <span class="caret"></span>
@@ -40,7 +40,7 @@
                     <!--<li class="divider"></li>-->
                     <li><a data-toggle="modal" href="#avatar" class=""> <i class="icon-picture"></i>  Cambiar avatar</a></li>
                     <li class="divider"></li>
-                    <li><a href="<?= base_url() ?>backend/b_usuario_c/cerrar_sesion"> <i class="icon-remove"></i>  Cerrar sesión</a></li>
+                    <li><a href="<?= base_url() ?>backend/usuarios/cerrar_sesion"> <i class="icon-remove"></i>  Cerrar sesión</a></li>
                 </ul>
             </div>
             <!-- user dropdown ends -->
@@ -52,9 +52,26 @@
                         <form class="navbar-search pull-left">
                             <input placeholder="Buscar en el sitio" class="search-query span2" name="query" type="text">
                         </form>
+                    </li>                    
+                </ul>
+            </div><!--/.nav-collapse -->
+            <div class="top-nav nav-collapse">
+                <ul class="nav">
+                    <li>                        
+                        <!--
+                            //base_url() . $this->lang->switch_uri('es')
+                        -->
+                        <a href="#"><img src="<?= base_url() ?>img/es.gif" alt=""> &nbsp;Español</a>
+                    </li>
+                    <li>                        
+                        <!--
+                            //base_url() . $this->lang->switch_uri('en') 
+                        -->
+                        <a href="#"><img src="<?= base_url() ?>img/en.gif" alt=""> &nbsp;English</a>
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->
+
         </div>
     </div>
 </div>
@@ -80,7 +97,7 @@
             </ul>
         </div>
         <div>
-            <form class="form-horizontal" action="<?= base_url() ?>backend/b_usuario_c/edit" method="post">
+            <form class="form-horizontal" action="<?= base_url() ?>backend/usuarios/edit" method="post">
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                 <h3>Editar datos:</h3>
                 <div class="control-group">

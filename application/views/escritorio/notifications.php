@@ -1,6 +1,6 @@
 
 <div class="sortable row-fluid">
-    <a data-rel="tooltip" title="<?= $last_month ?> nuevos miembros este último mes." class="well span4 top-block" href="<?= site_url('backend/b_usuario_c/nuevo_administrador') ?>">
+    <a data-rel="tooltip" title="<?= $last_month ?> nuevos miembros este último mes." class="well span4 top-block" href="<?= site_url('backend/usuarios/nuevo_administrador') ?>">
         <span class="icon32 icon-red icon-user"></span>
         <div>Miembros totales</div>
         <div><?= $totales ?></div>
