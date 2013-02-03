@@ -16,7 +16,7 @@ if ($this->simple_sessions->get_value('super') === '1') {
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                 <form class="form-horizontal" action="<?= site_url('backend/usuarios/almacenar_nuevo') ?>" method="post">
                     <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                    <div class="alert-error" style="border-radius: 5px;margin-bottom: 10px;">
+                    <div class="alert-error" style="padding: 0;border-radius: 5px;margin-bottom: 10px;">
                         <?= validation_errors() ?>
                     </div>
                     <?php if (isset($nombre_error)) echo '<p class="alert alert-error">El usuario <b>' . $nombre_error . '</b> ya existe en la base de datos</p>'; ?>

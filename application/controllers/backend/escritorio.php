@@ -32,7 +32,7 @@ class Escritorio extends CI_Controller {
             $this->load->view('includes/menu_v');
             $this->load->view('escritorio/breadcrumb_escritorio_v');
             $this->load->view('escritorio/notifications', $data);
-            //$this->load->view('escritorio/prueba');
+            $this->load->view('escritorio/prueba');
             $this->load->view('includes/footer_v');
         } else {// Si no está activada la SESION será imposible acceder al BACKEND, se redirig al LOGIN
             redirect('');

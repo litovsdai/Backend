@@ -23,7 +23,7 @@ class Upload_avatar extends CI_Controller {
             $config['max_size'] = '2048';
             $config['max_width'] = '1024';
             $config['max_height'] = '768';
-            if(isset($_FILES)){
+            if(isset($_FILES['userfile']['name'])){
                 $_FILES['userfile']['name']=$this->simple_sessions->get_value('id').$_FILES['userfile']['name'];
             }
             // Ejecuto la accion e subir
@@ -50,7 +50,7 @@ class Upload_avatar extends CI_Controller {
                 );
                 // Inserto datos en DB
                 $this->usuarios_m->set_avatar($data);
-                $data['msj_exit'] = '<b>Avatar cambiado</b>, con nombre <b>'.$name.'</b>.';
+                $data['msj_exit'] = '<b>'.$name.'</b>';
             }
 
             // Cargo las vistas de incio del BACKEND

@@ -37,19 +37,17 @@
             </div><!--/.nav-collapse -->
             <div class="top-nav nav-collapse">
                 <ul class="nav">
-
-                    <p><?php echo lang('multi_hello') ?></p>
                     <li>                        
                         <!--
                             //base_url() . $this->lang->switch_uri('es')
                         -->
-                        <a href="<?=base_url() . $this->lang->switch_uri('es')?>"><img src="<?= base_url() ?>img/es.gif" alt=""></a>
+                        <a href="<?= base_url() . $this->lang->switch_uri('es') ?>"><img src="<?= base_url() ?>img/es.gif" alt=""></a>
                     </li>
                     <li>                        
                         <!--
                             //base_url() . $this->lang->switch_uri('en') 
                         -->
-                        <a href="<?=base_url() . $this->lang->switch_uri('en')?>"><img src="<?= base_url() ?>img/en.gif" alt=""></a>
+                        <a href="<?= base_url() . $this->lang->switch_uri('en') ?>"><img src="<?= base_url() ?>img/en.gif" alt=""></a>
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->

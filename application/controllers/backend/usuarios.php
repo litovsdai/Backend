@@ -178,25 +178,25 @@ class Usuarios extends CI_Controller {
                 );
                 // Compruebo que coincida el viejo password
                 if (!$this->usuarios_m->existe_old($data)) {
-                    $data['old'] = '';
+                    $data['err_old'] = '';
                 }
                 // Compruebo si existe el nombre de usuario, ya que no se puede duplicar en la DB
                 if ($this->usuarios_m->existe_nombre_menos1($data)) {
-                    $data['nombre_error1'] = $this->input->post('nombre');
+                    $data['err_username'] = $this->input->post('nombre');
                 }
                 // Lo mismo con el email
                 if ($this->usuarios_m->existe_mail_menos1($data)) {
-                    $data['email_error1'] = $this->input->post('email');
+                    $data['err_email'] = $this->input->post('email');
                 }
                 // Si no existe ninguno de las dos variables, alamaceno los datos en la DB
-                if (!isset($data['nombre_error1']) && !isset($data['email_error1']) && !isset($data['old'])) {
+                if (!isset($data['err_old']) && !isset($data['err_username']) && !isset($data['err_email'])) {
                     //Almaceno los datos en la DB y si esto funciona bien..
                     if ($this->usuarios_m->update_usuario($data)) {
                         // Creo la variable para mensaje de exito
-                        $data['form_ok'] = '';
+                        $data['success'] = '';
                     } else {// Si no se almacena ---> ERROR
                         //Error al insertar datos en la base de datos
-                        $data['error_db'] = '';
+                        $data['err_db'] = '';
                     }
                 }
 

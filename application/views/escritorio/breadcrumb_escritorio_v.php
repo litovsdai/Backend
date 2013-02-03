@@ -4,34 +4,29 @@
             <span class="divider">Menu /</span>
         </li>
         <li>
-            <a href="#">Escritorio</a><span class="divider">/</span>
+            <a href="#"><?= lang('multi_escritorio_breadcrumb') ?></a><span class="divider">/</span>
         </li>
     </ul>
 </div>
-
-<?= validation_errors('<div class="alert alert-error">', '</div>') ?>  
-
-<?php if (isset($nombre_error1)) echo '<br><span class="alert alert-error">El nombre ya existe en la base de datos</span><br><br><br>'; ?>
-<?php if (isset($email_error1)) echo '<span class="alert alert-error">El email ya existe en la base de datos</span><br><br><br>'; ?>
-<?php if (isset($form_ok)) echo '<span class="alert alert-success">Los datos de usuario se han actualizado satisfactoriamente</span><br><br><br>'; ?>
-<?php if (isset($error_db)) echo '<span class="alert alert-error">Error al actualizar los datos</span><br><br><br>'; ?>
-<?php if (isset($old)) echo '<span class="alert alert-error">El password antiguo no coincide, por lo tanto los cambios no se han realizado.</span><br><br><br>'; ?>
-
-
+<div class="alert-error" style="border-radius: 5px;margin-bottom: 10px;">
+    <?= validation_errors() ?>
+</div>
 <?php
 if (isset($error))
     echo '<div class="alert alert-error">' . $error . '</div>';
 ?>
-<?php if (isset($err)) echo $err; ?>
 <?php if (isset($msj_exit)) { ?>
-    <h3>¡La imagen se transfirió correctamente!</h3>
-    <div class="alert alert-success"><?= $msj_exit ?></div><br>
-<?php } ?>
-<?php if (isset($upload_data)) { ?>
-    <ul>
-        <?php foreach ($upload_data as $item => $value): ?>
-            <li><?php echo $item; ?>: <?php echo $value; ?></li>
-        <?php endforeach; ?>
-    </ul>
+
+    <div class="alert alert-success">
+        <h4>¡<?= lang('multi_escritorio_avatar_success1') ?>!</h4>
+        <p><?= lang('multi_escritorio_avatar_success2') ?> <?= $msj_exit ?></p>
+    </div>
     <br>
 <?php } ?>
+<?php if (isset($err_old)) echo '<div class="alert alert-error">La <b>contraseña vieja</b> no coincide.</div>'; ?>
+<?php if (isset($err_username)) echo '<div class="alert alert-error">El nombre de usuario <b>' . $err_username . '</b>, ya existe en la base de datos<br>Pruebe con otro nombre.</div>'; ?>
+<?php if (isset($err_email)) echo '<div class="alert alert-error">El correo electronico <b>' . $err_email . '</b>, ya existe en la base de datos.</div>'; ?>
+<?php if (isset($err_db)) echo '<div class="alert alert-error">Error en la base de datos, rogamos póngase en contacto con el administrador.</div>'; ?>
+<?php
+if (isset($success))
+    echo '<div class="alert alert-success">Datos almacenados satisfactoriamente.</div>'; ?>
