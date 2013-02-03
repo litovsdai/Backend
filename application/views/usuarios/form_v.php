@@ -14,7 +14,7 @@ if ($this->simple_sessions->get_value('super') === '1') {
 
                 <!-- Fomulario de Nuevo Usuario -->
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                <form class="form-horizontal" action="<?= base_url() ?>backend/usuarios/almacenar_nuevo" method="post">
+                <form class="form-horizontal" action="<?= site_url('backend/usuarios/almacenar_nuevo') ?>" method="post">
                     <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                     <div class="alert-error" style="border-radius: 5px;margin-bottom: 10px;">
                         <?= validation_errors() ?>

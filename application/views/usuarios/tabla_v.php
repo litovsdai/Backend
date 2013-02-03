@@ -59,14 +59,14 @@
                                 }
                                 ?>
                                 <td class = "center">
-                                    <a class="btn btn-info" href="<?= base_url(); ?>backend/usuarios/ver/<?= $id_user ?>">
+                                    <a class="btn btn-info" href="<?= site_url('backend/usuarios/ver'); ?>/<?= $id_user ?>">
                                         <i class="icon-zoom-in icon-white"></i>  
                                         Ver                                            
                                     </a>
                                     <?php
                                     if ($this->simple_sessions->get_value('super') === '1') {
                                         ?>
-                                        <a class = "btn btn-danger" href = "<?= base_url(); ?>backend/usuarios/delete_user/<?= $id_user ?>/<?= $name ?>">
+                                    <a class = "btn btn-danger" href = "<?= site_url('backend/usuarios/delete_user'); ?>/<?= $id_user ?>/<?= $name ?>">
                                             <i class = "icon-trash icon-white"></i>
                                             Eliminar
                                         </a>

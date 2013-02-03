@@ -162,12 +162,12 @@
                 $('#n_cat').val('');
                 $.ajax({
                     type: 'POST',
-                    url: "<?= base_url() ?>backend/categorias/new_category",
+                    url: "<?= site_url('backend/categorias/new_category') ?>",
                     data: {name:datos},
                     beforeSend: mostrarLoader, //funciones que definimos más abajo
                     success: function(responseText){
-                        $("#refresh_list").load("<?= base_url() ?>backend/categorias/refresh_list");
-                        $("#refresh_delete").load("<?= base_url() ?>backend/categorias/refresh_delete");
+                        $("#refresh_list").load("<?= site_url('backend/categorias/refresh_list') ?>");
+                        $("#refresh_delete").load("<?= site_url('backend/categorias/refresh_delete') ?>");
                         $("#img_new_cat").fadeOut("slow"); // Hago desaparecer el loader de ajax
                         $("#resp_new_cat").html(responseText); // Aca utilizo la función append de JQuery para añadir el responseText  dentro del div "ajax_loader"
                     
@@ -220,11 +220,11 @@
                     
                 $.ajax({        
                     type: "POST",
-                    url: "<?= base_url() ?>backend/categorias/asign_category",
+                    url: "<?= site_url('backend/categorias/asign_category') ?>",
                     data: {activitiesArray:selectedItems},
                     beforeSend: mostrarLoader,
                     success: function(msg) {//resp_cat
-                        //$("#containerdiv").load("<?= base_url() ?>backend/b_gallery_c/refresh_div"); 
+                        //$("#containerdiv").load("<?= site_url() ?>backend/b_gallery_c/refresh_div"); 
                         $('.resp_asig').fadeOut("slow");
                         $('.resp_cat').html(msg);  
                         if($('li.thumbnail').length < 1){
@@ -251,12 +251,12 @@
                 }); 
                 $.ajax({        
                     type: "POST",
-                    url: "<?= base_url() ?>backend/categorias/delete_category",
+                    url: "<?= site_url('backend/categorias/delete_category') ?>",
                     data: { activitiesArray : selectedItems },
                     beforeSend: mostrarLoader,
                     success: function(msg) {//resp_cat
-                        $("#refresh_list").load("<?= base_url() ?>backend/categorias/refresh_list");
-                        $("#refresh_delete").load("<?= base_url() ?>backend/categorias/refresh_delete");
+                        $("#refresh_list").load("<?= site_url('backend/categorias/refresh_list') ?>");
+                        $("#refresh_delete").load("<?= site_url('backend/categorias/refresh_delete') ?>");
                         $('#img_del').fadeOut("slow");
                         $('#resp_del').html(msg);               
                     }
@@ -288,7 +288,7 @@
                 $('li#'+name[0]).detach();
                 $.ajax({
                     type : "POST",
-                    url : "<?= base_url() ?>backend/edit_images/delete_image",
+                    url : "<?= site_url('backend/edit_images/delete_image') ?>",
                     data: { activitiesArray : name },
                     success : function(msg){
                         $('.resp_del_img').html(msg); 

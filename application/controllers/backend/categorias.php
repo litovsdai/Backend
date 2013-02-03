@@ -7,6 +7,9 @@ class Categorias extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        // load language file
+        $this->lang->load('multi');
+
         $this->load->library('pagination');
         $this->load->library('image_lib');
         $this->load->model('gallery/gallery_m');

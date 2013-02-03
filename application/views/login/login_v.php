@@ -12,7 +12,7 @@
                     Por favor introduce tu nombre de usuario y contraseña.
                 </div>
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                <form class="form-horizontal" action="<?= base_url() ?>login/login_c/login" method="post">
+                <form class="form-horizontal" action="<?= site_url('login/login_c/login') ?>" method="post">
                     <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                     <?= validation_errors('<div class="alert alert-error">', '</div>') ?>
                     <fieldset>
@@ -28,7 +28,7 @@
                             <span class="add-on"><i class="icon-lock"></i></span>
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                             <input class="input-large span10" name="password" id="password" type="password" placeholder="contraseña"
-                                   value="lito" />
+                                   value="lito1984" />
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                         </div>
                         <div class="clearfix"></div>

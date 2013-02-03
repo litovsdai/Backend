@@ -1,19 +1,19 @@
 <?php
 
-$lang['date_year'] = "Year";
-$lang['date_years'] = "Years";
-$lang['date_month'] = "Month";
-$lang['date_months'] = "Months";
-$lang['date_week'] = "Week";
-$lang['date_weeks'] = "Weeks";
-$lang['date_day'] = "Day";
-$lang['date_days'] = "Days";
-$lang['date_hour'] = "Hour";
-$lang['date_hours'] = "Hours";
-$lang['date_minute'] = "Minute";
-$lang['date_minutes'] = "Minutes";
-$lang['date_second'] = "Second";
-$lang['date_seconds'] = "Seconds";
+$lang['date_year'] = "Año";
+$lang['date_years'] = "Años";
+$lang['date_month'] = "Mes";
+$lang['date_months'] = "Meses";
+$lang['date_week'] = "Semana";
+$lang['date_weeks'] = "Semanas";
+$lang['date_day'] = "Dia";
+$lang['date_days'] = "Dias";
+$lang['date_hour'] = "Hora";
+$lang['date_hours'] = "Horas";
+$lang['date_minute'] = "Minuto";
+$lang['date_minutes'] = "Minutos";
+$lang['date_second'] = "Segundo";
+$lang['date_seconds'] = "Segundos";
 
 $lang['UM12']	= '(UTC -12:00) Baker/Howland Island';
 $lang['UM11']	= '(UTC -11:00) Samoa Time Zone, Niue';
@@ -24,7 +24,7 @@ $lang['UM8']	= '(UTC -8:00) Pacific Standard Time, Clipperton Island';
 $lang['UM7']	= '(UTC -7:00) Mountain Standard Time';
 $lang['UM6']	= '(UTC -6:00) Central Standard Time';
 $lang['UM5']	= '(UTC -5:00) Eastern Standard Time, Western Caribbean Standard Time';
-$lang['UM45']	= '(UTC -4:30) Venezuelan Standard Time';
+$lang['UM45']	= '(UTC -4:30) Tiempo estandar de Venezuela';
 $lang['UM4']	= '(UTC -4:00) Atlantic Standard Time, Eastern Caribbean Standard Time';
 $lang['UM35']	= '(UTC -3:30) Newfoundland Standard Time';
 $lang['UM3']	= '(UTC -3:00) Argentina, Brazil, French Guiana, Uruguay';

@@ -37,17 +37,19 @@
             </div><!--/.nav-collapse -->
             <div class="top-nav nav-collapse">
                 <ul class="nav">
+
+                    <p><?php echo lang('multi_hello') ?></p>
                     <li>                        
                         <!--
                             //base_url() . $this->lang->switch_uri('es')
                         -->
-                        <a href="#"><img src="<?= base_url() ?>img/es.gif" alt=""></a>
+                        <a href="<?=base_url() . $this->lang->switch_uri('es')?>"><img src="<?= base_url() ?>img/es.gif" alt=""></a>
                     </li>
                     <li>                        
                         <!--
                             //base_url() . $this->lang->switch_uri('en') 
                         -->
-                        <a href="#"><img src="<?= base_url() ?>img/en.gif" alt=""></a>
+                        <a href="<?=base_url() . $this->lang->switch_uri('en')?>"><img src="<?= base_url() ?>img/en.gif" alt=""></a>
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -77,7 +79,7 @@
             </ul>
         </div>
         <div>
-            <form class="form-horizontal" action="<?= base_url() ?>backend/usuarios/edit" method="post">
+            <form class="form-horizontal" action="<?= site_url('backend/usuarios/edit') ?>" method="post">
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                 <h3>Editar datos:</h3>
                 <div class="control-group">
@@ -179,7 +181,7 @@
         </div>
         <!-- Subir imagen -->
         <div>
-            <?php echo form_open_multipart(base_url('backend/upload_avatar/do_upload')); ?>
+            <?php echo form_open_multipart(site_url('backend/upload_avatar/do_upload')); ?>
             <div class="control-group"  style="color:black;">
                 <h3>Seleccione nuevo avatar:</h3>
                 <div class="controls">

@@ -7,6 +7,8 @@ class Multi_upload extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        // load language file
+        $this->lang->load('multi');
         $this->load->library('pagination');
         $this->load->library('image_lib');
         $this->load->model('gallery/gallery_m');
@@ -104,8 +106,8 @@ class Multi_upload extends CI_Controller {
                                     // Recojo los datos a incluir en la Database
                                     $data = array(
                                         'name' => $value,
-                                        'ruta1' => site_url('img/gallery') . '/800X600/' . $value,
-                                        'ruta2' => site_url('img/gallery') . '/145X100/' . $value
+                                        'ruta1' => base_url() . 'img/gallery/800X600/' . $value,
+                                        'ruta2' => base_url() . 'img/gallery/145X100/' . $value
                                     );
                                     // Envio los datos
                                     $this->gallery_m->add_images($data);
@@ -269,10 +271,10 @@ class Multi_upload extends CI_Controller {
     }
 
     function pagination($array) {
-        $config['base_url'] = base_url() . 'backend/multi_upload/multi_upload_start';
+        $config['base_url'] = site_url('backend/multi_upload/multi_upload_start');
         $config['total_rows'] = count($array);
         $config['per_page'] = '3';
-        $config['uri_segment'] = '4';
+        $config['uri_segment'] = '5';
         // El texto que le gustaría que se muestre en el "primer" enlace de la izquierda.
         $config['first_link'] = '';
         // El texto que le gustaría que se muestre en el "último" enlace de la derecha.

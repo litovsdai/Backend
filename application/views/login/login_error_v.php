@@ -12,7 +12,7 @@
                     Por favor introduce tu nombre de usuario y contraseña.
                 </div>
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                <form class="form-horizontal" action="<?= base_url() ?>login/login_c/login" method="post">
+                <form class="form-horizontal" action="<?= site_url('login/login_c/login') ?>" method="post">
                     <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                    <div class="alert alert-error">
                     <?php

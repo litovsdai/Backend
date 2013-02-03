@@ -7,12 +7,14 @@ class Usuarios extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        // load language file
+        $this->lang->load('multi');
         $this->load->model('usuarios/usuarios_m');
         $this->load->model('gallery/gallery_m');
         $this->load->library('email','','correo');
     }
 
-    public function nuevo_administrador() {
+    public function index() {
         // Si está iniciada la SESION, mostrara las vistas del BACKEND
         if ($this->simple_sessions->get_value('status')) {
             // Recojo los datos de todos los usuarios para la tabla
@@ -43,13 +45,7 @@ class Usuarios extends CI_Controller {
             $this->form_validation->set_rules('email', 'Correo electrónico', 'required|valid_email|trim|max_length[80]');
             $this->form_validation->set_rules('password', 'Contraseña', 'required|trim|matches[repassword]');
             $this->form_validation->set_rules('repassword', 'Repita contraseña', 'required|trim|');
-            // Traducción de los mensajes de error
-            $this->form_validation->set_message('required', 'El campo %s es obligatorio');
-            $this->form_validation->set_message('max_length', 'El campo %s, no puede tener más de %s caracteres');
-            $this->form_validation->set_message('valid_email', 'El %s, no tiene un formato válido');
-            $this->form_validation->set_message('matches', 'Los campos %s y %s no coinciden');
-
-            // Si el formulario no es exitoso, vuelvo a mostrar las vistas junto a sus errores
+             // Si el formulario no es exitoso, vuelvo a mostrar las vistas junto a sus errores
             if (!$this->form_validation->run()) {
                 // Recojo los datos de todos los usuarios para la tabla
                 if ($this->usuarios_m->get_usuarios() != FALSE) {
@@ -292,7 +288,7 @@ class Usuarios extends CI_Controller {
 
     function cerrar_sesion() {
         $this->simple_sessions->destroy_sess();
-        redirect(base_url());
+        redirect(site_url());
     }
 
 

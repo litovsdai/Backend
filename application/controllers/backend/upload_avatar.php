@@ -8,6 +8,8 @@ class Upload_avatar extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        // load language file
+        $this->lang->load('multi');
         $this->load->model('usuarios/usuarios_m');
         $this->load->model('gallery/gallery_m');
     }
@@ -21,34 +23,34 @@ class Upload_avatar extends CI_Controller {
             $config['max_size'] = '2048';
             $config['max_width'] = '1024';
             $config['max_height'] = '768';
-            // Cambio el nombre de la imagen
-            $pos = strripos($_FILES['userfile']['name'], '.');
-            $format = substr($_FILES['userfile']['name'], $pos, strlen($_FILES['userfile']['name']));
-            $name = $this->simple_sessions->get_value('id') . $format;
-            $_FILES['userfile']['name'] = $name;
+            if(isset($_FILES)){
+                $_FILES['userfile']['name']=$this->simple_sessions->get_value('id').$_FILES['userfile']['name'];
+            }
             // Ejecuto la accion e subir
             $this->upload->initialize($config);
-
+            
             // Recojo los datos que genera la subida de imagen, ya sea error o mensaje OK
             if (!$this->upload->do_upload()) {
                 // Recojo los datos de suceso ERROR
                 $data = array('error' => $this->upload->display_errors());
             } else {
-                // Recojo los datos de suceso OK
-                $data = array('upload_data' => $this->upload->data());
-                // Manipulo lo datos recibidos, para crearle un nombre y ruta
-                $data['upload_data']['client_name'] = $name;
-                $route = base_url() . 'img/avatares/' . $name;
-                $dat = array(
+                foreach ($this->upload->data() as $key => $value) {
+                    if($key === 'file_ext'){
+                        $extension = $value;
+                    }
+                    if ($key === 'orig_name') {
+                        $name = $value;
+                    }
+                }
+                
+                $data = array(
                     'id' => $this->simple_sessions->get_value('id'),
                     'nom_img' => $name,
-                    'avatar' => $route
+                    'avatar' => base_url().'img/avatares/'.$name
                 );
                 // Inserto datos en DB
-                $this->usuarios_m->set_avatar($dat);
-                // Elimino los mensajes de error, si quiero verlos comento esto
-                unset($data['upload_data']);
-                $data['msj_exit'] = 'La imagen se ha sustituido con éxito.';
+                $this->usuarios_m->set_avatar($data);
+                $data['msj_exit'] = '<b>Avatar cambiado</b>, con nombre <b>'.$name.'</b>.';
             }
 
             // Cargo las vistas de incio del BACKEND

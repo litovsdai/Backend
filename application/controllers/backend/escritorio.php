@@ -7,6 +7,8 @@ class Escritorio extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        // load language file
+        $this->lang->load('multi');
         $this->load->model('usuarios/usuarios_m');
         $this->load->model('gallery/gallery_m');
     }

@@ -13,10 +13,14 @@
                 <!-- Formulario de subida -->
                 <?= form_open_multipart(site_url('backend/multi_upload/multi_upload_start')); ?>
 
-                <input style="overflow-x: auto;" type="file" name="files[]" multiple />
+
+                <input data-content="Pulsa la tecla 'Ctrl', para selección múltiple de imágenes" data-rel="popover" href="#" data-original-title="Selección multiple" style="overflow-x: auto;" type="file" name="files[]" multiple />
+
                 &nbsp;&nbsp;<img id="o" style="display: none;" src="<?= base_url() ?>img/ajax-loaders/load-indicator.gif">
                 <br><br>
+
                 <input id="ajax" type="submit" class="btn btn-primary"  name="subir" value="Subir imagen/es" />
+
                 </form>
                 <?php
                 if (isset($datos) && count($datos) > 0) {
