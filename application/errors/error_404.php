@@ -72,12 +72,13 @@
 		<div class="clear"></div>
 		<div class="content">
 			La página que busca no se encuentra.
-			<br/>
-			<a href="#">Ir al login</a>
+			<br/><!-- http://backend.casualweb.org/backend/escritorio-->
+                        <a href="http://localhost/Backend/login/login_c">Back to the desktop | Volver al escriotorio</a>
 			<form>
 				
 		</form>
 		<div id="container">
+                    <br /><br />
 			<h1><?php echo $heading; ?></h1>
 			<?php echo $message; ?>
 		</div>

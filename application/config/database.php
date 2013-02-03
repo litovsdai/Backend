@@ -49,9 +49,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'lito';
-$db['default']['password'] = 'lito1984';
-$db['default']['database'] = 'CMS';
+$db['default']['username'] = 'lito';//casualwe_lito
+$db['default']['password'] = 'lito1984';//Lito1984
+$db['default']['database'] = 'CMS';//casualwe_CMS
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

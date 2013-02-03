@@ -19,8 +19,8 @@
                 <input id="ajax" type="submit" class="btn btn-primary"  name="subir" value="Subir imagen/es" />
                 </form>
                 <?php
-                if (isset($datos)) {
-                    echo '<div class="alert alert-success" style="width:400px;"><p>';
+                if (isset($datos) && count($datos) > 0) {
+                    echo '<div class="alert alert-success"><p>';
                     echo '<h4 style="color:green;">Número de imágenes subidas satisfactoriamente (' . count($datos) . '): </h4>';
                     for ($i = 0; $i < count($datos); $i++) {
                         $temp = $i + 1;
@@ -29,7 +29,7 @@
                     echo '</p></div>';
                 }
                 if (isset($error_images)) {
-                    echo '<div class="alert alert-error" style="width:400px;"><p>';
+                    echo '<div class="alert alert-error"><p>';
                     echo $error_images;
                     if ($error_images === '') {
                         echo 'Ha surgido algún error inesperado, vuelve a intentarlo.';

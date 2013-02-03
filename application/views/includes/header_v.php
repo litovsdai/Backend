@@ -9,26 +9,6 @@
             </a>
             <a class="brand" href="#"> <span>casualWeb</span></a>
 
-            <!-- theme selector starts -->
-            <!--            <div class="btn-group pull-right theme-container" >
-                            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="icon-tint"></i><span class="hidden-phone"> Elegir tema / cambiar</span>
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" id="themes">
-                                <li><a data-value="classic" href="#"><i class="icon-blank"></i> Classic</a></li>
-                                <li><a data-value="cerulean" href="#"><i class="icon-blank"></i> Cerulean</a></li>
-                                <li><a data-value="cyborg" href="#"><i class="icon-blank"></i> Cyborg</a></li>
-                                <li><a data-value="redy" href="#"><i class="icon-blank"></i> Redy</a></li>
-                                <li><a data-value="journal" href="#"><i class="icon-blank"></i> Journal</a></li>
-                                <li><a data-value="simplex" href="#"><i class="icon-blank"></i> Simplex</a></li>
-                                <li><a data-value="slate" href="#"><i class="icon-blank"></i> Slate</a></li>
-                                <li><a data-value="spacelab" href="#"><i class="icon-blank"></i> Spacelab</a></li>
-                                <li><a data-value="united" href="#"><i class="icon-blank"></i> United</a></li>
-                            </ul>
-                        </div>-->
-            <!-- theme selector ends -->
-
             <!-- user dropdown starts -->
             <div class="btn-group pull-right" >                
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -61,13 +41,13 @@
                         <!--
                             //base_url() . $this->lang->switch_uri('es')
                         -->
-                        <a href="#"><img src="<?= base_url() ?>img/es.gif" alt=""> &nbsp;Español</a>
+                        <a href="#"><img src="<?= base_url() ?>img/es.gif" alt=""></a>
                     </li>
                     <li>                        
                         <!--
                             //base_url() . $this->lang->switch_uri('en') 
                         -->
-                        <a href="#"><img src="<?= base_url() ?>img/en.gif" alt=""> &nbsp;English</a>
+                        <a href="#"><img src="<?= base_url() ?>img/en.gif" alt=""></a>
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->
