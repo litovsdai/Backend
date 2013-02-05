@@ -140,12 +140,7 @@ class Usuarios extends CI_Controller {
             $this->form_validation->set_rules('email', 'Correo electrónico', 'required|valid_email|trim|max_length[80]');
             $this->form_validation->set_rules('password', 'Contraseña', 'required|trim|matches[repassword]');
             $this->form_validation->set_rules('repassword', 'Repita contraseña', 'required|trim|');
-            // Traducción de los mensajes de error
-            $this->form_validation->set_message('required', 'El campo %s es obligatorio');
-            $this->form_validation->set_message('max_length', 'El campo %s, no puede tener más de %s caracteres');
-            $this->form_validation->set_message('valid_email', 'El %s, no tiene un formato válido');
-            $this->form_validation->set_message('matches', 'Los campos %s y %s no coinciden');
-
+            
             // Si el formulario no es exitoso, vuelvo a mostrar las vistas junto a sus errores
             if (!$this->form_validation->run()) {
                 // Cargo las vistas de incio del BACKEND

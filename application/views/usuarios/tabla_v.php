@@ -1,7 +1,7 @@
 
 <div class="row-fluid sortable">
 
-    <div class="box span8">
+    <div class="box span11">
 
         <div class="box-header well" data-original-title>
             <h2><i class="icon-user"></i> Miembros</h2>
@@ -16,9 +16,10 @@
                     <tr>
                         <th>Nombre</th>
                         <th>Email</th>
+                        <th>Avatar</th>
                         <th>Fecha de registro</th>   
-                        <th>Estado</th>                     
-                        <th>Acciones</th>
+                        <th>Estado</th>     
+                        <th> <span class="label label-important">Eliminar (solo usuarios PRO)</span></th>
                     </tr>
                 </thead>   
                 <tbody>   
@@ -41,36 +42,47 @@
                                         case 'mail':
                                             echo '<td class="center">' . $valor . '</td>';
                                             break;
+                                        case 'avatar':
+                                            echo '<td class="center"><img class="" width="42" heigth="28" src="' . $valor . '" alt="img"></td>';
+                                            break;
                                         case 'fecha_creacion':
                                             echo '<td class="center">' . $valor . '</td>';
                                             break;
+                                        case 'super_user':
+                                            $super = $valor;
+                                            break;
                                         case 'activo':
-                                            if($valor==='si'){
-                                                echo '<td class="center">
+                                            if ($super == 0) {
+                                                if ($valor === 'si') {
+                                                    echo '<td class="center">
                                                             <span class="label label-success">Activo</span>
                                                             </td>';
-                                            }else{
-                                                echo '<td class="center">
+                                                } else {
+                                                    echo '<td class="center">
                                                             <span class="label label-warning">Pendiente</span>
+                                                            </td>';
+                                                }
+                                            } else {
+                                                echo '<td class="center">
+                                                            <span class="label btn-primary">Usuario PRO</span>
                                                             </td>';
                                             }
                                             break;
                                     }
                                 }
                                 ?>
-                                <td class = "center">
-                                    <a class="btn btn-info" href="<?= site_url('backend/usuarios/ver'); ?>/<?= $id_user ?>">
-                                        <i class="icon-zoom-in icon-white"></i>  
-                                        Ver                                            
-                                    </a>
+                                <td style="text-align: center;" class = "center">
+
                                     <?php
                                     if ($this->simple_sessions->get_value('super') === '1') {
-                                        ?>
+                                        if ($super == 0) {
+                                            ?>
                                     <a class = "btn btn-danger" href = "<?= site_url('backend/usuarios/delete_user'); ?>/<?= $id_user ?>/<?= $name ?>">
-                                            <i class = "icon-trash icon-white"></i>
-                                            Eliminar
-                                        </a>
+                                                <i class = "icon-trash icon-white"></i>                                              
+                                            </a>
+                                        <?php } ?>
                                     <?php } ?>
+                                            
                                 </td>
                             </tr>
                             <?php

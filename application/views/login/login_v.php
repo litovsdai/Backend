@@ -28,7 +28,7 @@
                             <span class="add-on"><i class="icon-lock"></i></span>
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                             <input class="input-large span10" name="password" id="password" type="password" placeholder="contraseña"
-                                   value="lito1984" />
+                                   value="lito" />
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                         </div>
                         <div class="clearfix"></div>

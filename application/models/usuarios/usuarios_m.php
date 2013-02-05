@@ -154,7 +154,6 @@ class Usuarios_m extends CI_Model {
     public function get_usuarios() {
         // Consulta
         $this->db->from('administradores');
-        $this->db->where('super_user', 0);
         // Inserción de la QUERY
         $query = $this->db->get();
         if ($this->db->affected_rows() > 0) {
@@ -165,6 +164,8 @@ class Usuarios_m extends CI_Model {
                     'id'             => $row['id'],
                     'nombre'         => $row['nombre'],
                     'mail'           => $row['mail'],
+                    'avatar'         => $row['avatar'],
+                    'super_user'         => $row['super_user'],
                     'fecha_creacion' => $row['fecha_creacion'],
                     'activo'         => $row['activo']);
                 array_push($array_usarios, $temporal);
