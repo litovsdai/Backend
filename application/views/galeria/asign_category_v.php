@@ -2,7 +2,7 @@
 <div class="row-fluid sortable">
     <div class="box span8">
         <div class="box-header well" data-original-title>
-            <h2><i class="icon-th-list"></i> Asignar categorías</h2>
+            <h2><i class="icon-th-list"></i> <?= lang('multi_asign_cat_img_1') ?></h2>
             <div class="box-icon">
                 <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
                 <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
@@ -16,20 +16,20 @@
                     ×
                 </button>  
                 <p>
-                    <i class="icon-exclamation-sign"></i>&nbsp;Atención! Ponga a 
-                    <a href="#" data-rel="tooltip" data-original-title="Sólo las imágenes a las que le desee asignarles categoría">
+                    <i class="icon-exclamation-sign"></i>&nbsp;<?= lang('multi_asign_cat_img_2') ?>
+                    <a href="#" data-rel="tooltip" data-original-title="<?= lang('multi_asign_cat_img_3_tooltip') ?>">
                         ON
                     </a> 
-                    las imágenes que desee asignarles una categoría, de lo contario póngalas a <a href="#" data-rel="tooltip" data-original-title="Las que no desee asignarles categoría.">
+                    <?= lang('multi_asign_cat_img_4') ?> <a href="#" data-rel="tooltip" data-original-title="<?= lang('multi_asign_cat_img_5_tooltip') ?>.">
                         OFF
                     </a> 
-                    para no asignarles categoría.
+                    <?=lang('multi_asign_cat_img_6')?>
                 </p>
             </div>
             <form method="POST">
                 <div class="control-group">                    
                     <div  class="controls">
-                        <h3>Selecciona categoría</h3><br>
+                        <h3><?=lang('multi_asign_cat_img_7')?></h3><br>
                         <span id="refresh_list">
                             <select id="list_cat" class="selectError" name="catgeroy" data-rel="chosen">
                                 <?php if (isset($categories) && $categories != 0) { ?>
@@ -37,12 +37,12 @@
                                         <option><?= $categories[$i] ?></option>   
                                     <?php } ?>
                                 <?php } else { ?>
-                                    <option>No hay categorías</option>
+                                    <option></option>
                                 <?php } ?>
                             </select>    
                         </span>
                         <a class="btn btn-small btn-primary comp_check" style="margin: -1% 2% 0 3%;">
-                            Asignar categorías
+                            <?=lang('multi_asign_cat_img_1')?>
                         </a>
                         <img class="resp_asig" src="<?= base_url() ?>img/ajax-loaders/load-indicator.gif" style="margin: -1% 2% 0 3%;display:none;">
 
@@ -52,14 +52,14 @@
                     </div>
                 </div> 
                 <?php if (isset($img_sin) && !empty($img_sin)) { ?>
-                    <h4 id="tile">Imágenes sin categoría</h4><br><br>
+                    <h4 id="tile"><?=lang('multi_asign_cat_img_8')?></h4><br><br>
                     <div id="containerdiv">
                         <ul class="thumbnails gallery" id="refresh">
                             <?php
                             foreach ($img_sin as $array) {
                                 foreach ($array as $key => $valor) {
                                     //echo $key . ' ' . $valor . '<br>';
-                                    if($key === 'id'){
+                                    if ($key === 'id') {
                                         $id = $valor;
                                     }
                                     if ($key === 'name') {
@@ -91,7 +91,7 @@
                     </div>
                     <?php
                 } else {
-                    echo '<p style="color:red;text-align: center;">Muy bién! todas las imágenes se encuentran con categorías asociadas.</p>';
+                    echo '<p style="color:tomato;text-align: center;">'.lang('multi_asign_cat_img_9').'</p>';
                 }
                 ?>
             </form>

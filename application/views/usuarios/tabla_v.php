@@ -4,7 +4,7 @@
     <div class="box span11">
 
         <div class="box-header well" data-original-title>
-            <h2><i class="icon-user"></i> Miembros</h2>
+            <h2><i class="icon-user"></i> <?= lang('multi_usu_tab_1') ?></h2>
             <div class="box-icon">
                 <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
                 <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
@@ -14,12 +14,12 @@
             <table class="table table-striped table-bordered bootstrap-datatable datatable">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Avatar</th>
-                        <th>Fecha de registro</th>   
-                        <th>Estado</th>     
-                        <th> <span class="label label-important">Eliminar (solo usuarios PRO)</span></th>
+                        <th><?= lang('multi_usu_tab_2') ?></th>
+                        <th><?= lang('multi_usu_tab_3') ?></th>
+                        <th><?= lang('multi_usu_tab_4') ?></th>
+                        <th><?= lang('multi_usu_tab_5') ?></th>   
+                        <th><?= lang('multi_usu_tab_6') ?></th>     
+                        <th> <span class="label label-important"><?= lang('multi_usu_tab_7') ?></span></th>
                     </tr>
                 </thead>   
                 <tbody>   
@@ -55,16 +55,16 @@
                                             if ($super == 0) {
                                                 if ($valor === 'si') {
                                                     echo '<td class="center">
-                                                            <span class="label label-success">Activo</span>
+                                                            <span class="label label-success">'.lang('multi_usu_tab_8').'</span>
                                                             </td>';
                                                 } else {
                                                     echo '<td class="center">
-                                                            <span class="label label-warning">Pendiente</span>
+                                                            <span class="label label-warning">'.lang('multi_usu_tab_9').'</span>
                                                             </td>';
                                                 }
                                             } else {
                                                 echo '<td class="center">
-                                                            <span class="label btn-primary">Usuario PRO</span>
+                                                            <span class="label btn-primary">'.lang('multi_usu_tab_10').'</span>
                                                             </td>';
                                             }
                                             break;
@@ -77,12 +77,12 @@
                                     if ($this->simple_sessions->get_value('super') === '1') {
                                         if ($super == 0) {
                                             ?>
-                                    <a class = "btn btn-danger" href = "<?= site_url('backend/usuarios/delete_user'); ?>/<?= $id_user ?>/<?= $name ?>">
+                                            <a class = "btn btn-danger" href = "<?= site_url('backend/usuarios/delete_user'); ?>/<?= $id_user ?>/<?= $name ?>">
                                                 <i class = "icon-trash icon-white"></i>                                              
                                             </a>
                                         <?php } ?>
                                     <?php } ?>
-                                            
+
                                 </td>
                             </tr>
                             <?php

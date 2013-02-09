@@ -8,7 +8,6 @@
                 <span class="icon-bar"></span>
             </a>
             <a class="brand" href="#"> <span>casualWeb</span></a>
-
             <!-- user dropdown starts -->
             <div class="btn-group pull-right" >                
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">

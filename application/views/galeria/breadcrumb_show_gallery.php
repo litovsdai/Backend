@@ -4,12 +4,12 @@
             <span class="divider">Menu /</span>
         </li>
         <li>
-            <a href="#"> Ver imágenes</a><span class="divider">/</span>
+            <a href="#"> <?= lang('multi_edit_img_1') ?></a><span class="divider">/</span>
         </li>
     </ul>
 </div>
 <?php
 if (isset($nom)) {
-    echo '<p class="alert alert-success">Imagen '.$nom.' eliminada satisfactoriamente.</p>';
+    echo '<p class="alert alert-success">' . lang('multi_edit_img_2', $nom) . '</p>';
 }
 ?>

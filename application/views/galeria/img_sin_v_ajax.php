@@ -30,9 +30,9 @@
                 <ul class="dashboard-list">
                     <li>
                         <img class="dashboard-avatar" title="<?= $name ?>" alt="<?= $name ?>" src="<?= $ruta_thumb ?>">
-                        <strong>Nombre:</strong> <a href="#"> <?= $name ?></a><br>
-                        <strong>Fecha de subida:</strong> <a href="#"> <?= $fecha_creacion ?></a><br>
-                        <strong>Categoria:</strong> <a href="#"> <?= $padre ?></a><br>
+                        <strong><?=lang('multi_nav_mod_3')?>:</strong> <a href="#"> <?= $name ?></a><br>
+                        <strong><?=lang('multi_edit_img_7')?>:</strong> <a href="#"> <?= $fecha_creacion ?></a><br>
+                        <strong><?=lang('multi_edit_img_8')?>:</strong> <a href="#"> <?= $padre ?></a><br>
                     </li>
                 </ul>
             </div>

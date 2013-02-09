@@ -4,7 +4,7 @@ if ($this->simple_sessions->get_value('super') === '1') {
     <div class="row-fluid sortable">
         <div class="box span8">
             <div class="box-header well" data-original-title>
-                <h2><i class="icon-plus"></i> Nuevo Usuario</h2>
+                <h2><i class="icon-plus"></i> <?= lang('multi_menuIzq_nuevo') ?></h2>
                 <div class="box-icon">
                     <a href="#" class="btn btn-minimize btn-round"><i class="icon-chevron-up"></i></a>
                     <a href="#" class="btn btn-close btn-round"><i class="icon-remove"></i></a>
@@ -19,19 +19,19 @@ if ($this->simple_sessions->get_value('super') === '1') {
                     <div class="alert-error" style="padding: 0;border-radius: 5px;margin-bottom: 10px;">
                         <?= validation_errors() ?>
                     </div>
-                    <?php if (isset($nombre_error)) echo '<p class="alert alert-error">El usuario <b>' . $nombre_error . '</b> ya existe en la base de datos</p>'; ?>
-                    <?php if (isset($email_error)) echo '<p class="alert alert-error">El correo electrónio <b>' . $email_error . '</b> ya existe en la base de datos </p>'; ?>
-                    <?php if (isset($form_ok) /* || isset($this->simple_sessions->get_value('form_ok')) */) echo '<p class="alert alert-success">El usuario <b>' . $form_ok . '</b> se almacenó satisfactoriamente</p>'; ?>
-                    <?php if (isset($error_db)) echo '<p class="alert alert-error">En la inserción de los datos ocurrió un error inesperado,<br> <b>rogamos se ponga en contacto con el administrador.</b></p>'; ?>
+                    <?php if (isset($nombre_error)) echo '<p class="alert alert-error">' . lang('multi_usu_new_1', $nombre_error) . '</p>'; ?>
+                    <?php if (isset($email_error)) echo '<p class="alert alert-error">' . lang('multi_usu_new_2', $email_error) . '</p>'; ?>
+                    <?php if (isset($form_ok) /* || isset($this->simple_sessions->get_value('form_ok')) */) echo '<p class="alert alert-success">' . lang('multi_usu_new_3', $form_ok) . '</p>'; ?>
+                    <?php if (isset($error_db)) echo '<p class="alert alert-error">' . lang('multi_usu_new_4') . '</p>'; ?>
                     <?php if (isset($mail_ok)) echo '<p class="alert alert-success">' . $mail_ok . '</p>'; ?>
                     <?php if (isset($mail_err)) echo '<p class="alert alert-errors">' . $mail_err . '</p>'; ?>
                     <fieldset>
                         <div class="control-group">
-                            <label class="control-label" for="focusedInput">Nombre</label>
+                            <label class="control-label" for="focusedInput"><?= lang('multi_nav_mod_3') ?></label>
                             <div class="controls">
                                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                                 <input id="nombre" name="nombre" class="input-xlarge focused" type="text" 
-                                       data-original-title="Máximo 45 caracteres" data-rel='tooltip' 
+                                       data-original-title="<?= lang('multi_usu_new_5') ?>" data-rel='tooltip' 
                                        <?php if (!isset($form_ok)) { ?>
                                            value="<?= set_value('nombre') ?>"
                                            <?php
@@ -44,11 +44,11 @@ if ($this->simple_sessions->get_value('super') === '1') {
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="focusedInput">Correo electrónico</label>
+                            <label class="control-label" for="focusedInput"><?= lang('multi_usu_new_6') ?></label>
                             <div class="controls">
                                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                                 <input id="email" name="email" class="input-xlarge focused" type="text"
-                                       data-original-title="Máximo 80 caracteres" data-rel='tooltip'
+                                       data-original-title="<?= lang('multi_usu_new_7') ?>" data-rel='tooltip'
                                        <?php if (!isset($form_ok)) { ?>
                                            value="<?= set_value('email') ?>"
                                            <?php
@@ -61,11 +61,11 @@ if ($this->simple_sessions->get_value('super') === '1') {
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="focusedInput">Contraseña</label>
+                            <label class="control-label" for="focusedInput"><?= lang('multi_usu_new_8') ?></label>
                             <div class="controls">
                                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                                 <input id="password" name="password" class="input-xlarge focused" 
-                                       type="password" data-rel='tooltip' data-original-title="Por motivos de seguridad crear una contraseña segura que contenga Símbolos especiales como (!, +, ], ?, etc) o valores numéricos como (1, 2, 4.. 9)"
+                                       type="password" data-rel='tooltip' data-original-title="<?= lang('multi_usu_new_9') ?>"
                                        <?php if (!isset($form_ok)) { ?>
                                            value="<?= set_value('password') ?>"
                                            <?php
@@ -78,7 +78,7 @@ if ($this->simple_sessions->get_value('super') === '1') {
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="focusedInput">Repita contreseña</label>
+                            <label class="control-label" for="focusedInput"><?= lang('multi_usu_new_10') ?></label>
                             <div class="controls">
                                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                                 <input id="repassword" name="repassword" class="input-xlarge focused"
@@ -96,9 +96,9 @@ if ($this->simple_sessions->get_value('super') === '1') {
                         </div>
                         <div class="form-actions">
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                            <button id="submit_nuevo" type="submit" class="btn btn-primary">Almacenar</button>
+                            <button id="submit_nuevo" type="submit" class="btn btn-primary"><?= lang('multi_usu_new_11') ?></button>
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                            <?= form_reset(array('class' => 'btn'), 'Vaciar campos') ?>
+                            <?= form_reset(array('class' => 'btn'), lang('multi_usu_new_12')) ?>
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                         </div>
                     </fieldset>

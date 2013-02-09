@@ -2,15 +2,16 @@
     <div class="row-fluid">        
         <div class="row-fluid">
             <div class="span12 center login-header">
-                <h2>Bienvenido a su backend personal</h2>
-            </div><!--/span-->
+                <h2>Backend propiedad <span style="color:#F60;text-decoration: underline;">casualweb.org</span></h2>
+                <blockquote><a href="https://twitter.com/soy_lito" title="@soy_lito">@soy_lito</a>|
+                <span>Backend totalmente personalizable según las necesidades del cliente.</span>
+                <small>Administre su Front subiendo imágenes, productos, artículos de cualquier tipo creando categorías y subcategorías..</small>
+            </blockquote></div><!--/span-->
         </div><!--/row-->
         <div class="row-fluid">
             <div class="well span5 center login-box">
                 <?php if(isset($active)) echo '<div class="alert alert-success">'.$active.'</div>'; ?>       
-                <div class="alert alert-info">
-                    Por favor introduce tu nombre de usuario y contraseña.
-                </div>
+                 <div class="alert alert-info"> Bienvenido !  </div>
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                 <form class="form-horizontal" action="<?= site_url('login/login_c/login') ?>" method="post">
                     <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
@@ -32,16 +33,6 @@
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                         </div>
                         <div class="clearfix"></div>
-
-                        <div class="input-prepend">
-                            <label class="remember" for="remember">
-                                <!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                                <input type="checkbox" id="remember"
-                                       <?php echo set_checkbox('mi_casilla', '2'); ?> />Recordarme</label>
-                            <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
-                        </div>
-                        <div class="clearfix"></div>
-
                         <p class="center span5">
                             <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                             <button type="submit" id="submit_log" class="btn btn-primary">Acceso</button>

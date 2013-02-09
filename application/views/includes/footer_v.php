@@ -4,19 +4,7 @@
 </div><!--/#content.span10-->
 </div><!--/fluid-row-->
 
-<hr><div class="modal hide fade" id="myModal">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h3>Herramientas</h3>
-    </div>
-    <div class="modal-body">
-        <p>Algunas opciones de confiración..</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">Cerrar</a>
-        <a href="#" class="btn btn-primary">Guardar cambios</a>
-    </div>
-</div>
+<hr>
 
 <footer>
     <p class="pull-left">&copy;&nbsp; 2012&nbsp;-&nbsp;<?php echo date('Y') ?> <a href="http://blogdelito.casualweb.org" target="_blank">&nbsp;Backend de Lito</a></p>

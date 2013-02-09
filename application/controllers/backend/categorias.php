@@ -82,11 +82,10 @@ class Categorias extends CI_Controller {
      */
 
     public function asign_category() {
-        // Si está iniciada la SESION, mostrara las vistas de la galeria
         if ($this->simple_sessions->get_value('status')) {
             $data = $this->input->post('activitiesArray');
             $msg = '';
-            if (count($data) > 1 && $data[0] !== 'No hay categorías' && !empty($data[0])) {
+            if (count($data) > 1 && $data[0] !== '' && !empty($data[0])) {
                 for ($i = 1; $i < count($data); $i++) {
                     $result = $this->gallery_m->asign_categ($data[$i], $data[0]);
                     if ($result !== TRUE) {
@@ -140,7 +139,7 @@ class Categorias extends CI_Controller {
                     $msg.= '<option>' . $categories[$i] . '</option>';
                 }
             } else {
-                $msg.= ' <option>No hay categorías</option>';
+                $msg.= ' <option></option>';
             }
             $msg .= '</select>';
             $msg .=$this->load->view('includes/all_dom', "", TRUE);
@@ -167,7 +166,7 @@ class Categorias extends CI_Controller {
                     $msg .='<option value="' . $categories[$i] . '">' . $categories[$i] . '</option>';
                 }
             } else {
-                $msg .='<option>No hay categorías</option>';
+                $msg .='<option></option>';
             }
             $msg .='</select>';
             $msg .=$this->load->view('includes/all_dom', "", TRUE);
@@ -192,7 +191,7 @@ class Categorias extends CI_Controller {
             $nombres_delete = array();
             if (count($data) > 0 && !empty($data)) {
                 for ($i = 0; $i < count($data); $i++) {
-                    if ($data[$i] !== 'No hay categorías') {
+                    if ($data[$i] !== '') {
                         $nombres_delete[$i] = $this->gallery_m->list_img_for_cat($data[$i]);
                         $this->gallery_m->remove_cat($data[$i]);
                     }

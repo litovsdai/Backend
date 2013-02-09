@@ -1,6 +1,5 @@
 <div class="container-fluid">
     <div class="row-fluid">
-
         <!-- left menu starts -->
         <div class="span2 main-menu-span">
             <div class="well nav-collapse sidebar-nav">

@@ -23,10 +23,9 @@ if (isset($error))
     </div>
     <br>
 <?php } ?>
-<?php if (isset($err_old)) echo '<div class="alert alert-error">La <b>contraseña vieja</b> no coincide.</div>'; ?>
-<?php if (isset($err_username)) echo '<div class="alert alert-error">El nombre de usuario <b>' . $err_username . '</b>, ya existe en la base de datos<br>Pruebe con otro nombre.</div>'; ?>
-<?php if (isset($err_email)) echo '<div class="alert alert-error">El correo electronico <b>' . $err_email . '</b>, ya existe en la base de datos.</div>'; ?>
-<?php if (isset($err_db)) echo '<div class="alert alert-error">Error en la base de datos, rogamos póngase en contacto con el administrador.</div>'; ?>
+<?php if (isset($err_old)) echo '<div class="alert alert-error">' . lang('multi_escritorio_err_1') . '.</div>'; ?>
+<?php if (isset($err_username)) echo '<div class="alert alert-error">' . lang('multi_escritorio_err_2', $err_username) . ' </div>'; ?>
+<?php if (isset($err_email)) echo '<div class="alert alert-error">' . lang('multi_escritorio_err_3', $err_email) . '</div>'; ?>
+<?php if (isset($err_db)) echo '<div class="alert alert-error">' . lang('multi_escritorio_err_4') . '</div>'; ?>
 <?php
-if (isset($success))
-    echo '<div class="alert alert-success">Datos almacenados satisfactoriamente.</div>'; ?>
+if (isset($success)) echo '<div class="alert alert-success">' . lang('multi_escritorio_succ_5') . '</div>'; ?>

@@ -4,7 +4,7 @@
             <span class="divider">Menu /</span>
         </li>
         <li>
-            <a href="#"> Subir imágenes</a><span class="divider">/</span>
+            <a href="#"> <?= lang('multi_menuIzq_subir') ?></a><span class="divider">/</span>
         </li>
     </ul>
 </div>

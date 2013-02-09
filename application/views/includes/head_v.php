@@ -5,7 +5,7 @@
         <title>Backend propiedad casualweb.org</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Privado">
-        <meta name="author" content="Lito">
+        <meta name="author" content="@soy_lito">
         <!-- The styles -->
         <link href="<?= base_url() ?>css/bootstrap-cerulean.css" rel="stylesheet">
         <style type="text/css">
