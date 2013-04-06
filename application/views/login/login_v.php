@@ -3,15 +3,17 @@
         <div class="row-fluid">
             <div class="span12 center login-header">
                 <h2>Backend propiedad <span style="color:#F60;text-decoration: underline;">casualweb.org</span></h2>
-                <blockquote><a href="https://twitter.com/soy_lito" title="@soy_lito">@soy_lito</a>|
-                <span>Backend totalmente personalizable según las necesidades del cliente.</span>
-                <small>Administre su Front subiendo imágenes, productos, artículos de cualquier tipo creando categorías y subcategorías..</small>
-            </blockquote></div><!--/span-->
+                <blockquote>
+                    <a href="https://twitter.com/soy_lito" title="@soy_lito">@soy_lito</a>|
+                    <span>Backend totalmente personalizable según las necesidades del cliente.</span>
+                    <small>Administre su Front subiendo imágenes, productos, artículos de cualquier tipo creando categorías y subcategorías..</small>
+                </blockquote>
+            </div><!--/span-->
         </div><!--/row-->
         <div class="row-fluid">
             <div class="well span5 center login-box">
-                <?php if(isset($active)) echo '<div class="alert alert-success">'.$active.'</div>'; ?>       
-                 <div class="alert alert-info"> Bienvenido !  </div>
+                <?php if (isset($active)) echo '<div class="alert alert-success">' . $active . '</div>'; ?>       
+                <div class="alert alert-info"> Bienvenido !  </div>
                 <!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
                 <form class="form-horizontal" action="<?= site_url('login/login_c/login') ?>" method="post">
                     <!----><!----><!----><!----><!----><!----><!----><!----><!----><!---->
